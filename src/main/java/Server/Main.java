@@ -2,6 +2,8 @@ package Server;
 
 import Objet.Channel.Channel;
 import Objet.Message.Message;
+import Objet.User.User;
+import Objet.User.UserUtils;
 import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOClient;
@@ -21,7 +23,8 @@ public class Main {
 
         HashMap<Integer, Message> messageHashMap = new HashMap<Integer, Message>();
         HashMap<Integer, Channel> channelHashMap = new HashMap<Integer, Channel>();
-
+        final HashMap<Integer, User> userHashMap = new HashMap<Integer, User>();
+        userHashMap.put(0,new User("theo","theo@beaudenon.pro","toto"));
 
 
         Configuration config = new Configuration();
@@ -41,6 +44,28 @@ public class Main {
 
             }
         });
+
+
+
+        server.addEventListener("login", User.class, new DataListener<User>() {
+            public void onData(SocketIOClient client, User data, AckRequest ackRequest) {
+                // broadcast messages to all clients
+                //server.getBroadcastOperations().sendEvent("chatevent", data);
+
+                User userLogin = UserUtils.getUserLogin(userHashMap, data.getMail(), data.getPass());
+
+                if (ackRequest.isAckRequested()) {
+                    // send ack response with data to client
+                    ackRequest.sendAckData(userLogin);
+                }
+
+                System.out.print(data.getUserName());
+                System.out.print(data.getPass());
+
+            }
+        });
+
+
 
         server.addConnectListener(new ConnectListener() {
             public void onConnect(SocketIOClient socketIOClient) {

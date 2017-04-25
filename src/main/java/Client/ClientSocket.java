@@ -1,34 +1,50 @@
 package Client;
 
-import Client.Controller.Controller_WindowMain;
-import Objet.Message.Message;
-import io.socket.client.Ack;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
 import java.net.URISyntaxException;
-import java.util.Date;
 
 /**
- * Created by theobeaudenon on 24/04/2017.
+ * Created by theobeaudenon on 25/04/2017.
  */
-public class Main {
-    public static void main( String[] argss) throws URISyntaxException {
+public class ClientSocket {
+    public Socket socket;
+
+
+
+
+    /** Instance unique non préinitialisée */
+    private static ClientSocket INSTANCE = null;
+
+    /** Point d'accès pour l'instance unique du singleton */
+    public static synchronized ClientSocket getInstance()
+    {
+        if (INSTANCE == null)
+        { 	INSTANCE = new ClientSocket();
+        }
+        return INSTANCE;
+    }
+
+    private ClientSocket()  {
+
+
+
 
         IO.Options opt = new IO.Options();
         opt.reconnectionDelay = 3000;
         opt.timeout = 15000 ;
-        final Socket socket = IO.socket("http://localhost:9092", opt);
+        try {
+            socket = IO.socket("http://localhost:9092", opt);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
 
-
-        final String[] art = argss;
 
         socket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
 
             public void call(Object... args) {
-
-                //Controller_WindowMain controller_windowMain = new Controller_WindowMain(socket);
 
 
                 System.out.printf("connect");
@@ -67,7 +83,6 @@ public class Main {
 
 
         socket.connect();
-
 
     }
 }
