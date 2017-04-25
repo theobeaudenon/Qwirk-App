@@ -1,6 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXMasonryPane?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" />
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.Controller_WindowMain">
+   <left>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <top>
+            <BorderPane prefHeight="110.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+         </top>
+         <center>
+            <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-focus-color: transparent; -fx-border-color: black;" BorderPane.alignment="CENTER">
+               <content>
+                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                     <children>
+                        <JFXListView />
+                     </children>
+                  </StackPane>
+               </content>
+            </ScrollPane>
+         </center>
+      </BorderPane>
+   </left>
+   <right>
+      <ScrollPane fitToHeight="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-focus-color: transparent;" BorderPane.alignment="CENTER">
+         <content>
+            <StackPane maxHeight="1080.0" minHeight="200.0" prefHeight="718.0" prefWidth="200.0">
+               <children>
+                  <JFXListView fx:id="chanelPan" maxHeight="3400.0" minHeight="200.0" prefHeight="718.0" />
+               </children>
+            </StackPane>
+         </content>
+      </ScrollPane>
+   </right>
+   <center>
+      <JFXMasonryPane fx:id="homeChan" BorderPane.alignment="CENTER" />
+   </center>
+</BorderPane>

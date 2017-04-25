@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import io.socket.client.Ack;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -63,15 +64,19 @@ public class Controller_WindowLogin extends Application implements Initializable
 
     }
 
-    public void login(Event event) {
+    public void login(final Event event) {
 
         Singleton_ClientSocket.getInstance().socket.emit("login", new User(login.getText(), pass.getText()).toJson(), new Ack() {
-            public void call(Object... args) {
+            public void call(final Object... args) {
                 if(args[0] != null){
-                    User user =  new User(args[0].toString()) ;
-                    Singleton_UserInfo.getInstance().setUser(user);
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            User user = new User(args[0].toString());
+                            Singleton_UserInfo.getInstance().setUser(user);
+                            goToMainFrame(event);
+                        }
+                    });
 
-                    System.out.println(Singleton_UserInfo.getInstance().getUser().getUserName());
                 }else{
                     System.out.printf("Erreur mdp/User");
                     error.setVisible(true);
@@ -108,6 +113,20 @@ public class Controller_WindowLogin extends Application implements Initializable
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    public void goToMainFrame(Event event){
+        Node node=(Node) event.getSource();
+        Stage stage=(Stage) node.getScene().getWindow();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/main.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
 
