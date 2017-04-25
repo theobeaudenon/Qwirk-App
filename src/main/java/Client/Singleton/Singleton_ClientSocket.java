@@ -1,4 +1,4 @@
-package Client;
+package Client.Singleton;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -9,25 +9,25 @@ import java.net.URISyntaxException;
 /**
  * Created by theobeaudenon on 25/04/2017.
  */
-public class ClientSocket {
+public class Singleton_ClientSocket {
     public Socket socket;
 
 
 
 
     /** Instance unique non préinitialisée */
-    private static ClientSocket INSTANCE = null;
+    private static Singleton_ClientSocket INSTANCE = null;
 
     /** Point d'accès pour l'instance unique du singleton */
-    public static synchronized ClientSocket getInstance()
+    public static synchronized Singleton_ClientSocket getInstance()
     {
         if (INSTANCE == null)
-        { 	INSTANCE = new ClientSocket();
+        { 	INSTANCE = new Singleton_ClientSocket();
         }
         return INSTANCE;
     }
 
-    private ClientSocket()  {
+    private Singleton_ClientSocket()  {
 
 
 
