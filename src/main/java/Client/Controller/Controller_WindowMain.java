@@ -82,7 +82,7 @@ public class Controller_WindowMain extends Application {
 
         ClientSocket.getInstance().socket.emit("login", new User(login.getText(), pass.getText()).toJson(), new Ack() {
             public void call(Object... args) {
-                if(args != null){
+                if(args[0] != null){
                     User user =  new User(args[0].toString()) ;
                     System.out.printf(user.getUserName());
 
