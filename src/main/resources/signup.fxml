@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -55,10 +56,11 @@
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints maxHeight="48.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="27.0" minHeight="10.0" prefHeight="18.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="27.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="27.0" minHeight="10.0" prefHeight="17.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <JFXButton buttonType="RAISED" onMouseClicked="#signupConfirmation" prefHeight="50.0" prefWidth="82.0" ripplerFill="#95a5a6" style="-fx-background-color: #7289DA;" text="Signup" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <JFXButton buttonType="RAISED" onMouseClicked="#signupConfirmation" prefHeight="46.0" prefWidth="163.0" ripplerFill="#95a5a6" style="-fx-background-color: #7289DA;" text="Inscription" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -71,6 +73,7 @@
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </Label>
+                  <Hyperlink onMouseClicked="#goToLogin" text="Vous avez déjà un compte ?" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                </children>
                <GridPane.margin>
                   <Insets />

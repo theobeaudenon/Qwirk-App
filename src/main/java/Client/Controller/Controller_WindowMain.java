@@ -7,10 +7,5 @@ import javafx.scene.control.Label;
 
 public class Controller_WindowMain  {
 
-    @FXML private Label customerName;
-    void initialize() {}
-    void initData() {
-        //customerName.setText(customer.getName());
-    }
 
 }

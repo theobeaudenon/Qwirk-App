@@ -57,6 +57,7 @@ public class Controller_WindowSignup {
                     public void run() {
                         try{
                             User user =  new User(args[0].toString()) ;
+                            Singleton_UserInfo.getInstance().setUser(user);
                             goToLogin(event);
                         }catch (JsonSyntaxException ex){
                             error.setText(args[0].toString());

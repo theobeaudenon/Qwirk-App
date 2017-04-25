@@ -2,7 +2,6 @@ package Objet.User;
 
 import Objet.Channel.Channel;
 import Objet.Message.Message;
-import sun.jvm.hotspot.debugger.AddressException;
 
 import java.util.ArrayList;
 import java.util.HashMap;

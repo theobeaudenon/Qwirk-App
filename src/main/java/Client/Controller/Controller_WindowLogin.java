@@ -12,15 +12,19 @@ import javafx.application.Application;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
+import javax.annotation.Resources;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class Controller_WindowLogin extends Application {
+public class Controller_WindowLogin extends Application implements Initializable {
 
     @FXML
     private JFXTextField login;
@@ -31,9 +35,15 @@ public class Controller_WindowLogin extends Application {
     @FXML
     private Label error;
 
-    public static void main(String[] args) {
-        launch(args);
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Singleton_ClientSocket.getInstance();
+        if (Singleton_UserInfo.getInstance().getUser() != null){
+            login.setText(Singleton_UserInfo.getInstance().getUser().getMail());
+            pass.setText(Singleton_UserInfo.getInstance().getUser().getPass());
+        }
     }
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -51,7 +61,6 @@ public class Controller_WindowLogin extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        Singleton_ClientSocket.getInstance();
     }
 
     public void login(Event event) {
@@ -105,4 +114,6 @@ public class Controller_WindowLogin extends Application {
     public void resetError(Event event) {
         error.setVisible(false);
     }
+
+
 }
