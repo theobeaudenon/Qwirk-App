@@ -56,8 +56,6 @@ public class Controller_WindowLogin extends Application {
 
     public void login(Event event) {
 
-        final Node node=(Node) event.getSource();
-
         Singleton_ClientSocket.getInstance().socket.emit("login", new User(login.getText(), pass.getText()).toJson(), new Ack() {
             public void call(Object... args) {
                 if(args[0] != null){
@@ -65,13 +63,6 @@ public class Controller_WindowLogin extends Application {
                     Singleton_UserInfo.getInstance().setUser(user);
 
                     System.out.println(Singleton_UserInfo.getInstance().getUser().getUserName());
-
-
-                   /* Stage stage=(Stage) node.getScene().getWindow();
-                    FXMLLoader root = new FXMLLoader(getClass().getResource("/tmpChat.fxml"));
-                    Scene scene = new Scene(root);
-                    stage.setScene(scene);
-                    stage.show();*/
                 }else{
                     System.out.printf("Erreur mdp/User");
                     error.setVisible(true);
@@ -94,9 +85,24 @@ public class Controller_WindowLogin extends Application {
         */
     }
 
-    public void singup(Event event){
+    public void signup(Event event){
+
+        Node node=(Node) event.getSource();
+        Stage stage=(Stage) node.getScene().getWindow();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/signup.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
 
     }
 
 
+    public void resetError(Event event) {
+        error.setVisible(false);
+    }
 }
