@@ -60,8 +60,32 @@ public class Main {
                     ackRequest.sendAckData(userLogin);
                 }
 
-                System.out.print(data.getUserName());
-                System.out.print(data.getPass());
+                System.out.print("Login : "+data.getUserName());
+                // System.out.print(data.getPass());
+
+            }
+        });
+
+
+        server.addEventListener("singup", User.class, new DataListener<User>() {
+            public void onData(SocketIOClient client, User data, AckRequest ackRequest) {
+                // broadcast messages to all clients
+                //server.getBroadcastOperations().sendEvent("chatevent", data);
+
+                if (ackRequest.isAckRequested()) {
+                    // send ack response with data to client
+
+                    try {
+                        User userLogin = UserUtils.registerUser(userHashMap, data);
+                        ackRequest.sendAckData(userLogin);
+
+                    } catch (Exception e) {
+                        ackRequest.sendAckData(e.getMessage());
+                    }
+
+                }
+
+                System.out.print("signup : "+data.getUserName());
 
             }
         });
