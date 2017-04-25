@@ -25,6 +25,7 @@ public class Main {
         HashMap<Integer, Channel> channelHashMap = new HashMap<Integer, Channel>();
         final HashMap<Integer, User> userHashMap = new HashMap<Integer, User>();
         userHashMap.put(0,new User("theo","theo@beaudenon.pro","toto"));
+        userHashMap.put(1,new User("test","test@test","test"));
 
 
         Configuration config = new Configuration();
