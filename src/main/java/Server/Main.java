@@ -5,6 +5,7 @@ import Objet.Message.Message;
 import Objet.User.User;
 import Objet.User.UserUtils;
 import Server.Data.Singleton_Data;
+import Server.Events.Channels.Channels_Events;
 import Server.Events.Login_Signup.Login_Signup_Events;
 import Server.Events.Messages.Messages_Events;
 import com.corundumstudio.socketio.AckRequest;
@@ -42,6 +43,11 @@ public class Main {
         //LOGIN SIGNUP EVENTS
         Login_Signup_Events.socketLoginEvent(server);
         Login_Signup_Events.socketSingupEvent(server);
+
+
+        //channels EVENT
+        Channels_Events.getPublicChannels(server);
+        Channels_Events.getMyChannels(server);
 
         //messages Events
         Messages_Events.newMessage(server);

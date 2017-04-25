@@ -27,7 +27,7 @@ public class Login_Signup_Events {
                     ackRequest.sendAckData(userLogin);
                 }
 
-                System.out.print("Login : "+data.getUserName());
+                System.out.print("Login : "+data.getMail());
                 // System.out.print(data.getPass());
 
             }
@@ -49,6 +49,7 @@ public class Login_Signup_Events {
                     try {
                         User userLogin = UserUtils.registerUser(Singleton_Data.getInstance().getUserHashMap(), data);
                         ackRequest.sendAckData(userLogin);
+                        System.out.print("signup : "+userLogin.getUserName());
 
                     } catch (Exception e) {
                         ackRequest.sendAckData(e.getMessage());
@@ -56,7 +57,6 @@ public class Login_Signup_Events {
 
                 }
 
-                System.out.print("signup : "+data.getUserName());
 
             }
         });

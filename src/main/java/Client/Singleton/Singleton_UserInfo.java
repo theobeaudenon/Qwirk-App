@@ -39,4 +39,6 @@ public class Singleton_UserInfo {
 
         return this.user;
     }
+
+
 }

@@ -1,9 +1,6 @@
 package Objet.Channel;
 
-import Objet.Message.Message;
 import com.google.gson.Gson;
-
-import java.util.Date;
 
 /**
  * Created by theobeaudenon on 24/04/2017.
@@ -13,16 +10,18 @@ public class Channel {
 
     private String channelName;
     private String description;
-    private Date creationDate;
+    private Integer creationDate;
     private Integer idCreator;
+    private Boolean ispublic;
 
 
-    public Channel(Integer idChannel, String channelName, String description, Date creationDate, Integer idCreator) {
+    public Channel(Integer idChannel, String channelName, String description, Integer creationDate, Integer idCreator, Boolean ispublic) {
         this.idChannel = idChannel;
         this.channelName = channelName;
         this.description = description;
         this.creationDate = creationDate;
         this.idCreator = idCreator;
+        this.ispublic = ispublic;
     }
 
     public Channel(String messageJson) {
@@ -33,7 +32,16 @@ public class Channel {
         this.creationDate = grupoAplicacao.getCreationDate();
         this.idCreator = grupoAplicacao.getIdCreator();
         this.idChannel = grupoAplicacao.getIdChannel();
+        this.ispublic = grupoAplicacao.ispublic();
 
+    }
+
+    public Boolean ispublic() {
+        return ispublic;
+    }
+
+    public void setIspublic(Boolean ispublic) {
+        this.ispublic = ispublic;
     }
 
     public Integer getIdChannel() {
@@ -60,11 +68,11 @@ public class Channel {
         this.description = description;
     }
 
-    public Date getCreationDate() {
+    public Integer getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(Date creationDate) {
+    public void setCreationDate(Integer creationDate) {
         this.creationDate = creationDate;
     }
 

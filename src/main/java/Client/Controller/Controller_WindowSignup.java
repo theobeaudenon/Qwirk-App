@@ -48,7 +48,7 @@ public class Controller_WindowSignup {
             return;
         }
 
-        User user = new User(pseudo.getText(), email.getText(), password.getText());
+        User user = new User(null,pseudo.getText(), email.getText(), password.getText());
 
 
         Singleton_ClientSocket.getInstance().socket.emit("singup", user.toJson(), new Ack() {

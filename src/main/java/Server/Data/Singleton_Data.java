@@ -19,6 +19,10 @@ public class Singleton_Data {
 
 
 
+    HashMap<Integer, Integer> userChannelsHashMap = new HashMap<Integer, Integer>();
+
+
+
 
     /** Instance unique non préinitialisée */
     private static Singleton_Data INSTANCE = null;
@@ -36,14 +40,26 @@ public class Singleton_Data {
 
 
         //VAleurs par defaut
-        userHashMap.put(0,new User("theo","theo@beaudenon.pro","toto"));
-        userHashMap.put(1,new User("test","test@test","test"));
+        userHashMap.put(0,new User(0,"theo","theo@beaudenon.pro","toto"));
+        userHashMap.put(1,new User(1,"test","test@test","test"));
 
 
+        channelHashMap.put(0,new Channel(0,"toto","",1493132555,0,true));
+        channelHashMap.put(2,new Channel(2,"tata","",1493132555,0,true));
+        channelHashMap.put(3,new Channel(3,"titi","",1493132555,0,true));
 
+
+        userChannelsHashMap.put(1,2);
 
     }
 
+    public HashMap<Integer, Integer> getUserChannelsHashMap() {
+        return userChannelsHashMap;
+    }
+
+    public void setUserChannelsHashMap(HashMap<Integer, Integer> userChannelsHashMap) {
+        this.userChannelsHashMap = userChannelsHashMap;
+    }
 
     public HashMap<Integer, Message> getMessageHashMap() {
         return messageHashMap;

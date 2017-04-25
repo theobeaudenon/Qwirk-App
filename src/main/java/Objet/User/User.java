@@ -10,11 +10,13 @@ public class User {
     String userName;
     String mail;
     String pass;
+    Integer userID;
 
-    public User(String userName, String mail, String pass) {
+    public User(Integer userID ,String userName, String mail, String pass) {
         this.userName = userName;
         this.mail = mail;
         this.pass = pass;
+        this.userID = userID;
     }
 
 
@@ -24,12 +26,17 @@ public class User {
         this.mail = grupoAplicacao.getMail();
         this.userName = grupoAplicacao.getUserName();
         this.pass = grupoAplicacao.getPass();
+        this.userID = grupoAplicacao.getUserID();
 
     }
 
     public User(String mail, String pass) {
         this.mail = mail;
         this.pass = pass;
+    }
+
+    public void setUserID(Integer userID) {
+        this.userID = userID;
     }
 
     public String getUserName() {
@@ -63,4 +70,7 @@ public class User {
 
     }
 
+    public Integer getUserID() {
+        return userID;
+    }
 }

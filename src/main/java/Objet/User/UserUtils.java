@@ -1,6 +1,7 @@
 package Objet.User;
 
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Created by theobeaudenon on 25/04/2017.
@@ -54,8 +55,10 @@ public class UserUtils {
                 throw new Exception("Email existe deja");
             }
         }
-
-        messageHashMap.put(messageHashMap.size(),user);
+        Random r = new Random();
+        Integer userId = 100 + r.nextInt(999999999 - 100);
+        user.setUserID(userId);
+        messageHashMap.put(userId,user);
         return user;
 
     }
