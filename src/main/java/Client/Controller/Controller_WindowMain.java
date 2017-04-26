@@ -6,6 +6,7 @@ import Client.EventHandler.EventHandler_UserChan;
 import Client.Singleton.Singleton_ClientSocket;
 import Client.Singleton.Singleton_UserInfo;
 import Objet.Channel.Channel;
+import Objet.Message.Message;
 import Objet.User.User;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -166,10 +167,50 @@ public class Controller_WindowMain implements Initializable {
         controllerChat.setVisible(true);
         controllerChat.setManaged(true);
 
-        JFXListView<Label> list = new JFXListView<>();
-        for (int i = 0; i < 100; i++) {
-            list.getItems().add(new Label("Item " + i));
-        }
+        final JFXListView<Label> list = new JFXListView<>();
+
+        final ArrayList<Message> myMessageArrayList = new ArrayList<Message>();
+
+        Singleton_ClientSocket.getInstance().socket.emit("channelMessages", 2, new Ack() {
+            public void call(final Object... args) {
+                if(args[0] != null){
+
+                    JSONArray array = (JSONArray) args[0];
+
+
+
+                    for (int i = 0; i < array.length(); i++) {
+                        try {
+
+                            JSONObject jsonObject = array.getJSONObject(i);
+                            myMessageArrayList.add(new Message(jsonObject.toString()));
+
+                        } catch (JSONException e) {
+
+                        }
+                    }
+
+
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            for (Message message : myMessageArrayList) {
+                                list.getItems().add(new Label(message.getMessage()));
+                            }
+
+                        }
+                    });
+
+                }else{
+                    System.out.printf("Erreur mdp/User");
+                    //error.setVisible(true);
+                }
+            }
+        });
+
+
+
+
+
        // list.getStyleClass().add("mylistview");
         list.setMaxHeight(3400);
 

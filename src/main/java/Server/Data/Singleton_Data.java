@@ -49,7 +49,9 @@ public class Singleton_Data {
         channelHashMap.put(3,new Channel(3,"titi","",1493132555,0,true));
 
         messageHashMap.put(0,new Message("Théo","message de test",1493132555,2,1));
-        messageHashMap.put(0,new Message("Théo","autre message de test",1493132999,2,1));
+        messageHashMap.put(1,new Message("Théo","autre message de test",1493132999,2,1));
+        messageHashMap.put(2,new Message("Théo","autre message de test",1493152999,2,1));
+        messageHashMap.put(3,new Message("Théo","autre message de test",1493142999,2,1));
 
         userChannelsHashMap.put(1,2);
 
