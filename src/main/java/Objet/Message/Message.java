@@ -2,21 +2,19 @@ package Objet.Message;
 
 import com.google.gson.Gson;
 
-import java.util.Date;
-
 /**
  * Created by theobeaudenon on 24/04/2017.
  */
 public class Message {
     private String userName;
     private String message;
-    private Date date;
+    private Integer date;
     private Integer channel;
     private Integer user;
 
 
 
-    public Message(String userName, String message, Date date, Integer channel,Integer user) {
+    public Message(String userName, String message, Integer date, Integer channel,Integer user) {
         super();
         this.userName = userName;
         this.message = message;
@@ -59,7 +57,7 @@ public class Message {
         this.user = user;
     }
 
-    public Date getDate() {
+    public Integer getDate() {
         return date;
     }
 

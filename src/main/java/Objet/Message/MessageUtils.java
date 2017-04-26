@@ -17,12 +17,25 @@ public class MessageUtils {
 
     }
 
+
     public static ArrayList<Message> getMessageFromChannel(HashMap<Integer, Message> messageHashMap , Channel channel){
 
         ArrayList<Message> messagestemp = new ArrayList<Message>();
         for (Message message:
-             messageHashMap.values()) {
+                messageHashMap.values()) {
             if (message.getChannel().equals(channel.getIdChannel())){
+                messagestemp.add(message);
+            }
+        }
+        return messagestemp;
+
+    }
+    public static ArrayList<Message> getMessageFromChannel(HashMap<Integer, Message> messageHashMap , Integer channelid){
+
+        ArrayList<Message> messagestemp = new ArrayList<Message>();
+        for (Message message:
+                messageHashMap.values()) {
+            if (message.getChannel().equals(channelid)){
                 messagestemp.add(message);
             }
         }
