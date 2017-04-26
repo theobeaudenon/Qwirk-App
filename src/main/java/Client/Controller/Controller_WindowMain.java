@@ -128,7 +128,7 @@ public class Controller_WindowMain implements Initializable {
                             for (Channel channel : myChannelArrayList) {
                                 Label label = new Label();
                                 label.setText(channel.getChannelName());
-                                label.setOnMouseClicked(new EventHandler_UserChan());
+                                label.setId(String.valueOf(channel.getIdChannel()));
                                 chanelPan.getItems().add(label);
                             }
                         }
@@ -152,6 +152,7 @@ public class Controller_WindowMain implements Initializable {
 
         //System.out.println("clicked on " + chanelPan.getSelectionModel().getSelectedItem());
         nameGroupChat = ((Label) chanelPan.getSelectionModel().getSelectedItem()).getText();
+        System.out.println( ((Label) chanelPan.getSelectionModel().getSelectedItem()).getId());
         showGroupChat();
 
     }
