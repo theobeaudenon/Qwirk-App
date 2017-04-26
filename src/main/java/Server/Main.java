@@ -51,6 +51,7 @@ public class Main {
 
         //messages Events
         Messages_Events.newMessage(server);
+        Messages_Events.getAllmessagesFromChannel(server);
 
 
 
