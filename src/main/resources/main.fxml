@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXMasonryPane?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 
@@ -30,13 +34,34 @@
          <content>
             <StackPane maxHeight="1080.0" minHeight="200.0" prefHeight="718.0" prefWidth="200.0">
                <children>
-                  <JFXListView fx:id="chanelPan" maxHeight="3400.0" minHeight="200.0" prefHeight="718.0" />
+                  <JFXListView fx:id="chanelPan" maxHeight="3400.0" minHeight="200.0" onMouseClicked="#userChanClicked" prefHeight="718.0" />
                </children>
             </StackPane>
          </content>
       </ScrollPane>
    </right>
    <center>
-      <JFXMasonryPane fx:id="homeChan" BorderPane.alignment="CENTER" />
+      <BorderPane fx:id="centerPan" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <center>
+            <JFXMasonryPane fx:id="homeChan" BorderPane.alignment="CENTER" />
+         </center>
+         <top>
+            <ImageView fx:id="chatGroupBanner" fitHeight="111.0" fitWidth="680.0" pickOnBounds="true" visible="false" BorderPane.alignment="CENTER">
+               <image>
+                  <Image url="@banniere1.png" />
+               </image>
+            </ImageView>
+         </top>
+         <bottom>
+            <BorderPane fx:id="controllerChat" prefHeight="44.0" prefWidth="680.0" BorderPane.alignment="CENTER">
+               <center>
+                  <TextArea fx:id="chatSendBox" onKeyPressed="#chatSendEventHandler" prefHeight="44.0" prefWidth="581.0" BorderPane.alignment="CENTER" />
+               </center>
+               <right>
+                  <JFXButton fx:id="sendButton" onMouseClicked="#sendButtonEvent" text="Send" BorderPane.alignment="CENTER" />
+               </right>
+            </BorderPane>
+         </bottom>
+      </BorderPane>
    </center>
 </BorderPane>

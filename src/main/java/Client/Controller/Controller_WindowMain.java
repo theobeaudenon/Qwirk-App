@@ -2,6 +2,7 @@ package Client.Controller;/**
  * Created by Boufle on 24/04/2017.
  */
 
+import Client.EventHandler.EventHandler_UserChan;
 import Client.Singleton.Singleton_ClientSocket;
 import Client.Singleton.Singleton_UserInfo;
 import Objet.Channel.Channel;
@@ -10,11 +11,21 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXMasonryPane;
+import com.jfoenix.controls.JFXScrollPane;
 import io.socket.client.Ack;
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,8 +43,24 @@ public class Controller_WindowMain implements Initializable {
     @FXML
     private JFXMasonryPane homeChan;
 
+    @FXML
+    private ImageView chatGroupBanner;
+
+    @FXML
+    private TextArea chatSendBox;
+
+    @FXML
+    private BorderPane centerPan;
+
+    @FXML
+    private BorderPane controllerChat;
+
+    private String nameGroupChat;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        homeDisplay();
 
         final ArrayList<Channel> channelArrayList = new ArrayList<Channel>();
 
@@ -99,8 +126,10 @@ public class Controller_WindowMain implements Initializable {
                    Platform.runLater(new Runnable() {
                         public void run() {
                             for (Channel channel : myChannelArrayList) {
-                                chanelPan.getItems().add(new Label(channel.getChannelName()));
-
+                                Label label = new Label();
+                                label.setText(channel.getChannelName());
+                                label.setOnMouseClicked(new EventHandler_UserChan());
+                                chanelPan.getItems().add(label);
                             }
                         }
                     });
@@ -117,5 +146,67 @@ public class Controller_WindowMain implements Initializable {
 
 
 
+    }
+
+    public void userChanClicked(Event event) {
+
+        //System.out.println("clicked on " + chanelPan.getSelectionModel().getSelectedItem());
+        nameGroupChat = ((Label) chanelPan.getSelectionModel().getSelectedItem()).getText();
+        showGroupChat();
+
+    }
+
+    public void showGroupChat(){
+
+        homeChan.setVisible(false);
+        homeChan.setManaged(false);
+        chatGroupBanner.setVisible(true);
+        chatGroupBanner.setManaged(true);
+        controllerChat.setVisible(true);
+        controllerChat.setManaged(true);
+
+        JFXListView<Label> list = new JFXListView<>();
+        for (int i = 0; i < 100; i++) {
+            list.getItems().add(new Label("Item " + i));
+        }
+       // list.getStyleClass().add("mylistview");
+        list.setMaxHeight(3400);
+
+
+        StackPane container = new StackPane(list);
+       // container.setPadding(new Insets(24));
+
+        ScrollPane pane = new ScrollPane();
+        pane.setContent(container);
+
+        pane.setFitToWidth(true);
+
+
+        centerPan.setCenter(pane);
+
+
+    }
+
+    public void homeDisplay(){
+
+        homeChan.setVisible(true);
+        homeChan.setManaged(true);
+        chatGroupBanner.setVisible(false);
+        chatGroupBanner.setManaged(false);
+        controllerChat.setVisible(false);
+        controllerChat.setManaged(false);
+    }
+
+    public void chatSendEventHandler(KeyEvent event) {
+        if (chatSendBox.isVisible()){
+            if (event.getCode() == KeyCode.ENTER){
+
+            }
+        }
+    }
+
+    public void sendButtonEvent(Event event) {
+        System.out.println(chatSendBox.getText());
+        chatSendBox.setText("");
     }
 }
