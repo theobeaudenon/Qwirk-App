@@ -2,6 +2,9 @@ package Client.Controller;/**
  * Created by Boufle on 24/04/2017.
  */
 
+import Client.Component.Component_Label_Group;
+import Client.EventHandler.EventHandler_Home;
+import Client.EventHandler.EventHandler_Message;
 import Client.EventHandler.EventHandler_UserChan;
 import Client.Singleton.Singleton_ClientSocket;
 import Client.Singleton.Singleton_UserInfo;
@@ -63,99 +66,17 @@ public class Controller_WindowMain implements Initializable {
 
         homeDisplay();
 
-        final ArrayList<Channel> channelArrayList = new ArrayList<Channel>();
 
-        Singleton_ClientSocket.getInstance().socket.emit("getPublicChannels", Singleton_UserInfo.getInstance().getUser().getUserID(),new Ack() {
-            public void call(final Object... args) {
-                if(args[0] != null){
-                    JSONArray array = (JSONArray) args[0];
-
-                    for (int i = 0; i < array.length(); i++) {
-                        try {
-                            JSONObject jsonObject = array.getJSONObject(i);
-                            channelArrayList.add(new Channel(jsonObject.toString()));
-
-                        } catch (JSONException e) {
-
-                        }
-                    }
-
-                    Platform.runLater(new Runnable() {
-                        public void run() {
-                            for (Channel channel : channelArrayList) {
-                                Label l = new Label();
-                                l.setPrefSize(340,100);
-                                l.setStyle("-fx-background-image: url(http://www.sosiphone.com/blogiphone/wp-content/uploads//2011/02/Pac-Man-banniere.jpg)");
-                                l.setText(channel.getChannelName());
-                                homeChan.getChildren().add(l);
-                            }
-                        }
-                    });
-
-
-                }else{
-                    //System.out.printf("Erreur mdp/User");
-                    //error.setVisible(true);
-                }
-            }
-        });
-
-
-        final ArrayList<Channel> myChannelArrayList = new ArrayList<Channel>();
-
-
-        Singleton_ClientSocket.getInstance().socket.emit("getMyChannels", Singleton_UserInfo.getInstance().getUser().getUserID(), new Ack() {
-            public void call(final Object... args) {
-                if(args[0] != null){
-
-                    JSONArray array = (JSONArray) args[0];
-
-
-
-                    for (int i = 0; i < array.length(); i++) {
-                        try {
-
-                            JSONObject jsonObject = array.getJSONObject(i);
-                            myChannelArrayList.add(new Channel(jsonObject.toString()));
-
-                        } catch (JSONException e) {
-
-                        }
-                    }
-
-
-                   Platform.runLater(new Runnable() {
-                        public void run() {
-                            for (Channel channel : myChannelArrayList) {
-                                Label label = new Label();
-                                label.setText(channel.getChannelName());
-                                label.setId(String.valueOf(channel.getIdChannel()));
-                                chanelPan.getItems().add(label);
-                            }
-                        }
-                    });
-
-                }else{
-                    System.out.printf("Erreur mdp/User");
-                    //error.setVisible(true);
-                }
-            }
-        });
-
-
-
-
-
+        EventHandler_Home.loadPublicChan_Home(homeChan);
+        EventHandler_UserChan.loadUserChan_UserChan(chanelPan);
 
     }
 
     public void userChanClicked(Event event) {
 
-        //System.out.println("clicked on " + chanelPan.getSelectionModel().getSelectedItem());
-        nameGroupChat = ((Label) chanelPan.getSelectionModel().getSelectedItem()).getText();
-        System.out.println( ((Label) chanelPan.getSelectionModel().getSelectedItem()).getId());
+        Channel channel = ((Component_Label_Group)chanelPan.getSelectionModel().getSelectedItem()).getChannel();
         showGroupChat();
-
+        EventHandler_Message.loadHistory_Message(centerPan, channel.getIdChannel());
     }
 
     public void showGroupChat(){
@@ -166,66 +87,6 @@ public class Controller_WindowMain implements Initializable {
         chatGroupBanner.setManaged(true);
         controllerChat.setVisible(true);
         controllerChat.setManaged(true);
-
-        final JFXListView<Label> list = new JFXListView<>();
-
-        final ArrayList<Message> myMessageArrayList = new ArrayList<Message>();
-
-        Singleton_ClientSocket.getInstance().socket.emit("channelMessages", 2, new Ack() {
-            public void call(final Object... args) {
-                if(args[0] != null){
-
-                    JSONArray array = (JSONArray) args[0];
-
-
-
-                    for (int i = 0; i < array.length(); i++) {
-                        try {
-
-                            JSONObject jsonObject = array.getJSONObject(i);
-                            myMessageArrayList.add(new Message(jsonObject.toString()));
-
-                        } catch (JSONException e) {
-
-                        }
-                    }
-
-
-                    Platform.runLater(new Runnable() {
-                        public void run() {
-                            for (Message message : myMessageArrayList) {
-                                list.getItems().add(new Label(message.getMessage()));
-                            }
-
-                        }
-                    });
-
-                }else{
-                    System.out.printf("Erreur mdp/User");
-                    //error.setVisible(true);
-                }
-            }
-        });
-
-
-
-
-
-       // list.getStyleClass().add("mylistview");
-        list.setMaxHeight(3400);
-
-
-        StackPane container = new StackPane(list);
-       // container.setPadding(new Insets(24));
-
-        ScrollPane pane = new ScrollPane();
-        pane.setContent(container);
-
-        pane.setFitToWidth(true);
-
-
-        centerPan.setCenter(pane);
-
 
     }
 
