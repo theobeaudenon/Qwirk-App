@@ -8,6 +8,9 @@ import Objet.User.User;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import io.socket.client.Ack;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -18,11 +21,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import javax.annotation.Resources;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class Controller_WindowLogin extends Application implements Initializable {
@@ -36,12 +44,21 @@ public class Controller_WindowLogin extends Application implements Initializable
     @FXML
     private Label error;
 
+    @FXML
+    private Pane leftPane;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Singleton_ClientSocket.getInstance();
         if (Singleton_UserInfo.getInstance().getUser() != null){
             login.setText(Singleton_UserInfo.getInstance().getUser().getMail());
             pass.setText(Singleton_UserInfo.getInstance().getUser().getPass());
+        }
+
+        int numberOfSquares = 30;
+        while (numberOfSquares > 0){
+            generateAnimation();
+            numberOfSquares--;
         }
     }
 
@@ -132,6 +149,68 @@ public class Controller_WindowLogin extends Application implements Initializable
 
     public void resetError(Event event) {
         error.setVisible(false);
+    }
+
+    public void generateAnimation(){
+        Random rand = new Random();
+        int sizeOfSqaure = rand.nextInt(40) + 1;
+        int speedOfSqaure = rand.nextInt(10) + 10;
+        int startXPoint = rand.nextInt(190);
+        int startYPoint = rand.nextInt(397);
+        int direction = rand.nextInt(5) + 1;
+
+        KeyValue moveXAxis = null;
+        KeyValue moveYAxis = null;
+        Rectangle r1 = null;
+
+        switch (direction){
+            case 1 :
+                // MOVE LEFT TO RIGHT
+                r1 = new Rectangle(0,startYPoint,sizeOfSqaure,sizeOfSqaure);
+                moveXAxis = new KeyValue(r1.xProperty(), 222 -  sizeOfSqaure);
+                break;
+            case 2 :
+                // MOVE TOP TO BOTTOM
+                r1 = new Rectangle(startXPoint,0,sizeOfSqaure,sizeOfSqaure);
+                moveYAxis = new KeyValue(r1.yProperty(), 397 - sizeOfSqaure);
+                break;
+            case 3 :
+                // MOVE LEFT TO RIGHT, TOP TO BOTTOM
+                r1 = new Rectangle(startXPoint,0,sizeOfSqaure,sizeOfSqaure);
+                moveXAxis = new KeyValue(r1.xProperty(), 222 -  sizeOfSqaure);
+                moveYAxis = new KeyValue(r1.yProperty(), 397 - sizeOfSqaure);
+                break;
+            case 4 :
+                // MOVE BOTTOM TO TOP
+                r1 = new Rectangle(startXPoint,397-sizeOfSqaure ,sizeOfSqaure,sizeOfSqaure);
+                moveYAxis = new KeyValue(r1.xProperty(), 0);
+                break;
+            case 5 :
+                // MOVE RIGHT TO LEFT
+                r1 = new Rectangle(222-sizeOfSqaure,startYPoint,sizeOfSqaure,sizeOfSqaure);
+                moveXAxis = new KeyValue(r1.xProperty(), 0);
+                break;
+            case 6 :
+                //MOVE RIGHT TO LEFT, BOTTOM TO TOP
+                r1 = new Rectangle(startXPoint,0,sizeOfSqaure,sizeOfSqaure);
+                moveXAxis = new KeyValue(r1.xProperty(), 222 -  sizeOfSqaure);
+                moveYAxis = new KeyValue(r1.yProperty(), 397 - sizeOfSqaure);
+                break;
+
+            default:
+                System.out.println("default");
+        }
+
+        r1.setFill(Color.web("#7289DA"));
+        r1.setOpacity(0.3);
+
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(speedOfSqaure * 1000), moveXAxis, moveYAxis);
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.setAutoReverse(true);
+        timeline.getKeyFrames().add(keyFrame);
+        timeline.play();
+        leftPane.getChildren().add(leftPane.getChildren().size()-1,r1);
     }
 
 

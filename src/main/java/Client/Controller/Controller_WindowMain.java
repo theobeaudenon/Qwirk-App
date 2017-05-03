@@ -20,8 +20,12 @@ import io.socket.client.Ack;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -30,10 +34,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
@@ -59,14 +65,20 @@ public class Controller_WindowMain implements Initializable {
     @FXML
     private BorderPane controllerChat;
 
+    @FXML
+    private JFXListView userContactList;
+
     private String nameGroupChat;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+
+
+        userContactList.getItems().add(new Label("test"));
+
+
         homeDisplay();
-
-
         EventHandler_Home.loadPublicChan_Home(homeChan);
         EventHandler_UserChan.loadUserChan_UserChan(chanelPan);
 
@@ -111,5 +123,21 @@ public class Controller_WindowMain implements Initializable {
     public void sendButtonEvent(Event event) {
         System.out.println(chatSendBox.getText());
         chatSendBox.setText("");
+    }
+
+    public void userContactClick(Event event) {
+        Parent root;
+        try {
+            root  = FXMLLoader.load(getClass().getResource("/soloChat.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("My New Stage Title");
+            stage.setScene(new Scene(root, 600, 600));
+            stage.show();
+            // Hide this current window (if this is what you want)
+//            ((Node)(event.getSource())).getScene().getWindow().hide();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

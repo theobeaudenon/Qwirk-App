@@ -48,7 +48,6 @@ public class EventHandler_Home {
                         }
                     });
 
-
                 }else{
                     //System.out.printf("Erreur mdp/User");
                     //error.setVisible(true);
