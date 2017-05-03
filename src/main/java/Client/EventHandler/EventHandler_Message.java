@@ -52,7 +52,6 @@ public class EventHandler_Message {
 
                     list.setFocusTraversable(false);
                     list.setId("Messagelist");
-                    list.getScene().getStylesheets().add("/style/listViewChat.css");
                     Platform.runLater(new Runnable() {
                         public void run() {
                             for (Message message : myMessageArrayList) {

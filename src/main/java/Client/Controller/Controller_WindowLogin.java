@@ -142,6 +142,7 @@ public class Controller_WindowLogin extends Application implements Initializable
             e.printStackTrace();
         }
         Scene scene = new Scene(root);
+        scene.getStylesheets().add("/style/listViewChat.css");
         stage.setScene(scene);
         stage.show();
     }

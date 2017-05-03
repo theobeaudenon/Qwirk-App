@@ -77,7 +77,6 @@ public class Controller_WindowMain implements Initializable {
 
         userContactList.getItems().add(new Label("test"));
 
-
         homeDisplay();
         EventHandler_Home.loadPublicChan_Home(homeChan);
         EventHandler_UserChan.loadUserChan_UserChan(chanelPan);
@@ -87,8 +86,11 @@ public class Controller_WindowMain implements Initializable {
     public void userChanClicked(Event event) {
 
         Channel channel = ((Component_Label_Group)chanelPan.getSelectionModel().getSelectedItem()).getChannel();
-        showGroupChat();
-        EventHandler_Message.loadHistory_Message(centerPan, channel.getIdChannel());
+        if (channel != null){
+            showGroupChat();
+            EventHandler_Message.loadHistory_Message(centerPan, channel.getIdChannel());
+        }
+
     }
 
     public void showGroupChat(){
