@@ -28,6 +28,7 @@
             </ScrollPane>
          </center>
       </BorderPane>
+
    </left>
    <right>
       <ScrollPane fitToHeight="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-focus-color: transparent;" BorderPane.alignment="CENTER">
