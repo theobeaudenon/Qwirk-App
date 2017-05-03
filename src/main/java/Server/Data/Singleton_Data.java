@@ -11,7 +11,7 @@ import java.util.HashMap;
  */
 public class Singleton_Data {
 
-
+    Integer messageIncrement = 0;
 
     HashMap<Integer, Message> messageHashMap = new HashMap<Integer, Message>();
     HashMap<Integer, Channel> channelHashMap = new HashMap<Integer, Channel>();
@@ -48,10 +48,10 @@ public class Singleton_Data {
         channelHashMap.put(2,new Channel(2,"tata","",1493132555,0,true));
         channelHashMap.put(3,new Channel(3,"titi","",1493132555,0,true));
 
-        messageHashMap.put(0,new Message("Théo","message de test",1493132555,2,1));
-        messageHashMap.put(1,new Message("Théo","autre message de test",1493132999,2,1));
-        messageHashMap.put(2,new Message("Théo","autre message de test",1493152999,2,1));
-        messageHashMap.put(3,new Message("Théo","autre message de test",1493142999,2,1));
+        messageHashMap.put(getMessageIncrement(),new Message("Théo","message de test",1493132555,2,1));
+        messageHashMap.put(getMessageIncrement(),new Message("Théo","autre message de test",1493132999,2,1));
+        messageHashMap.put(getMessageIncrement(),new Message("Théo","autre message de test",1493152999,2,1));
+        messageHashMap.put(getMessageIncrement(),new Message("Théo","autre message de test",1493142999,2,1));
 
         userChannelsHashMap.put(1,2);
 
@@ -67,6 +67,11 @@ public class Singleton_Data {
 
     public HashMap<Integer, Message> getMessageHashMap() {
         return messageHashMap;
+    }
+
+    public Integer getMessageIncrement() {
+        messageIncrement++;
+        return messageIncrement;
     }
 
     public void setMessageHashMap(HashMap<Integer, Message> messageHashMap) {

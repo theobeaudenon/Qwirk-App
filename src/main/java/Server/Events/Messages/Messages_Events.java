@@ -17,14 +17,24 @@ import java.util.ArrayList;
  */
 public class Messages_Events {
 
-    public static void newMessage(SocketIOServer server){
+    public static void newMessage(final SocketIOServer server){
 
         server.addEventListener("chatevent", Message.class, new DataListener<Message>() {
             public void onData(SocketIOClient client, Message data, AckRequest ackRequest) {
+
+
+                System.out.println("chatevent : "+data.getUserName()+" "+data.getMessage());
+
+
+                Integer newID = Singleton_Data.getInstance().getMessageIncrement();
+
+                Singleton_Data.getInstance().getMessageHashMap().put(newID,data);
                 // broadcast messages to all clients
-                //server.getBroadcastOperations().sendEvent("chatevent", data);
-                System.out.print(data.getUserName());
-                System.out.print(data.getMessage());
+
+                System.out.println("newmessage : "+data.getMessage());
+                server.getBroadcastOperations().sendEvent("newmessage", data);
+                //System.out.print(data.getUserName());
+                //System.out.print(data.getMessage());
 
             }
         });
@@ -48,7 +58,7 @@ public class Messages_Events {
                     ackRequest.sendAckData(messageFromChannel);
                 }
 
-                System.out.print("channelMessages : "+messageFromChannel.size());
+                System.out.println("channelMessages : "+messageFromChannel.size());
                 // System.out.print(data.getPass());
 
             }

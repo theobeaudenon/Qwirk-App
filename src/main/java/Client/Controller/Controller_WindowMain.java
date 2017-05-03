@@ -6,6 +6,8 @@ import Client.Component.Component_Label_Group;
 import Client.EventHandler.EventHandler_Home;
 import Client.EventHandler.EventHandler_Message;
 import Client.EventHandler.EventHandler_UserChan;
+import Client.Messages.Bubble.BubbleSpec;
+import Client.Messages.Bubble.BubbledLabel;
 import Client.Singleton.Singleton_ClientSocket;
 import Client.Singleton.Singleton_UserInfo;
 import Objet.Channel.Channel;
@@ -17,6 +19,7 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXMasonryPane;
 import com.jfoenix.controls.JFXScrollPane;
 import io.socket.client.Ack;
+import io.socket.emitter.Emitter;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -32,8 +35,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,6 +44,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -70,6 +74,8 @@ public class Controller_WindowMain implements Initializable {
 
     private String nameGroupChat;
 
+    private Channel channel;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -81,11 +87,23 @@ public class Controller_WindowMain implements Initializable {
         EventHandler_Home.loadPublicChan_Home(homeChan);
         EventHandler_UserChan.loadUserChan_UserChan(chanelPan);
 
+
+        Singleton_ClientSocket.getInstance().socket.on("newmessage", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                JSONObject obj = (JSONObject)args[0];
+                new Message(obj.toString());
+
+            }
+        });
+
+
+
     }
 
     public void userChanClicked(Event event) {
 
-        Channel channel = ((Component_Label_Group)chanelPan.getSelectionModel().getSelectedItem()).getChannel();
+        channel = ((Component_Label_Group)chanelPan.getSelectionModel().getSelectedItem()).getChannel();
         if (channel != null){
             showGroupChat();
             EventHandler_Message.loadHistory_Message(centerPan, channel.getIdChannel());
@@ -119,12 +137,21 @@ public class Controller_WindowMain implements Initializable {
             if (event.getCode() == KeyCode.ENTER){
 
             }
+
+
         }
     }
 
     public void sendButtonEvent(Event event) {
         System.out.println(chatSendBox.getText());
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        //Envoi du message
+        Message message = new Message(Singleton_UserInfo.getInstance().getUser().getUserName(), chatSendBox.getText(), new Integer((int) timestamp.getTime()), channel.getIdChannel(), Singleton_UserInfo.getInstance().getUser().getUserID());
+        Singleton_ClientSocket.getInstance().socket.emit("chatevent", message.toJson());
+
         chatSendBox.setText("");
+
     }
 
     public void userContactClick(Event event) {
