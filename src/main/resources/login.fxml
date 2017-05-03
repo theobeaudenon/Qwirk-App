@@ -72,8 +72,7 @@
       </GridPane>
    </center>
    <left>
-
-      <Pane prefHeight="397.0" prefWidth="222.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      <Pane fx:id="leftPane" prefHeight="397.0" prefWidth="222.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="330.0" fitWidth="600.0" layoutX="-61.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
                <image>

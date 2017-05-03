@@ -19,7 +19,7 @@
          <center>
             <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-focus-color: transparent; -fx-border-color: black;" BorderPane.alignment="CENTER">
                <content>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                  <StackPane fx:id="userContactList" prefHeight="150.0" prefWidth="200.0">
                      <children>
                         <JFXListView />
                      </children>
@@ -28,7 +28,6 @@
             </ScrollPane>
          </center>
       </BorderPane>
-
    </left>
    <right>
       <ScrollPane fitToHeight="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-focus-color: transparent;" BorderPane.alignment="CENTER">
