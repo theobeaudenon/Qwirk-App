@@ -20,6 +20,7 @@ public class Singleton_Data {
 
 
     HashMap<Integer, Integer> userChannelsHashMap = new HashMap<Integer, Integer>();
+    HashMap<Integer, Integer> userContactsHashMap = new HashMap<Integer, Integer>();
 
 
 
@@ -54,6 +55,8 @@ public class Singleton_Data {
         messageHashMap.put(getMessageIncrement(),new Message("Théo","autre message de test",1493142999,2,1));
 
         userChannelsHashMap.put(1,2);
+
+        userContactsHashMap.put(0,1);
 
     }
 
@@ -92,6 +95,10 @@ public class Singleton_Data {
 
     public void setUserHashMap(HashMap<Integer, User> userHashMap) {
         this.userHashMap = userHashMap;
+    }
+
+    public HashMap<Integer, Integer> getUserContactsHashMap() {
+        return userContactsHashMap;
     }
 
 
