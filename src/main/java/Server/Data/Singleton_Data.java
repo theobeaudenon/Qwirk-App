@@ -57,6 +57,7 @@ public class Singleton_Data {
         userChannelsHashMap.put(1,2);
 
         userContactsHashMap.put(0,1);
+        userContactsHashMap.put(1,0);
 
     }
 

@@ -6,6 +6,7 @@ import Objet.User.User;
 import Objet.User.UserUtils;
 import Server.Data.Singleton_Data;
 import Server.Events.Channels.Channels_Events;
+import Server.Events.Contacts.Contacts_Events;
 import Server.Events.Login_Signup.Login_Signup_Events;
 import Server.Events.Messages.Messages_Events;
 import com.corundumstudio.socketio.AckRequest;
@@ -54,7 +55,8 @@ public class Main {
         Messages_Events.getAllmessagesFromChannel(server);
 
 
-
+        //Contact Events
+        Contacts_Events.getMyContacts(server);
 
 
 
