@@ -140,23 +140,7 @@ public class Controller_WindowLogin extends Application implements Initializable
         });
 
 
-        Singleton_ClientSocket.getInstance().socket.emit("getMyContacts", Singleton_UserInfo.getInstance().getUser().getUserID(), new Ack() {
-            public void call(final Object... args) {
-                if(args[0] != null){
-                    Platform.runLater(new Runnable() {
-                        public void run() {
-                            User user = new User(args[0].toString());
-                            Singleton_UserInfo.getInstance().setUser(user);
-                            goToMainFrame(event);
-                        }
-                    });
 
-                }else{
-                    System.out.printf("Erreur mdp/User");
-                    error.setVisible(true);
-                }
-            }
-        });
 
         /*
         Node node=(Node) event.getSource();
