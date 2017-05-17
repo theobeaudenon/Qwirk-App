@@ -139,7 +139,7 @@ public class Controller_WindowMain implements Initializable {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         //Envoi du message
-        Message message = new Message(Singleton_UserInfo.getInstance().getUser().getUserName(), chatSendBox.getText(), new Integer((int) timestamp.getTime()), channel.getIdChannel(), Singleton_UserInfo.getInstance().getUser().getUserID());
+        Message message = new Message(Singleton_UserInfo.getInstance().getUser().getUserName(), chatSendBox.getText(), new Integer((int) timestamp.getTime()), channel.getIdChannel(), Singleton_UserInfo.getInstance().getUser().getUserID(),false,null,null);
         Singleton_ClientSocket.getInstance().socket.emit("chatevent", message.toJson());
 
         chatSendBox.setText("");

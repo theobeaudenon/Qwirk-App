@@ -2,8 +2,10 @@ package Server.Events.Contacts;
 
 import Objet.Channel.Channel;
 import Objet.Channel.ChannelUtils;
+import Objet.Contacts.Contact;
 import Objet.Contacts.ContactUtils;
 import Objet.User.User;
+import Objet.Utils.Tuple;
 import Server.Data.Singleton_Data;
 import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.SocketIOClient;
@@ -40,5 +42,22 @@ public class Contacts_Events {
     }
 
 
+    public static void oppContact(final SocketIOServer server) {
 
+        server.addEventListener("oppContacts",  Contact.class, new DataListener<Contact>() {
+            public void onData(SocketIOClient client, Contact contact, AckRequest ackRequest) {
+                // broadcast messages to all clients
+                //server.getBroadcastOperations().sendEvent("chatevent", data);
+
+                Boolean publicChannels = ContactUtils.addMyContacts(Singleton_Data.getInstance().getUserHashMap(),Singleton_Data.getInstance().getUserContactsHashMap(),contact);
+                if(publicChannels){
+                    server.getBroadcastOperations().sendEvent("contactupdate", contact);
+                }
+
+                System.out.print("oppContacts : "+publicChannels);
+                // System.out.print(data.getPass());
+
+            }
+        });
+    }
 }

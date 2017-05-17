@@ -55,4 +55,11 @@ public class ChannelUtils {
 
         return tmp;
     }
+
+    public static Boolean operation(HashMap<Integer, Channel> channelHashMap, HashMap<Integer, Integer> userChannelsHashMap, ChannelOpperation channelOpperation) {
+
+
+
+        return null;
+    }
 }

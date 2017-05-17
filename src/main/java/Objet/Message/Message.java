@@ -13,8 +13,13 @@ public class Message {
     private Integer user;
 
 
+    private Boolean isImage;
+    private Byte[] data;
+    private String dataName;
 
-    public Message(String userName, String message, Integer date, Integer channel,Integer user) {
+
+
+    public Message(String userName, String message, Integer date, Integer channel,Integer user, Boolean isImage,Byte[] data,String dataName) {
         super();
         this.userName = userName;
         this.message = message;
@@ -22,6 +27,9 @@ public class Message {
         this.date = date;
         this.channel = channel;
         this.user = user;
+        this.isImage = isImage;
+        this.data = data;
+        this.dataName = dataName;
     }
 
     public String getUserName() {
@@ -47,6 +55,12 @@ public class Message {
         this.channel = grupoAplicacao.getChannel();
         this.user = grupoAplicacao.getUser();
 
+
+        this.isImage = grupoAplicacao.getImage();
+        this.data = grupoAplicacao.getData();
+        this.dataName = grupoAplicacao.getDataName();
+
+
     }
 
     public Integer getUser() {
@@ -66,6 +80,29 @@ public class Message {
         return channel;
     }
 
+    public Boolean getImage() {
+        return isImage;
+    }
+
+    public void setImage(Boolean image) {
+        isImage = image;
+    }
+
+    public Byte[] getData() {
+        return data;
+    }
+
+    public void setData(Byte[] data) {
+        this.data = data;
+    }
+
+    public String getDataName() {
+        return dataName;
+    }
+
+    public void setDataName(String dataName) {
+        this.dataName = dataName;
+    }
 
     public String toJson() {
         Gson gson = new Gson();

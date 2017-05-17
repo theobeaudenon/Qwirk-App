@@ -1,5 +1,8 @@
 package Server;
 
+import Objet.Bot.ActionBot;
+import Objet.Bot.Bot;
+import Objet.Bot.Commandes;
 import Objet.Channel.Channel;
 import Objet.Message.Message;
 import Objet.User.User;
@@ -15,7 +18,12 @@ import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -28,7 +36,6 @@ public class Main {
         //Creation du signleton de données
         Singleton_Data.getInstance();
 
-
         //Demarage du serveur
         Configuration config = new Configuration();
         config.setHostname("localhost");
@@ -40,6 +47,65 @@ public class Main {
         SocketIOServer server = new SocketIOServer(config);
 
 
+        String bot1 = "{\n" +
+                "  \"commandes\": [\n" +
+                "    {\n" +
+                "      \"action\": \"KICK\",\n" +
+                "      \"cmd\": \"kick\",\n" +
+                "      \"message\": \"Le marteau du ban a frappé\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"action\": \"BAN\",\n" +
+                "      \"cmd\": \"ban\",\n" +
+                "      \"message\": \"Le marteau du ban a frappé\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"action\": \"MESSAGE\",\n" +
+                "      \"cmd\": \"hey\",\n" +
+                "      \"message\": \"Coucou\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"name\": \"nom du bot\"\n" +
+                "}";
+
+        try {
+            JsonParser parser = new JsonParser();
+            JsonObject rootObj = parser.parse(bot1).getAsJsonObject();
+
+            ArrayList<Commandes> commandes = new ArrayList<Commandes>();
+
+            JsonArray locObj = rootObj.getAsJsonArray("commandes");
+            for (JsonElement pa : locObj) {
+                JsonObject paymentObj = pa.getAsJsonObject();
+                String     action     = paymentObj.get("action").getAsString();
+                String     quoteid     = paymentObj.get("cmd").getAsString();
+                String     message     = paymentObj.get("message").getAsString();
+                ActionBot actionBot=null;
+                if(ActionBot.BAN.toString().equals(action)){
+                    actionBot = ActionBot.BAN;
+                }
+                if(ActionBot.MESSAGE.toString().equals(action)){
+                    actionBot = ActionBot.MESSAGE;
+                }
+                if(ActionBot.KICK.toString().equals(action)){
+                    actionBot = ActionBot.KICK;
+                }
+                if(action== null){
+                    throw new Exception();
+                }
+                commandes.add(new Commandes(actionBot,quoteid,message));
+            }
+            Bot name = new Bot(commandes, rootObj.get("name").getAsString(),Singleton_Data.getInstance().getBotIncrement());
+            Singleton_Data.getInstance().getBotArrayList().add(name);
+            Singleton_Data.getInstance().getBotChannelHashMap().put(0,name.getIdBot());
+
+         }catch (Exception e){
+
+        }
+
+
+
+
 
         //LOGIN SIGNUP EVENTS
         Login_Signup_Events.socketLoginEvent(server);
@@ -49,6 +115,7 @@ public class Main {
         //channels EVENT
         Channels_Events.getPublicChannels(server);
         Channels_Events.getMyChannels(server);
+        Channels_Events.channelOpperation(server);
 
         //messages Events
         Messages_Events.newMessage(server);
@@ -57,6 +124,7 @@ public class Main {
 
         //Contact Events
         Contacts_Events.getMyContacts(server);
+        Contacts_Events.oppContact(server);
 
 
 

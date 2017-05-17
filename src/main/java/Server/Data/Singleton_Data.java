@@ -1,9 +1,11 @@
 package Server.Data;
 
+import Objet.Bot.Bot;
 import Objet.Channel.Channel;
 import Objet.Message.Message;
 import Objet.User.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -12,15 +14,17 @@ import java.util.HashMap;
 public class Singleton_Data {
 
     Integer messageIncrement = 0;
+    Integer botIncrement = 0;
 
     HashMap<Integer, Message> messageHashMap = new HashMap<Integer, Message>();
     HashMap<Integer, Channel> channelHashMap = new HashMap<Integer, Channel>();
     HashMap<Integer, User> userHashMap = new HashMap<Integer, User>();
 
-
+    ArrayList<Bot> botArrayList = new ArrayList<Bot>();
 
     HashMap<Integer, Integer> userChannelsHashMap = new HashMap<Integer, Integer>();
     HashMap<Integer, Integer> userContactsHashMap = new HashMap<Integer, Integer>();
+    HashMap<Integer, Integer> botChannelHashMap = new HashMap<Integer, Integer>();
 
 
 
@@ -48,16 +52,19 @@ public class Singleton_Data {
         channelHashMap.put(0,new Channel(0,"toto","",1493132555,0,true));
         channelHashMap.put(2,new Channel(2,"tata","",1493132555,0,true));
         channelHashMap.put(3,new Channel(3,"titi","",1493132555,0,true));
+        channelHashMap.put(3,new Channel(3,"tutu","",1493132595,0,true));
 
-        messageHashMap.put(getMessageIncrement(),new Message("Théo","message de test",1493132555,2,1));
-        messageHashMap.put(getMessageIncrement(),new Message("Théo","autre message de test",1493132999,2,1));
-        messageHashMap.put(getMessageIncrement(),new Message("Théo","autre message de test",1493152999,2,1));
-        messageHashMap.put(getMessageIncrement(),new Message("Théo","autre message de test",1493142999,2,1));
+        messageHashMap.put(getMessageIncrement(),new Message("Théo","message de test",1493132555,2,1,false,null,null));
+        messageHashMap.put(getMessageIncrement(),new Message("Théo","autre message de test",1493132999,2,1,false,null,null));
+        messageHashMap.put(getMessageIncrement(),new Message("Théo","autre message de test",1493152999,2,1,false,null,null));
+        messageHashMap.put(getMessageIncrement(),new Message("Théo","autre message de test",1493142999,2,1,false,null,null));
 
         userChannelsHashMap.put(1,2);
 
         userContactsHashMap.put(0,1);
         userContactsHashMap.put(1,0);
+
+
 
     }
 
@@ -73,9 +80,26 @@ public class Singleton_Data {
         return messageHashMap;
     }
 
+    public Integer getBotIncrement() {
+        botIncrement++;
+        return botIncrement;
+    }
+
+    public void setBotIncrement(Integer botIncrement) {
+        this.botIncrement = botIncrement;
+    }
+
     public Integer getMessageIncrement() {
         messageIncrement++;
         return messageIncrement;
+    }
+
+    public ArrayList<Bot> getBotArrayList() {
+        return botArrayList;
+    }
+
+    public void setBotArrayList(ArrayList<Bot> botArrayList) {
+        this.botArrayList = botArrayList;
     }
 
     public void setMessageHashMap(HashMap<Integer, Message> messageHashMap) {
@@ -102,5 +126,21 @@ public class Singleton_Data {
         return userContactsHashMap;
     }
 
+    public HashMap<Integer, Integer> getBotChannelHashMap() {
+        return botChannelHashMap;
+    }
 
+    public void setBotChannelHashMap(HashMap<Integer, Integer> botChannelHashMap) {
+        this.botChannelHashMap = botChannelHashMap;
+    }
+
+    public Bot getBotArrayList(Integer value) {
+        for (Bot bot : botArrayList) {
+            if(bot.getIdBot().equals(value)){
+                return bot;
+            }
+        }
+
+        return null;
+    }
 }

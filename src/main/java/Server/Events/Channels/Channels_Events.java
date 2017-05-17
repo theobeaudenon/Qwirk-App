@@ -1,6 +1,7 @@
 package Server.Events.Channels;
 
 import Objet.Channel.Channel;
+import Objet.Channel.ChannelOpperation;
 import Objet.Channel.ChannelUtils;
 import Objet.User.User;
 import Objet.User.UserUtils;
@@ -62,4 +63,27 @@ public class Channels_Events {
             }
         });
     }
+
+    public static void channelOpperation(final SocketIOServer server) {
+
+        server.addEventListener("channelOpperation", ChannelOpperation.class, new DataListener<ChannelOpperation>() {
+            public void onData(SocketIOClient client, ChannelOpperation channelOpperation, AckRequest ackRequest) {
+                // broadcast messages to all clients
+                //server.getBroadcastOperations().sendEvent("chatevent", data);
+
+                Boolean publicChannels = ChannelUtils.operation(Singleton_Data.getInstance().getChannelHashMap(),Singleton_Data.getInstance().getUserChannelsHashMap(),channelOpperation);
+                if(publicChannels){
+                    server.getBroadcastOperations().sendEvent("channelupdate", true);
+
+                }
+
+                System.out.print("channelOpperation : "+publicChannels);
+                // System.out.print(data.getPass());
+
+            }
+        });
+    }
+
+
+
 }
