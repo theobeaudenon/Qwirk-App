@@ -21,7 +21,7 @@
                <content>
                   <StackPane prefHeight="150.0" prefWidth="200.0">
                      <children>
-                        <JFXListView fx:id="userContactList" />
+                        <JFXListView fx:id="userContactList" style="-fx-background-color: #3c3f41;" />
                      </children>
                   </StackPane>
                </content>
@@ -34,7 +34,7 @@
          <content>
             <StackPane maxHeight="1080.0" minHeight="200.0" prefHeight="718.0" prefWidth="200.0">
                <children>
-                  <JFXListView fx:id="chanelPan" maxHeight="3400.0" minHeight="200.0" onMouseClicked="#userChanClicked" prefHeight="718.0" />
+                  <JFXListView fx:id="chanelPan" maxHeight="3400.0" minHeight="200.0" onMouseClicked="#userChanClicked" prefHeight="718.0" style="-fx-background-color: #3c3f41;" />
                </children>
             </StackPane>
          </content>
@@ -58,7 +58,7 @@
                   <TextArea fx:id="chatSendBox" onKeyPressed="#chatSendEventHandler" prefHeight="44.0" prefWidth="581.0" BorderPane.alignment="CENTER" />
                </center>
                <right>
-                  <JFXButton fx:id="sendButton" onMouseClicked="#sendButtonEvent" text="Send" BorderPane.alignment="CENTER" />
+                  <JFXButton fx:id="sendButton" onMouseClicked="#sendButtonEvent" prefHeight="46.0" prefWidth="43.0" text="Send" BorderPane.alignment="CENTER" />
                </right>
             </BorderPane>
          </bottom>

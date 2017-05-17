@@ -30,6 +30,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
@@ -76,37 +77,30 @@ public class Controller_WindowMain implements Initializable {
 
     private Channel channel;
 
+    ListView list = new ListView();
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-
+        list.setFocusTraversable(false);
+        list.setId("Messagelist");
 
         userContactList.getItems().add(new Label("test"));
 
         homeDisplay();
         EventHandler_Home.loadPublicChan_Home(homeChan);
         EventHandler_UserChan.loadUserChan_UserChan(chanelPan);
-
-
-        Singleton_ClientSocket.getInstance().socket.on("newmessage", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                JSONObject obj = (JSONObject)args[0];
-                new Message(obj.toString());
-
-            }
-        });
-
-
-
+        EventHandler_Message.updateMessage(list);
     }
 
     public void userChanClicked(Event event) {
 
         channel = ((Component_Label_Group)chanelPan.getSelectionModel().getSelectedItem()).getChannel();
         if (channel != null){
+            list.getItems().clear();
             showGroupChat();
-            EventHandler_Message.loadHistory_Message(centerPan, channel.getIdChannel());
+            EventHandler_Message.loadHistory_Message(centerPan, channel.getIdChannel(), list);
         }
 
     }
@@ -137,8 +131,6 @@ public class Controller_WindowMain implements Initializable {
             if (event.getCode() == KeyCode.ENTER){
 
             }
-
-
         }
     }
 
