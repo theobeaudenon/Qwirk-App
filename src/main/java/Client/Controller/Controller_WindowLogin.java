@@ -91,13 +91,34 @@ public class Controller_WindowLogin extends Application implements Initializable
         Singleton_ClientSocket.getInstance().socket.emit("login", new User(login.getText(), pass.getText()).toJson(), new Ack() {
             public void call(final Object... args) {
                 if(args[0] != null){
-                    Platform.runLater(new Runnable() {
-                        public void run() {
-                            User user = new User(args[0].toString());
-                            Singleton_UserInfo.getInstance().setUser(user);
+
+                    User user = new User(args[0].toString());
+                    Singleton_UserInfo.getInstance().setUser(user);
+
+                    final ArrayList<User> myContactArrayList = new ArrayList<User>();
+                    Singleton_ClientSocket.getInstance().socket.emit("getMyContacts",  Singleton_UserInfo.getInstance().getUser().getUserID(), new Ack() {
+                        public void call(final Object... args) {
+                            if(args[0] != null){
+
+                                JSONArray array = (JSONArray) args[0];
+
+                                for (int i = 0; i < array.length(); i++) {
+                                    try {
+
+                                        JSONObject jsonObject = array.getJSONObject(i);
+                                        myContactArrayList.add(new User(jsonObject.toString()));
+
+                                    } catch (JSONException e) {
+
+                                    }
+                                }
+                                Singleton_UserInfo.getInstance().setContactList(myContactArrayList);
+                            }else{
+                                System.out.printf("Erreur dans le chargement des contacts");
+                                //error.setVisible(true);
+                            }
                         }
                     });
-
                 }else{
                     System.out.printf("Erreur mdp/User");
                     error.setVisible(true);
@@ -105,39 +126,9 @@ public class Controller_WindowLogin extends Application implements Initializable
             }
         });
 
-        final ArrayList<User> myMessageArrayList = new ArrayList<User>();
-        Singleton_ClientSocket.getInstance().socket.emit("getMyContacts",  Singleton_UserInfo.getInstance().getUser().getUserID(), new Ack() {
-            public void call(final Object... args) {
-                if(args[0] != null){
 
-                    JSONArray array = (JSONArray) args[0];
 
-                     for (int i = 0; i < array.length(); i++) {
-                        try {
-
-                            JSONObject jsonObject = array.getJSONObject(i);
-                            myMessageArrayList.add(new User(jsonObject.toString()));
-
-                        } catch (JSONException e) {
-
-                        }
-                    }
-
-                    Platform.runLater(new Runnable() {
-                        public void run() {
-                            for (User message : myMessageArrayList) {
-                               // messageFormate(list, message);
-                            }
-
-                        }
-                    });
-
-                }else{
-                    System.out.printf("Erreur dans le chargement des contacts");
-                    //error.setVisible(true);
-                }
-            }
-        });
+        goToMainFrame(event);
 
 
 

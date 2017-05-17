@@ -6,6 +6,7 @@ import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 /**
  * Created by Boufle on 25/04/2017.
@@ -16,6 +17,7 @@ public class Singleton_UserInfo {
     private static Singleton_UserInfo INSTANCE = null;
 
     private User user;
+    private ArrayList<User> contactList;
 
     /** Point d'accès pour l'instance unique du singleton */
     public static synchronized Singleton_UserInfo getInstance()
@@ -39,6 +41,14 @@ public class Singleton_UserInfo {
 
         return this.user;
     }
+    public ArrayList<User> getContactList() {
+        return contactList;
+    }
+
+    public void setContactList(ArrayList<User> contactList) {
+        this.contactList = contactList;
+    }
+
 
 
 }

@@ -2,7 +2,9 @@ package Client.Controller;/**
  * Created by Boufle on 24/04/2017.
  */
 
+import Client.Component.Component_Label_Contact;
 import Client.Component.Component_Label_Group;
+import Client.EventHandler.EventHandler_Contact;
 import Client.EventHandler.EventHandler_Home;
 import Client.EventHandler.EventHandler_Message;
 import Client.EventHandler.EventHandler_UserChan;
@@ -21,6 +23,8 @@ import com.jfoenix.controls.JFXScrollPane;
 import io.socket.client.Ack;
 import io.socket.emitter.Emitter;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,10 +33,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -86,12 +87,47 @@ public class Controller_WindowMain implements Initializable {
         list.setFocusTraversable(false);
         list.setId("Messagelist");
 
-        userContactList.getItems().add(new Label("test"));
+       // userContactList.getItems().add(new Label("test"));
 
         homeDisplay();
         EventHandler_Home.loadPublicChan_Home(homeChan);
         EventHandler_UserChan.loadUserChan_UserChan(chanelPan);
         EventHandler_Message.updateMessage(list);
+
+/*        userContactList.setCellFactory(lv -> {
+
+            ListCell<Component_Label_Contact> cell = new ListCell<>();
+
+            ContextMenu contextMenu = new ContextMenu();
+
+            MenuItem editItem = new MenuItem();
+            editItem.textProperty().bind(Bindings.format("Edit \"%s\"", cell.itemProperty()));
+            editItem.setOnAction(event -> {
+                Component_Label_Contact item = cell.getItem();
+                // code to edit item...
+            });
+            MenuItem deleteItem = new MenuItem();
+            deleteItem.textProperty().bind(Bindings.format("Delete \"%s\"", cell.itemProperty().get().nameProperty()));
+            deleteItem.setOnAction(event -> userContactList.getItems().remove(cell.getItem()));
+            contextMenu.getItems().addAll(editItem, deleteItem);
+
+            cell.textProperty().bind(cell.itemProperty().get().nameProperty());
+            cell.setTextFill(Color.WHITE);
+            cell.setStyle("-fx-background-color: #3c3f41 ;  -fx-padding: 10 ; -fx-background-insets: 0 ;");
+
+
+            cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
+                if (isNowEmpty) {
+                    cell.setContextMenu(null);
+                } else {
+                    cell.setContextMenu(contextMenu);
+                }
+            });
+            return cell ;
+        });
+
+        EventHandler_Contact.loadContact_Contact(userContactList);*/
+
     }
 
     public void userChanClicked(Event event) {
