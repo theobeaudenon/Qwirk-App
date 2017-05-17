@@ -4,6 +4,7 @@ package Client.Controller;/**
 
 import Client.Singleton.Singleton_ClientSocket;
 import Client.Singleton.Singleton_UserInfo;
+import Objet.Message.Message;
 import Objet.User.User;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -26,10 +27,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import javax.annotation.Resources;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -99,6 +104,41 @@ public class Controller_WindowLogin extends Application implements Initializable
                 }
             }
         });
+
+        final ArrayList<User> myMessageArrayList = new ArrayList<User>();
+        Singleton_ClientSocket.getInstance().socket.emit("getMyContacts",  Singleton_UserInfo.getInstance().getUser().getUserID(), new Ack() {
+            public void call(final Object... args) {
+                if(args[0] != null){
+
+                    JSONArray array = (JSONArray) args[0];
+
+                     for (int i = 0; i < array.length(); i++) {
+                        try {
+
+                            JSONObject jsonObject = array.getJSONObject(i);
+                            myMessageArrayList.add(new User(jsonObject.toString()));
+
+                        } catch (JSONException e) {
+
+                        }
+                    }
+
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            for (User message : myMessageArrayList) {
+                               // messageFormate(list, message);
+                            }
+
+                        }
+                    });
+
+                }else{
+                    System.out.printf("Erreur dans le chargement des contacts");
+                    //error.setVisible(true);
+                }
+            }
+        });
+
 
         Singleton_ClientSocket.getInstance().socket.emit("getMyContacts", Singleton_UserInfo.getInstance().getUser().getUserID(), new Ack() {
             public void call(final Object... args) {
