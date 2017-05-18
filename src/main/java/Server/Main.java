@@ -9,6 +9,8 @@ import Server.Events.Channels.Channels_Events;
 import Server.Events.Contacts.Contacts_Events;
 import Server.Events.Login_Signup.Login_Signup_Events;
 import Server.Events.Messages.Messages_Events;
+import Server.Events.Users.Users_Events;
+import Server.Saving.Saving;
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
@@ -22,6 +24,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by theobeaudenon on 24/04/2017.
@@ -32,6 +36,22 @@ public class Main {
 
         //Creation du signleton de données
         Singleton_Data.getInstance();
+        Singleton_Data singleton_data = Saving.deserialzeSingleton();
+        if(singleton_data!= null){
+            Singleton_Data.setData(singleton_data);
+        }else {
+            Saving.serializeSingleton();
+        }
+
+        Timer timer = new Timer();
+
+        timer.schedule( new TimerTask() {
+            public void run() {
+                Saving.serializeSingleton();
+
+            }
+        }, 0, 25*1000);
+
 
         //Demarage du serveur
         Configuration config = new Configuration();
@@ -107,41 +127,10 @@ public class Main {
 
 
 
-        FileOutputStream fout = null;
-        ObjectOutputStream oos = null;
 
-        try {
 
-            fout = new FileOutputStream("address.ser");
-            oos = new ObjectOutputStream(fout);
-            oos.writeObject(Singleton_Data.getInstance());
-
-            System.out.println("Done");
-
-        } catch (Exception ex) {
-
-            ex.printStackTrace();
-
-        } finally {
-
-            if (fout != null) {
-                try {
-                    fout.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (oos != null) {
-                try {
-                    oos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }
-
+        //USER EVENT
+        Users_Events.getUserID(server);
 
 
         //LOGIN SIGNUP EVENTS
@@ -172,6 +161,8 @@ public class Main {
         });
 
         server.start();
+
+
     }
 
 

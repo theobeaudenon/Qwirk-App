@@ -53,6 +53,9 @@ public class Controller_WindowMain implements Initializable {
     private JFXListView chanelPan;
 
     @FXML
+    private StackPane principalPane;
+
+    @FXML
     private JFXMasonryPane homeChan;
 
     @FXML
@@ -225,5 +228,9 @@ public class Controller_WindowMain implements Initializable {
             });
             chanAddText.setText("");
         }
+    }
+
+    public StackPane getPrincipalPane() {
+        return principalPane;
     }
 }

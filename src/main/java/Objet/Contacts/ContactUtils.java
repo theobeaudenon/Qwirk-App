@@ -66,19 +66,28 @@ public class ContactUtils {
     @SuppressWarnings("Since15")
     public static Boolean addMyContacts(HashMap<Integer, User> userHashMap,  ArrayList<UserContacts> userContactsHashMap, Contact idUser) {
 
-        UserContacts myContacts = isMyContacts(userHashMap, userContactsHashMap, idUser.getIdUser1(), idUser.getIdUser2());
 
         if(idUser.getAction().equals(Action.AJOUTER)){
-            if (myContacts== null){
-                userContactsHashMap.add(new UserContacts(idUser.getIdUser1(),idUser.getIdUser2()));
+
+            User user = UserUtils.getUserFromMail(userHashMap, idUser.getMail());
+            if(user != null){
+                UserContacts myContacts = isMyContacts(userHashMap, userContactsHashMap, idUser.getIdUser1(),user.getUserID());
+
+                if (myContacts== null){
+                    userContactsHashMap.add(new UserContacts(idUser.getIdUser1(),user.getUserID()));
 
 
-                return true;
+                    return true;
+                }else {
+                    return false;
+                }
             }else {
                 return false;
             }
         }
         if(idUser.getAction().equals(Action.SUPPRIMER)){
+            UserContacts myContacts = isMyContacts(userHashMap, userContactsHashMap, idUser.getIdUser1(), idUser.getIdUser2());
+
             if (myContacts != null){
 
                 userContactsHashMap.remove(myContacts);
@@ -92,4 +101,6 @@ public class ContactUtils {
 
         return false;
     }
+
+
 }

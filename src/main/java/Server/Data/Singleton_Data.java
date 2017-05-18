@@ -47,6 +47,20 @@ public class Singleton_Data implements Serializable{
         }
         return INSTANCE;
     }
+
+    public static void setData(Singleton_Data data){
+        Singleton_Data instance = Singleton_Data.getInstance();
+        instance.setBotArrayList(data.getBotArrayList());
+        instance.setBotChannelHashMap(data.getBotChannelHashMap());
+        instance.setBotIncrement(data.getBotIncrement());
+        instance.setChannelHashMap(data.getChannelHashMap());
+        instance.setChannelIncrement(data.getChannelIncrement());
+        instance.setMessageHashMap(data.getMessageHashMap());
+        instance.setUserChannelsHashMap(data.getUserChannelsHashMap());
+        instance.setUserHashMap(data.getUserHashMap());
+
+    }
+
     private Singleton_Data() {
 
 

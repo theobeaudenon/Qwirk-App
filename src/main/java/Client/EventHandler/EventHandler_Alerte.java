@@ -6,6 +6,8 @@ import Client.Messages.Bubble.BubbledLabel;
 import Client.Singleton.Singleton_ClientSocket;
 import Client.Singleton.Singleton_UserInfo;
 import Objet.Message.Message;
+import com.jfoenix.controls.JFXDialog;
+import com.jfoenix.controls.JFXDialogLayout;
 import io.socket.client.Ack;
 import io.socket.emitter.Emitter;
 import javafx.application.Platform;
@@ -37,14 +39,21 @@ public class EventHandler_Alerte {
                final String message = (String) args[0];
                 Platform.runLater(new Runnable() {
                     public void run() {
-                        final Stage dialog = new Stage();
+
+                        JFXDialogLayout content = new JFXDialogLayout();
+                        content.setHeading(new Text("Head"));
+                        content.setBody(new Text(message));
+                        JFXDialog dialog = new JFXDialog(controller_windowMain.getPrincipalPane() , content , JFXDialog.DialogTransition.CENTER );
+                        dialog.show();
+
+                        /*final Stage dialog = new Stage();
                         dialog.initModality(Modality.APPLICATION_MODAL);
                        // dialog.initOwner(Controller_WindowMain);
                         VBox dialogVbox = new VBox(20);
                         dialogVbox.getChildren().add(new Text(message));
                         Scene dialogScene = new Scene(dialogVbox, 300, 200);
                         dialog.setScene(dialogScene);
-                        dialog.show();
+                        dialog.show();*/
                     }
                 });
             }

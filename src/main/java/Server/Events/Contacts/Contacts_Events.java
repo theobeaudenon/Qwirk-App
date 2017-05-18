@@ -5,6 +5,7 @@ import Objet.Channel.ChannelUtils;
 import Objet.Contacts.Contact;
 import Objet.Contacts.ContactUtils;
 import Objet.User.User;
+import Objet.User.UserUtils;
 import Objet.Utils.Tuple;
 import Server.Data.Singleton_Data;
 import com.corundumstudio.socketio.AckRequest;
@@ -34,7 +35,7 @@ public class Contacts_Events {
                     ackRequest.sendAckData(publicChannels);
                 }
 
-                System.out.print("getMyContacts : "+publicChannels.size());
+                System.out.println("getMyContacts : "+publicChannels.size());
                 // System.out.print(data.getPass());
 
             }
@@ -52,11 +53,18 @@ public class Contacts_Events {
                 Boolean publicChannels = ContactUtils.addMyContacts(Singleton_Data.getInstance().getUserHashMap(),Singleton_Data.getInstance().getUserContactsHashMap(),contact);
 
                 if(publicChannels){
+                    if(contact.getMail()!= null){
+                        User user = UserUtils.getUserFromMail(Singleton_Data.getInstance().getUserHashMap(), contact.getMail());
+                        contact.setIdUser2(user.getUserID());
+                    }
+
                     //ackRequest.sendAckData(publicChannels);
                     server.getBroadcastOperations().sendEvent("contactupdate", contact);
+                }else {
+                    client.sendEvent("alerte","Cet utilisateur n'existe pas / Est déjà votre contact");
                 }
 
-                System.out.print("oppContacts : "+publicChannels);
+                System.out.println("oppContacts : "+publicChannels);
                 // System.out.print(data.getPass());
 
             }

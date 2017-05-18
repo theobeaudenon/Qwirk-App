@@ -69,4 +69,13 @@ public class UserUtils {
         return m.matches();
     }
 
+    public static User getUserFromMail(HashMap<Integer, User> userHashMap, String mail) {
+        for (User message:
+                userHashMap.values()) {
+            if (message.getMail().equals(mail)){
+                return message;
+            }
+        }
+        return null;
+    }
 }
