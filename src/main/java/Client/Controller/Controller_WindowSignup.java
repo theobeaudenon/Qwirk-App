@@ -34,6 +34,8 @@ public class Controller_WindowSignup {
     private JFXPasswordField passwordConfirmation;
     @FXML
     private Label error;
+    @FXML
+    private JFXTextField question;
 
     public void resetError(Event event) {
         if (error.isVisible()){
@@ -48,7 +50,7 @@ public class Controller_WindowSignup {
             return;
         }
 
-        User user = new User(null,pseudo.getText(), email.getText(), password.getText());
+        User user = new User(null,pseudo.getText(), email.getText(), password.getText(), question.getText());
 
 
         Singleton_ClientSocket.getInstance().socket.emit("singup", user.toJson(), new Ack() {

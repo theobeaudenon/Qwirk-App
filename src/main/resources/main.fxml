@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-
 <StackPane fx:id="principalPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.Controller_WindowMain">
    <BorderPane>
       <left>
@@ -44,6 +43,14 @@
                   </content>
                </ScrollPane>
             </center>
+            <bottom>
+               <HBox prefHeight="44.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <children>
+                     <JFXButton fx:id="optionButton" onMouseClicked="#optionAction" prefHeight="52.0" prefWidth="52.0" />
+                     <JFXButton fx:id="deconectButton" onMouseClicked="#deconectAction" prefHeight="62.0" prefWidth="52.0" />
+                  </children>
+               </HBox>
+            </bottom>
          </BorderPane>
       </left>
       <center>
@@ -99,4 +106,3 @@
       </right>
    </BorderPane>
 </StackPane>
-
