@@ -36,7 +36,7 @@ public class Singleton_ClientSocket {
         opt.reconnectionDelay = 3000;
         opt.timeout = 15000 ;
         try {
-            socket = IO.socket("http://localhost:9092", opt);
+            socket = IO.socket("http://10.29.16.55:9092", opt);
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

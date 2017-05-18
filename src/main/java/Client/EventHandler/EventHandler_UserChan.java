@@ -45,7 +45,7 @@ public class EventHandler_UserChan {
 
                    Platform.runLater(new Runnable() {
                        public void run() {
-                           chanelPan.getItems().removeAll();
+                           chanelPan.getItems().clear();
                            for (Channel channel : myChannelArrayList) {
                                Component_Label_Group label = new Component_Label_Group();
                                label.setChannel(channel);

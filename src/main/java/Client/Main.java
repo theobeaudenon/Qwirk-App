@@ -19,7 +19,7 @@ public class Main {
         IO.Options opt = new IO.Options();
         opt.reconnectionDelay = 3000;
         opt.timeout = 15000 ;
-        final Socket socket = IO.socket("http://localhost:9092", opt);
+        final Socket socket = IO.socket("http://10.29.16.55:9092", opt);
 
 
         final String[] art = argss;

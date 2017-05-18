@@ -214,11 +214,11 @@ public class Controller_WindowMain implements Initializable {
             String chanName = chanAddText.getText();
             Channel channel = new Channel(null, chanName, "", (int)timestamp.getTime(), Singleton_UserInfo.getInstance().getUser().getUserID(), false);
             ChannelOpperation channelOpperation = new ChannelOpperation(null, channel, Action.AJOUTER);
-            Singleton_ClientSocket.getInstance().socket.emit("channelOpperation", channelOpperation, new Ack() {
+            Singleton_ClientSocket.getInstance().socket.emit("channelOpperation", channelOpperation.toJson(), new Ack() {
                 public void call(final Object... args) {
-                    /*if ((boolean)args[0]){
+                  //  if ((boolean)args[0]){
                         EventHandler_UserChan.loadUserChan_UserChan(chanelPan);
-                    }*/
+                   // }
                 }
             });
             chanAddText.setText("");

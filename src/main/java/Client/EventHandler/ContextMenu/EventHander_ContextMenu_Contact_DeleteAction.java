@@ -25,7 +25,7 @@ public class EventHander_ContextMenu_Contact_DeleteAction implements EventHandle
         int userID = Singleton_UserInfo.getInstance().getUser().getUserID();
         Component_Label_Contact contactID = (Component_Label_Contact)listView.getSelectionModel().getSelectedItem();
         Contact contact = new Contact(userID ,contactID.getUser().getUserID(), Action.SUPPRIMER);
-        Singleton_ClientSocket.getInstance().socket.emit("oppContacts", contact);
+        Singleton_ClientSocket.getInstance().socket.emit("oppContacts", contact.toJson());
         //déselectionner la liste
     }
 }
