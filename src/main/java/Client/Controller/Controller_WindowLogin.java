@@ -119,19 +119,17 @@ public class Controller_WindowLogin extends Application implements Initializable
                             }
                         }
                     });
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            goToMainFrame(event);
+                        }
+                    });
                 }else{
                     System.out.printf("Erreur mdp/User");
                     error.setVisible(true);
                 }
             }
         });
-
-
-
-        goToMainFrame(event);
-
-
-
 
         /*
         Node node=(Node) event.getSource();
@@ -161,7 +159,6 @@ public class Controller_WindowLogin extends Application implements Initializable
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
     }
 
     public void goToMainFrame(Event event){
@@ -248,6 +245,16 @@ public class Controller_WindowLogin extends Application implements Initializable
 
 
     public void mdpoublierActionc(Event event) {
-
+        Node node=(Node) event.getSource();
+        Stage stage=(Stage) node.getScene().getWindow();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/resetPassword.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

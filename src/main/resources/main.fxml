@@ -3,6 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXMasonryPane?>
+<?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
@@ -84,21 +85,26 @@
                   <content>
                      <StackPane maxHeight="1080.0" minHeight="200.0" prefHeight="718.0" prefWidth="200.0">
                         <children>
-                           <JFXListView fx:id="chanelPan" maxHeight="3400.0" minHeight="200.0" onMouseClicked="#userChanClicked" prefHeight="737.0" prefWidth="200.0" style="-fx-background-color: #3c3f41;" />
+                           <JFXListView fx:id="chanelPan" maxHeight="3400.0" minHeight="200.0" onMouseClicked="#userChanClicked" prefHeight="664.0" prefWidth="200.0" style="-fx-background-color: #3c3f41;" />
                         </children>
                      </StackPane>
                   </content>
                </ScrollPane>
             </right>
             <bottom>
-               <HBox prefHeight="37.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <HBox prefHeight="44.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                   <children>
-                     <JFXTextField fx:id="chanAddText" labelFloat="true" prefHeight="37.0" prefWidth="153.0" promptText="Ajouter un channel ">
+                     <JFXTextField fx:id="chanAddText" labelFloat="true" prefHeight="44.0" prefWidth="110.0" promptText="Ajouter un channel ">
                         <HBox.margin>
-                           <Insets left="10.0" />
+                           <Insets left="5.0" />
                         </HBox.margin>
                      </JFXTextField>
-                     <JFXButton fx:id="chanAddButton" onMouseClicked="#chanAddAction" prefHeight="37.0" prefWidth="55.0" />
+                     <JFXRadioButton fx:id="isPrivate" prefHeight="44.0" prefWidth="78.0" text="Public">
+                        <HBox.margin>
+                           <Insets />
+                        </HBox.margin>
+                     </JFXRadioButton>
+                     <JFXButton fx:id="chanAddButton" onMouseClicked="#chanAddAction" prefHeight="46.0" prefWidth="46.0" />
                   </children>
                </HBox>
             </bottom>

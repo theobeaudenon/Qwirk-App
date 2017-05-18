@@ -14,10 +14,7 @@ import Objet.Channel.ChannelOpperation;
 import Objet.Contacts.Contact;
 import Objet.Message.Message;
 import Objet.Utils.Action;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXMasonryPane;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import com.jfoenix.svg.SVGGlyph;
 import io.socket.client.Ack;
 import javafx.application.Platform;
@@ -74,6 +71,9 @@ public class Controller_WindowMain implements Initializable {
     @FXML
     private JFXListView userContactList;
 
+    @FXML
+    private JFXRadioButton isPrivate;
+
     private String nameGroupChat;
 
     private Channel channel;
@@ -81,6 +81,8 @@ public class Controller_WindowMain implements Initializable {
     ListView list = new ListView();
 
     MenuItem delectContactAction = new MenuItem("Supprimer");
+    MenuItem addToChanAction = new MenuItem("Ajouter au channel");
+
 
     ContextMenu contactContextMenu = new ContextMenu();
 
@@ -112,6 +114,8 @@ public class Controller_WindowMain implements Initializable {
 
        // userContactList.getItems().add(new Label("test"));
 
+
+
         homeDisplay();
         EventHandler_Home.loadPublicChan_Home(homeChan);
         EventHandler_UserChan.loadUserChan_UserChan(chanelPan);
@@ -119,6 +123,11 @@ public class Controller_WindowMain implements Initializable {
         EventHandler_Contact.loadContact_Contact(userContactList);
         EventHandler_Alerte.updateMessage(this);
         EventHandler_Contact.updateContact(userContactList);
+
+
+        addToChanAction.setOnAction(new EventHander_ContextMenu_Group_JoinAction(chanelPan, userContactList));
+        contactContextMenu.getItems().add(addToChanAction);
+
 
         delectContactAction.setOnAction(new EventHander_ContextMenu_Contact_DeleteAction(userContactList));
         contactContextMenu.getItems().add(delectContactAction);
@@ -235,9 +244,10 @@ public class Controller_WindowMain implements Initializable {
 
     public void chanAddAction(Event event) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        boolean isPrivateChan = isPrivate.isSelected();
         if (!chanAddText.getText().equals("")){
             String chanName = chanAddText.getText();
-            Channel channel = new Channel(null, chanName, "", (int)timestamp.getTime(), Singleton_UserInfo.getInstance().getUser().getUserID(), false);
+            Channel channel = new Channel(null, chanName, "", (int)timestamp.getTime(), Singleton_UserInfo.getInstance().getUser().getUserID(), isPrivateChan);
             ChannelOpperation channelOpperation = new ChannelOpperation(null, channel, Action.AJOUTER);
             Singleton_ClientSocket.getInstance().socket.emit("channelOpperation", channelOpperation.toJson(), new Ack() {
                 public void call(final Object... args) {
