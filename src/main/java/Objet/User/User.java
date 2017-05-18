@@ -15,11 +15,13 @@ public class User implements Serializable{
     Integer userID;
     String verif;
 
-    public User(Integer userID ,String userName, String mail, String pass) {
+    public User(Integer userID ,String userName, String mail, String pass,String verif) {
         this.userName = userName;
         this.mail = mail;
         this.pass = pass;
         this.userID = userID;
+        this.verif = verif;
+
     }
 
 

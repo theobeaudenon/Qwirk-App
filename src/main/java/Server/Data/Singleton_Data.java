@@ -66,8 +66,8 @@ public class Singleton_Data implements Serializable{
 
 
         //VAleurs par defaut
-        userHashMap.put(0,new User(0,"theo","theo@beaudenon.pro","toto"));
-        userHashMap.put(1,new User(1,"test","test@test","test"));
+        userHashMap.put(0,new User(0,"theo","theo@beaudenon.pro","toto","reset"));
+        userHashMap.put(1,new User(1,"test","test@test","test","reset"));
 
         Integer channelIncrement = getChannelIncrement();
         channelHashMap.put(channelIncrement,new Channel(channelIncrement,"toto","",1493132555,0,true));
