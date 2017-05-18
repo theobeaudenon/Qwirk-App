@@ -13,86 +13,89 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.Controller_WindowMain">
-   <left>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <top>
-            <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <bottom>
-                  <HBox prefHeight="37.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                     <children>
-                        <JFXTextField fx:id="addUserTextBox" labelFloat="true" prefHeight="37.0" prefWidth="171.0" promptText="Ajouter un utilisateur">
-                           <HBox.margin>
-                              <Insets left="10.0" />
-                           </HBox.margin>
-                        </JFXTextField>
-                        <JFXButton fx:id="addContact" onMouseClicked="#addUserAction" prefHeight="37.0" prefWidth="55.0" />
-                     </children>
-                  </HBox>
-               </bottom></BorderPane>
-         </top>
-         <center>
-            <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-focus-color: transparent; -fx-border-color: black;" BorderPane.alignment="CENTER">
-               <content>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
-                     <children>
-                        <JFXListView fx:id="userContactList" style="-fx-background-color: #3c3f41;" />
-                     </children>
-                  </StackPane>
-               </content>
-            </ScrollPane>
-         </center>
-      </BorderPane>
-   </left>
-   <center>
-      <BorderPane fx:id="centerPan" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <center>
-            <JFXMasonryPane fx:id="homeChan" BorderPane.alignment="CENTER" />
-         </center>
-         <top>
-            <ImageView fx:id="chatGroupBanner" fitHeight="111.0" fitWidth="680.0" pickOnBounds="true" visible="false" BorderPane.alignment="CENTER">
-               <image>
-                  <Image url="@banniere1.png" />
-               </image>
-            </ImageView>
-         </top>
-         <bottom>
-            <BorderPane fx:id="controllerChat" prefHeight="44.0" prefWidth="680.0" BorderPane.alignment="CENTER">
-               <center>
-                  <TextArea fx:id="chatSendBox" onKeyPressed="#chatSendEventHandler" prefHeight="44.0" prefWidth="581.0" BorderPane.alignment="CENTER" />
-               </center>
-               <right>
-                  <JFXButton fx:id="sendButton" onMouseClicked="#sendButtonEvent" prefHeight="46.0" prefWidth="43.0" text="Send" BorderPane.alignment="CENTER" />
-               </right>
-            </BorderPane>
-         </bottom>
-      </BorderPane>
-   </center>
-   <right>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <right>
-            <ScrollPane fitToHeight="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-focus-color: transparent;" BorderPane.alignment="CENTER">
-               <content>
-                  <StackPane maxHeight="1080.0" minHeight="200.0" prefHeight="718.0" prefWidth="200.0">
-                     <children>
-                        <JFXListView fx:id="chanelPan" maxHeight="3400.0" minHeight="200.0" onMouseClicked="#userChanClicked" prefHeight="737.0" prefWidth="200.0" style="-fx-background-color: #3c3f41;" />
-                     </children>
-                  </StackPane>
-               </content>
-            </ScrollPane>
-         </right>
-         <bottom>
-            <HBox prefHeight="37.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <JFXTextField fx:id="chanAddText" labelFloat="true" prefHeight="37.0" prefWidth="153.0" promptText="Ajouter un channel ">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </JFXTextField>
-                  <JFXButton fx:id="chanAddButton" onMouseClicked="#chanAddAction" prefHeight="37.0" prefWidth="55.0" />
-               </children>
-            </HBox>
-         </bottom>
-      </BorderPane>
-   </right>
-</BorderPane>
+<StackPane fx:id="principalPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.Controller_WindowMain">
+   <BorderPane>
+      <left>
+         <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <top>
+               <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <bottom>
+                     <HBox prefHeight="37.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <children>
+                           <JFXTextField fx:id="addUserTextBox" labelFloat="true" prefHeight="37.0" prefWidth="171.0" promptText="Ajouter un utilisateur">
+                              <HBox.margin>
+                                 <Insets left="10.0" />
+                              </HBox.margin>
+                           </JFXTextField>
+                           <JFXButton fx:id="addContact" onMouseClicked="#addUserAction" prefHeight="37.0" prefWidth="55.0" />
+                        </children>
+                     </HBox>
+                  </bottom></BorderPane>
+            </top>
+            <center>
+               <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-focus-color: transparent; -fx-border-color: black;" BorderPane.alignment="CENTER">
+                  <content>
+                     <StackPane prefHeight="150.0" prefWidth="200.0">
+                        <children>
+                           <JFXListView fx:id="userContactList" style="-fx-background-color: #3c3f41;" />
+                        </children>
+                     </StackPane>
+                  </content>
+               </ScrollPane>
+            </center>
+         </BorderPane>
+      </left>
+      <center>
+         <BorderPane fx:id="centerPan" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <center>
+               <JFXMasonryPane fx:id="homeChan" BorderPane.alignment="CENTER" />
+            </center>
+            <top>
+               <ImageView fx:id="chatGroupBanner" fitHeight="111.0" fitWidth="680.0" pickOnBounds="true" visible="false" BorderPane.alignment="CENTER">
+                  <image>
+                     <Image url="@banniere1.png" />
+                  </image>
+               </ImageView>
+            </top>
+            <bottom>
+               <BorderPane fx:id="controllerChat" prefHeight="44.0" prefWidth="680.0" BorderPane.alignment="CENTER">
+                  <center>
+                     <TextArea fx:id="chatSendBox" onKeyPressed="#chatSendEventHandler" prefHeight="44.0" prefWidth="581.0" BorderPane.alignment="CENTER" />
+                  </center>
+                  <right>
+                     <JFXButton fx:id="sendButton" onMouseClicked="#sendButtonEvent" prefHeight="46.0" prefWidth="43.0" text="Send" BorderPane.alignment="CENTER" />
+                  </right>
+               </BorderPane>
+            </bottom>
+         </BorderPane>
+      </center>
+      <right>
+         <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <right>
+               <ScrollPane fitToHeight="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-focus-color: transparent;" BorderPane.alignment="CENTER">
+                  <content>
+                     <StackPane maxHeight="1080.0" minHeight="200.0" prefHeight="718.0" prefWidth="200.0">
+                        <children>
+                           <JFXListView fx:id="chanelPan" maxHeight="3400.0" minHeight="200.0" onMouseClicked="#userChanClicked" prefHeight="737.0" prefWidth="200.0" style="-fx-background-color: #3c3f41;" />
+                        </children>
+                     </StackPane>
+                  </content>
+               </ScrollPane>
+            </right>
+            <bottom>
+               <HBox prefHeight="37.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                  <children>
+                     <JFXTextField fx:id="chanAddText" labelFloat="true" prefHeight="37.0" prefWidth="153.0" promptText="Ajouter un channel ">
+                        <HBox.margin>
+                           <Insets left="10.0" />
+                        </HBox.margin>
+                     </JFXTextField>
+                     <JFXButton fx:id="chanAddButton" onMouseClicked="#chanAddAction" prefHeight="37.0" prefWidth="55.0" />
+                  </children>
+               </HBox>
+            </bottom>
+         </BorderPane>
+      </right>
+   </BorderPane>
+</StackPane>
+
