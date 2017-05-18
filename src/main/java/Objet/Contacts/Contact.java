@@ -12,6 +12,8 @@ public class Contact {
 
     private Integer idUser2;
 
+    private String mail;
+
     private Action action;
 
 
@@ -20,6 +22,14 @@ public class Contact {
         this.idUser2 = idUser2;
         this.idUser1 = idUser1;
         this.action = action;
+    }
+
+    public Contact(Integer idUser2,  Integer idUser1 ,Action action, String mail) {
+
+        this.idUser2 = idUser2;
+        this.idUser1 = idUser1;
+        this.action = action;
+        this.mail = mail;
     }
 
     public Contact(String messageJson) {
@@ -59,5 +69,13 @@ public class Contact {
         Gson gson = new Gson();
         return gson.toJson(this);
 
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 }

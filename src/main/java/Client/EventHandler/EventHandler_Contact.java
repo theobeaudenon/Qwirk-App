@@ -20,12 +20,16 @@ public class EventHandler_Contact {
 
                     Component_Label_Contact label = new Component_Label_Contact();
                     label.setUser(user);
-                   // label.setText(user.getUserName());
-                    label.setName(user.getUserName());
+                    label.setText(user.getUserName());
+                    //label.setName(user.getUserName());
                     userContactList.getItems().add(label);
                    /* userContactList.getItems().add(user.getUserName());*/
                 }
             }
         });
+    }
+
+    public static void delete_Contact(){
+
     }
 }

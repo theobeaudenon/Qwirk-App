@@ -4,39 +4,36 @@ package Client.Controller;/**
 
 import Client.Component.Component_Label_Contact;
 import Client.Component.Component_Label_Group;
-import Client.EventHandler.EventHandler_Contact;
-import Client.EventHandler.EventHandler_Home;
-import Client.EventHandler.EventHandler_Message;
-import Client.EventHandler.EventHandler_UserChan;
-import Client.Messages.Bubble.BubbleSpec;
-import Client.Messages.Bubble.BubbledLabel;
+import Client.EventHandler.*;
+import Client.EventHandler.ContextMenu.EventHander_ContextMenu_Contact_DeleteAction;
+import Client.EventHandler.ContextMenu.EventHandler_ContextMenu_Contact;
 import Client.Singleton.Singleton_ClientSocket;
 import Client.Singleton.Singleton_UserInfo;
 import Objet.Channel.Channel;
+import Objet.Channel.ChannelOpperation;
+import Objet.Contacts.Contact;
 import Objet.Message.Message;
-import Objet.User.User;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
+import Objet.Utils.Action;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXMasonryPane;
-import com.jfoenix.controls.JFXScrollPane;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.svg.SVGGlyph;
 import io.socket.client.Ack;
-import io.socket.emitter.Emitter;
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.ObjectProperty;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -47,8 +44,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class Controller_WindowMain implements Initializable {
@@ -80,6 +76,22 @@ public class Controller_WindowMain implements Initializable {
 
     ListView list = new ListView();
 
+    MenuItem delectContactAction = new MenuItem("Supprimer");
+
+    ContextMenu contactContextMenu = new ContextMenu();
+
+    @FXML
+    private JFXButton addContact;
+
+    @FXML
+    private JFXTextField addUserTextBox;
+
+    @FXML
+    private JFXButton chanAddButton;
+
+    @FXML
+    private JFXTextField chanAddText;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -93,52 +105,41 @@ public class Controller_WindowMain implements Initializable {
         EventHandler_Home.loadPublicChan_Home(homeChan);
         EventHandler_UserChan.loadUserChan_UserChan(chanelPan);
         EventHandler_Message.updateMessage(list);
+        EventHandler_Contact.loadContact_Contact(userContactList);
 
-/*        userContactList.setCellFactory(lv -> {
+        delectContactAction.setOnAction(new EventHander_ContextMenu_Contact_DeleteAction(userContactList));
+        contactContextMenu.getItems().add(delectContactAction);
+        userContactList.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler_ContextMenu_Contact(userContactList, contactContextMenu));
 
-            ListCell<Component_Label_Contact> cell = new ListCell<>();
+        SVGGlyph plus = new SVGGlyph(0,
+                "FULLSCREEN",
+                "M357,204H204v153h-51V204H0v-51h153V0h51v153h153V204z",
+                Color.web("#04fd00"));
+        plus.setSize(20, 16);
+        SVGGlyph plus2 = new SVGGlyph(0,
+                "FULLSCREEN",
+                "M357,204H204v153h-51V204H0v-51h153V0h51v153h153V204z",
+                 Color.web("#04fd00"));
+        plus2.setSize(20, 16);
+        addContact.setGraphic(plus);
+        addContact.setRipplerFill(Color.GREENYELLOW);
 
-            ContextMenu contextMenu = new ContextMenu();
+        chanAddButton.setGraphic(plus2);
+        chanAddButton.setRipplerFill(Color.GREENYELLOW);
 
-            MenuItem editItem = new MenuItem();
-            editItem.textProperty().bind(Bindings.format("Edit \"%s\"", cell.itemProperty()));
-            editItem.setOnAction(event -> {
-                Component_Label_Contact item = cell.getItem();
-                // code to edit item...
-            });
-            MenuItem deleteItem = new MenuItem();
-            deleteItem.textProperty().bind(Bindings.format("Delete \"%s\"", cell.itemProperty().get().nameProperty()));
-            deleteItem.setOnAction(event -> userContactList.getItems().remove(cell.getItem()));
-            contextMenu.getItems().addAll(editItem, deleteItem);
-
-            cell.textProperty().bind(cell.itemProperty().get().nameProperty());
-            cell.setTextFill(Color.WHITE);
-            cell.setStyle("-fx-background-color: #3c3f41 ;  -fx-padding: 10 ; -fx-background-insets: 0 ;");
-
-
-            cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
-                if (isNowEmpty) {
-                    cell.setContextMenu(null);
-                } else {
-                    cell.setContextMenu(contextMenu);
-                }
-            });
-            return cell ;
-        });
-
-        EventHandler_Contact.loadContact_Contact(userContactList);*/
 
     }
 
     public void userChanClicked(Event event) {
 
-        channel = ((Component_Label_Group)chanelPan.getSelectionModel().getSelectedItem()).getChannel();
-        if (channel != null){
-            list.getItems().clear();
-            showGroupChat();
-            EventHandler_Message.loadHistory_Message(centerPan, channel.getIdChannel(), list);
+        if (chanelPan.getSelectionModel().getSelectedItem() != null) {
+            channel = ((Component_Label_Group) chanelPan.getSelectionModel().getSelectedItem()).getChannel();
+            if (channel != null) {
+                list.getItems().clear();
+                showGroupChat();
+                EventHandler_Message.loadHistory_Message(centerPan, channel.getIdChannel(), list);
+            }
         }
-
     }
 
     public void showGroupChat(){
@@ -195,6 +196,32 @@ public class Controller_WindowMain implements Initializable {
         }
         catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void addUserAction(Event event) {
+        if (!addUserTextBox.getText().equals("")) {
+            String contactMail = addUserTextBox.getText();
+            Contact contact = new Contact(Singleton_UserInfo.getInstance().getUser().getUserID(), null, Action.AJOUTER, contactMail);
+            Singleton_ClientSocket.getInstance().socket.emit("oppContacts", contact);
+            addUserTextBox.setText("");
+        }
+    }
+
+    public void chanAddAction(Event event) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        if (!chanAddText.getText().equals("")){
+            String chanName = chanAddText.getText();
+            Channel channel = new Channel(null, chanName, "", (int)timestamp.getTime(), Singleton_UserInfo.getInstance().getUser().getUserID(), false);
+            ChannelOpperation channelOpperation = new ChannelOpperation(null, channel, Action.AJOUTER);
+            Singleton_ClientSocket.getInstance().socket.emit("channelOpperation", channelOpperation, new Ack() {
+                public void call(final Object... args) {
+                    if ((boolean)args[0]){
+                        EventHandler_UserChan.loadUserChan_UserChan(chanelPan);
+                    }
+                }
+            });
+            chanAddText.setText("");
         }
     }
 }

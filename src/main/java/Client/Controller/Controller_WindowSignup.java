@@ -63,7 +63,6 @@ public class Controller_WindowSignup {
                             error.setText(args[0].toString());
                             error.setVisible(true);
                         }
-
                     }
                 });
             }
