@@ -133,7 +133,6 @@ public class Main {
         Users_Events.getUserID(server);
         Users_Events.resetUserID(server);
 
-
         //LOGIN SIGNUP EVENTS
         Login_Signup_Events.socketLoginEvent(server);
         Login_Signup_Events.socketSingupEvent(server);
@@ -143,6 +142,9 @@ public class Main {
         Channels_Events.getPublicChannels(server);
         Channels_Events.getMyChannels(server);
         Channels_Events.channelOpperation(server);
+        Channels_Events.inviteChannel(server);
+        Channels_Events.joinChannel(server);
+        Channels_Events.leaveChannel(server);
 
         //messages Events
         Messages_Events.newMessage(server);

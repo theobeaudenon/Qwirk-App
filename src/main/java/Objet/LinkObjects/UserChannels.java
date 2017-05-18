@@ -1,5 +1,7 @@
 package Objet.LinkObjects;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 
 /**
@@ -29,5 +31,11 @@ public class UserChannels implements Serializable {
 
     public void setChannelID(int channelID) {
         this.channelID = channelID;
+    }
+
+    public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+
     }
 }

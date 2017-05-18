@@ -42,6 +42,10 @@ public class UserUtils {
             throw new Exception("Email est vide");
 
         }
+        if(user.getMail().equals("")){
+            throw new Exception("Question vide est vide");
+
+        }
 
         if(!isValidEmailAddress(user.getMail())){
             throw new Exception("Email est invalide");

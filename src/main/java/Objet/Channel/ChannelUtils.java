@@ -1,16 +1,11 @@
 package Objet.Channel;
 
 import Objet.LinkObjects.UserChannels;
-import Objet.LinkObjects.UserContacts;
-import Objet.Message.Message;
-import Objet.User.User;
-import Objet.User.UserUtils;
 import Objet.Utils.Action;
 import Server.Data.Singleton_Data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.TreeMap;
 
 /**
  * Created by theobeaudenon on 25/04/2017.
@@ -79,5 +74,46 @@ public class ChannelUtils {
 
 
         return null;
+    }
+    public static Boolean inChannel( ArrayList<UserChannels> userChannelsHashMap, UserChannels userChannels) {
+        for (UserChannels channels : userChannelsHashMap) {
+            if(channels.getUserID() == userChannels.getUserID() && channels.getChannelID() == userChannels.getChannelID()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static UserChannels getuserchannelChannel(ArrayList<UserChannels> userChannelsHashMap, UserChannels userChannels) {
+        for (UserChannels channels : userChannelsHashMap) {
+            if(channels.getUserID() == userChannels.getUserID() && channels.getChannelID() == userChannels.getChannelID()){
+                return channels;
+            }
+        }
+        return null;
+    }
+
+
+
+    public static Boolean joinChannel(ArrayList<UserChannels> userChannelsHashMap, UserChannels userChannels) {
+
+        if(!inChannel(userChannelsHashMap,userChannels)){
+            userChannelsHashMap.add(userChannels);
+            return true;
+        }else {
+            return false;
+        }
+
+    }
+
+    public static Boolean leaveChannel(ArrayList<UserChannels> userChannelsHashMap, UserChannels userChannels) {
+
+        if(inChannel(userChannelsHashMap,userChannels)){
+            UserChannels userChannels1 = getuserchannelChannel(userChannelsHashMap, userChannels);
+            userChannelsHashMap.remove(userChannels1);
+            return true;
+        }else {
+            return false;
+        }
     }
 }

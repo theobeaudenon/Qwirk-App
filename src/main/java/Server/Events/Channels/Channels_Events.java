@@ -1,8 +1,10 @@
 package Server.Events.Channels;
 
+import Objet.Alerte.Alerte;
 import Objet.Channel.Channel;
 import Objet.Channel.ChannelOpperation;
 import Objet.Channel.ChannelUtils;
+import Objet.LinkObjects.UserChannels;
 import Objet.User.User;
 import Objet.User.UserUtils;
 import Server.Data.Singleton_Data;
@@ -38,7 +40,74 @@ public class Channels_Events {
             }
         });
 
+    }
 
+
+    public static void joinChannel(SocketIOServer server){
+
+        server.addEventListener("joinChannel", UserChannels.class, new DataListener<UserChannels>() {
+            public void onData(SocketIOClient client, UserChannels userChannels, AckRequest ackRequest) {
+
+                Boolean publicChannels = ChannelUtils.joinChannel(Singleton_Data.getInstance().getUserChannelsHashMap(),userChannels);
+
+                if (ackRequest.isAckRequested()) {
+                    // send ack response with data to client
+                    ackRequest.sendAckData(publicChannels);
+                }
+
+                System.out.print("joinChannel : "+publicChannels);
+                // System.out.print(data.getPass());
+
+            }
+        });
+
+    }
+
+
+    public static void leaveChannel(SocketIOServer server){
+
+        server.addEventListener("leaveChannel", UserChannels.class, new DataListener<UserChannels>() {
+            public void onData(SocketIOClient client, UserChannels userChannels, AckRequest ackRequest) {
+
+                Boolean publicChannels = ChannelUtils.leaveChannel(Singleton_Data.getInstance().getUserChannelsHashMap(),userChannels);
+
+                if (ackRequest.isAckRequested()) {
+                    // send ack response with data to client
+                    ackRequest.sendAckData(publicChannels);
+                }
+
+                System.out.print("leaveChannel : "+publicChannels);
+                // System.out.print(data.getPass());
+
+            }
+        });
+
+    }
+
+
+
+    public static void inviteChannel(SocketIOServer server){
+
+        server.addEventListener("inviteChannel", UserChannels.class, new DataListener<UserChannels>() {
+            public void onData(SocketIOClient client, UserChannels userChannels, AckRequest ackRequest) {
+
+                Boolean publicChannels = ChannelUtils.joinChannel(Singleton_Data.getInstance().getUserChannelsHashMap(),userChannels);
+                if(publicChannels){
+                    client.sendEvent("alerte",new Alerte("Bravo","Votre contact à bien été ajouté a votre groupe/Channel"));
+                    server.getBroadcastOperations().sendEvent("inviteContactChannel", userChannels);
+
+                }else {
+                    client.sendEvent("alerte",new Alerte("Erreur","Votre contact n'a pas été ajouté..."));
+                }
+
+
+
+
+                System.out.print("leaveChannel : "+publicChannels);
+                // System.out.print(data.getPass());
+
+            }
+        });
 
     }
 
