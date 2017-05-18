@@ -107,6 +107,7 @@ public class Controller_WindowMain implements Initializable {
         EventHandler_Message.updateMessage(list);
         EventHandler_Contact.loadContact_Contact(userContactList);
         EventHandler_Alerte.updateMessage(this);
+        EventHandler_Contact.updateContact(userContactList);
 
         delectContactAction.setOnAction(new EventHander_ContextMenu_Contact_DeleteAction(userContactList));
         contactContextMenu.getItems().add(delectContactAction);
@@ -203,8 +204,8 @@ public class Controller_WindowMain implements Initializable {
     public void addUserAction(Event event) {
         if (!addUserTextBox.getText().equals("")) {
             String contactMail = addUserTextBox.getText();
-            Contact contact = new Contact(Singleton_UserInfo.getInstance().getUser().getUserID(), null, Action.AJOUTER, contactMail);
-            Singleton_ClientSocket.getInstance().socket.emit("oppContacts", contact);
+            Contact contact = new Contact(null,Singleton_UserInfo.getInstance().getUser().getUserID() , Action.AJOUTER, contactMail);
+            Singleton_ClientSocket.getInstance().socket.emit("oppContacts", contact.toJson());
             addUserTextBox.setText("");
         }
     }
