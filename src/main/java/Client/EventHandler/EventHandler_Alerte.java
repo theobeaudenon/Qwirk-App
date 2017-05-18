@@ -5,12 +5,17 @@ import Client.Messages.Bubble.BubbleSpec;
 import Client.Messages.Bubble.BubbledLabel;
 import Client.Singleton.Singleton_ClientSocket;
 import Client.Singleton.Singleton_UserInfo;
+import Objet.Alerte.Alerte;
 import Objet.Message.Message;
+import Objet.User.User;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import io.socket.client.Ack;
 import io.socket.emitter.Emitter;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
@@ -36,14 +41,23 @@ public class EventHandler_Alerte {
         Singleton_ClientSocket.getInstance().socket.on("alerte", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-               final String message = (String) args[0];
-                Platform.runLater(new Runnable() {
+                final JSONObject obj = (JSONObject)args[0];
+                Alerte alerte = new Alerte(obj.toString());
+                 Platform.runLater(new Runnable() {
                     public void run() {
 
                         JFXDialogLayout content = new JFXDialogLayout();
-                        content.setHeading(new Text("Head"));
-                        content.setBody(new Text(message));
+                        content.setHeading(new Text(alerte.getHead()));
+                        content.setBody(new Text(alerte.getMessage()));
                         JFXDialog dialog = new JFXDialog(controller_windowMain.getPrincipalPane() , content , JFXDialog.DialogTransition.CENTER );
+                        JFXButton button = new JFXButton("Fermer");
+                        button.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent event) {
+                                dialog.close();
+                            }
+                        });
+                        content.setActions(button);
                         dialog.show();
 
                         /*final Stage dialog = new Stage();

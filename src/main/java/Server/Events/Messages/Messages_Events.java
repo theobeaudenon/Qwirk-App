@@ -1,5 +1,6 @@
 package Server.Events.Messages;
 
+import Objet.Alerte.Alerte;
 import Objet.Bot.ActionBot;
 import Objet.Bot.Bot;
 import Objet.Bot.Commandes;
@@ -40,21 +41,21 @@ public class Messages_Events {
                                 if(botArrayList != null){
                                     for (BotChannel entry : Singleton_Data.getInstance().getBotChannelHashMap()) {
                                        if(data.getChannel().equals(entry.getChannelID())){
-                                           client.sendEvent("alerte","Ce bot est déjà dans le channel");
+                                           client.sendEvent("alerte",new Alerte("Erreur","Ce bot est déjà dans le channel"));
                                            return;
                                        }else {
                                            Singleton_Data.getInstance().getBotChannelHashMap().add(new BotChannel(integer,data.getChannel()));
-                                           client.sendEvent("alerte","Le bot a bien été ajouté");
+                                           client.sendEvent("alerte",new Alerte("Succès","Le bot a bien été ajouté"));
                                            return;
                                        }
                                     }
 
                                     }else {
-                                    client.sendEvent("alerte","Ce bot n'existe pas");
+                                    client.sendEvent("alerte",new Alerte("Erreur","Ce bot n'existe pas"));
                                     return;
                                  }
                             }catch (Exception e){
-                                client.sendEvent("alerte","Erreur dans l'ajout du bot");
+                                client.sendEvent("alerte",new Alerte("Erreur","Erreur dans l'ajout du bot"));
                                  return;
                             }
 
@@ -81,7 +82,7 @@ public class Messages_Events {
                                      if(commandes.getValue().equals(split[0])){
 
                                          if(ActionBot.BAN.equals(commandes.getActionBot())){
-                                             client.sendEvent("alerte",commandes.getMessage());
+                                             client.sendEvent("alerte",new Alerte("Info",commandes.getMessage()));
                                              System.out.printf("ban");
                                              return;
 
@@ -104,7 +105,7 @@ public class Messages_Events {
 
                                          }
                                          if(ActionBot.KICK.equals(commandes.getActionBot())){
-                                             client.sendEvent("alerte",commandes.getMessage());
+                                             client.sendEvent("alerte",new Alerte("Succès",commandes.getMessage()));
                                              System.out.printf("kick");
                                              return;
 
@@ -116,7 +117,7 @@ public class Messages_Events {
                          }
 
 
-                        client.sendEvent("alerte","commande Inconue");
+                        client.sendEvent("alerte",new Alerte("Erreur","commande Inconue"));
 
                         return;
                     }

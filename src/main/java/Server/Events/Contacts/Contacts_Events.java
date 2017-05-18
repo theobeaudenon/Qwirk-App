@@ -1,5 +1,6 @@
 package Server.Events.Contacts;
 
+import Objet.Alerte.Alerte;
 import Objet.Channel.Channel;
 import Objet.Channel.ChannelUtils;
 import Objet.Contacts.Contact;
@@ -61,7 +62,7 @@ public class Contacts_Events {
                     //ackRequest.sendAckData(publicChannels);
                     server.getBroadcastOperations().sendEvent("contactupdate", contact);
                 }else {
-                    client.sendEvent("alerte","Cet utilisateur n'existe pas / Est déjà votre contact");
+                    client.sendEvent("alerte",new Alerte("Erreur","Cet utilisateur n'existe pas / Est déjà votre contact"));
                 }
 
                 System.out.println("oppContacts : "+publicChannels);
