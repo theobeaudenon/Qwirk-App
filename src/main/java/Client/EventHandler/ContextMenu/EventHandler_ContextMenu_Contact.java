@@ -1,5 +1,8 @@
 package Client.EventHandler.ContextMenu;
 
+import Client.Component.Component_Label_Contact;
+import Client.Singleton.Singleton_UserInfo;
+import Objet.User.User;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,7 +36,9 @@ public class EventHandler_ContextMenu_Contact implements EventHandler<MouseEvent
                 contextMenu.show(component, event.getScreenX(), event.getScreenY());
             }
         }
-        if (event.getButton().equals(MouseButton.PRIMARY)) {
+        if (event.getButton().equals(MouseButton.PRIMARY) && component.getSelectionModel().getSelectedItem() != null) {
+            User user = ((Component_Label_Contact)component.getSelectionModel().getSelectedItem()).getUser();
+            Singleton_UserInfo.getInstance().setUserSoloChat(user);
             Parent root;
             try {
                 root  = FXMLLoader.load(getClass().getResource("/soloChat.fxml"));

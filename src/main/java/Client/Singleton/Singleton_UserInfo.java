@@ -18,6 +18,7 @@ public class Singleton_UserInfo {
 
     private User user;
     private ArrayList<User> contactList;
+    private User userSoloChat;
 
     /** Point d'accès pour l'instance unique du singleton */
     public static synchronized Singleton_UserInfo getInstance()
@@ -50,5 +51,11 @@ public class Singleton_UserInfo {
     }
 
 
+    public User getUserSoloChat() {
+        return userSoloChat;
+    }
 
+    public void setUserSoloChat(User userSoloChat) {
+        this.userSoloChat = userSoloChat;
+    }
 }
