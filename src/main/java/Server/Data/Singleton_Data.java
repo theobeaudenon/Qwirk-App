@@ -76,6 +76,7 @@ public class Singleton_Data {
         userChannelsHashMap.add(new UserChannels(1,3));
         userChannelsHashMap.add(new UserChannels(1,5));
         userChannelsHashMap.add(new UserChannels(1,6));
+        userChannelsHashMap.add(new UserChannels(0,6));
 
         userContactsHashMap.add(new UserContacts(0,1));
 

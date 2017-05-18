@@ -32,7 +32,7 @@ public class Messages_Events {
                     if(data.getMessage().charAt(0) == ':'){
 
                         String[] splits = data.getMessage().split(" ");
-                        if("/invite".equals(splits[0])){
+                        if(":invite".equals(splits[0])){
 
                             try {
                                 Integer integer = Integer.valueOf(splits[1]);

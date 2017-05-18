@@ -106,6 +106,7 @@ public class Controller_WindowMain implements Initializable {
         EventHandler_UserChan.loadUserChan_UserChan(chanelPan);
         EventHandler_Message.updateMessage(list);
         EventHandler_Contact.loadContact_Contact(userContactList);
+        EventHandler_Alerte.updateMessage(this);
 
         delectContactAction.setOnAction(new EventHander_ContextMenu_Contact_DeleteAction(userContactList));
         contactContextMenu.getItems().add(delectContactAction);
