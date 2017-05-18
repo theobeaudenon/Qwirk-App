@@ -3,11 +3,13 @@ package Objet.Channel;
 import Objet.Utils.Action;
 import com.google.gson.Gson;
 
+import java.io.Serializable;
+
 /**
  * Objet.Channel
  * Created by Theo on 17/05/2017 for app.
  */
-public class ChannelOpperation {
+public class ChannelOpperation implements Serializable{
     private Channel channeldata;
     private Integer channelid;
     private Action action;

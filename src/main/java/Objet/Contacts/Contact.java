@@ -3,11 +3,13 @@ package Objet.Contacts;
 import Objet.Utils.Action;
 import com.google.gson.Gson;
 
+import java.io.Serializable;
+
 /**
  * Objet.Contacts
  * Created by Theo on 17/05/2017 for app.
  */
-public class Contact {
+public class Contact implements Serializable {
     private Integer idUser1;
 
     private Integer idUser2;
@@ -38,6 +40,7 @@ public class Contact {
         this.idUser1 = grupoAplicacao.getIdUser1();
         this.idUser2 = grupoAplicacao.getIdUser2();
         this.action = grupoAplicacao.getAction();
+        this.mail = grupoAplicacao.getMail();
 
     }
 

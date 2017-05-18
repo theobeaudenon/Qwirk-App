@@ -18,6 +18,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 /**
@@ -103,6 +106,41 @@ public class Main {
         }
 
 
+
+        FileOutputStream fout = null;
+        ObjectOutputStream oos = null;
+
+        try {
+
+            fout = new FileOutputStream("address.ser");
+            oos = new ObjectOutputStream(fout);
+            oos.writeObject(Singleton_Data.getInstance());
+
+            System.out.println("Done");
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+
+        } finally {
+
+            if (fout != null) {
+                try {
+                    fout.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (oos != null) {
+                try {
+                    oos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
 
 
 

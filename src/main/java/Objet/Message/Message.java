@@ -2,10 +2,12 @@ package Objet.Message;
 
 import com.google.gson.Gson;
 
+import java.io.Serializable;
+
 /**
  * Created by theobeaudenon on 24/04/2017.
  */
-public class Message {
+public class Message implements Serializable{
     private String userName;
     private String message;
     private Integer date;

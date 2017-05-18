@@ -3,10 +3,12 @@ package Objet.User;
 import Objet.Message.Message;
 import com.google.gson.Gson;
 
+import java.io.Serializable;
+
 /**
  * Created by theobeaudenon on 25/04/2017.
  */
-public class User {
+public class User implements Serializable{
     String userName;
     String mail;
     String pass;

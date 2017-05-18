@@ -2,10 +2,12 @@ package Objet.Channel;
 
 import com.google.gson.Gson;
 
+import java.io.Serializable;
+
 /**
  * Created by theobeaudenon on 24/04/2017.
  */
-public class Channel {
+public class Channel implements Serializable{
     private Integer idChannel;
 
     private String channelName;

@@ -5,9 +5,10 @@ package Objet.Bot;
  * Created by Theo on 17/05/2017 for app.
  */
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Bot {
+public class Bot implements Serializable{
 
 
     private ArrayList<Commandes> commandes;

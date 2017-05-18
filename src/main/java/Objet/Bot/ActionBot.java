@@ -1,10 +1,12 @@
 package Objet.Bot;
 
+import java.io.Serializable;
+
 /**
  * Objet.Bot
  * Created by Theo on 17/05/2017 for app.
  */
-public enum  ActionBot {
+public enum  ActionBot implements Serializable {
 
     KICK("KICK"),
     MESSAGE("MESSAGE"),

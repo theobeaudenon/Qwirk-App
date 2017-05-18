@@ -9,6 +9,7 @@ import Objet.Message.Message;
 import Objet.User.User;
 import Objet.Utils.Tuple;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
@@ -16,7 +17,7 @@ import java.util.TreeMap;
 /**
  * Created by theobeaudenon on 25/04/2017.
  */
-public class Singleton_Data {
+public class Singleton_Data implements Serializable{
 
     Integer messageIncrement = 0;
     Integer channelIncrement = 0;
