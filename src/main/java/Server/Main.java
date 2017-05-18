@@ -3,28 +3,22 @@ package Server;
 import Objet.Bot.ActionBot;
 import Objet.Bot.Bot;
 import Objet.Bot.Commandes;
-import Objet.Channel.Channel;
-import Objet.Message.Message;
-import Objet.User.User;
-import Objet.User.UserUtils;
+import Objet.LinkObjects.BotChannel;
 import Server.Data.Singleton_Data;
 import Server.Events.Channels.Channels_Events;
 import Server.Events.Contacts.Contacts_Events;
 import Server.Events.Login_Signup.Login_Signup_Events;
 import Server.Events.Messages.Messages_Events;
-import com.corundumstudio.socketio.AckRequest;
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
-import com.corundumstudio.socketio.listener.DataListener;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by theobeaudenon on 24/04/2017.
@@ -51,17 +45,22 @@ public class Main {
                 "  \"commandes\": [\n" +
                 "    {\n" +
                 "      \"action\": \"KICK\",\n" +
-                "      \"cmd\": \"kick\",\n" +
+                "      \"cmd\": \":kick\",\n" +
                 "      \"message\": \"Le marteau du ban a frappé\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"action\": \"BAN\",\n" +
-                "      \"cmd\": \"ban\",\n" +
+                "      \"cmd\": \":ban\",\n" +
                 "      \"message\": \"Le marteau du ban a frappé\"\n" +
                 "    },\n" +
                 "    {\n" +
                 "      \"action\": \"MESSAGE\",\n" +
-                "      \"cmd\": \"hey\",\n" +
+                "      \"cmd\": \":bite\",\n" +
+                "      \"message\": \"chatte\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"action\": \"MESSAGE\",\n" +
+                "      \"cmd\": \":hey\",\n" +
                 "      \"message\": \"Coucou\"\n" +
                 "    }\n" +
                 "  ],\n" +
@@ -97,7 +96,7 @@ public class Main {
             }
             Bot name = new Bot(commandes, rootObj.get("name").getAsString(),Singleton_Data.getInstance().getBotIncrement());
             Singleton_Data.getInstance().getBotArrayList().add(name);
-            Singleton_Data.getInstance().getBotChannelHashMap().put(0,name.getIdBot());
+            Singleton_Data.getInstance().getBotChannelHashMap().add(new BotChannel(name.getIdBot(),6));
 
          }catch (Exception e){
 

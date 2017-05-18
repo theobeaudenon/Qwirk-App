@@ -8,8 +8,7 @@ public enum  ActionBot {
 
     KICK("KICK"),
     MESSAGE("MESSAGE"),
-    BAN("BAN")
-            ;
+    BAN("BAN");
 
     private final String text;
 

@@ -50,7 +50,9 @@ public class Contacts_Events {
                 //server.getBroadcastOperations().sendEvent("chatevent", data);
 
                 Boolean publicChannels = ContactUtils.addMyContacts(Singleton_Data.getInstance().getUserHashMap(),Singleton_Data.getInstance().getUserContactsHashMap(),contact);
+
                 if(publicChannels){
+                    //ackRequest.sendAckData(publicChannels);
                     server.getBroadcastOperations().sendEvent("contactupdate", contact);
                 }
 

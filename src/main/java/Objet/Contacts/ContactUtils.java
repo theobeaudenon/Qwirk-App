@@ -1,5 +1,6 @@
 package Objet.Contacts;
 
+import Objet.LinkObjects.UserContacts;
 import Objet.User.User;
 import Objet.User.UserUtils;
 import Objet.Utils.Action;
@@ -7,6 +8,7 @@ import Objet.Utils.Tuple;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * Objet.Contacts
@@ -14,45 +16,62 @@ import java.util.HashMap;
  */
 public class ContactUtils {
 
-    public static ArrayList<User> getMyContacts(HashMap<Integer, User> userHashMap, HashMap<Integer, Integer> userContactsHashMap, Integer data) {
+    public static ArrayList<User> getMyContacts(HashMap<Integer, User> userHashMap, ArrayList<UserContacts> userContactsHashMap, Integer data) {
 
         ArrayList<User> tmp = new ArrayList<User>();
 
-        for (Integer integer : userContactsHashMap.keySet()) {
-            if(integer.equals(data)){
-                User channelFromId = UserUtils.getUserFromId(userHashMap,userContactsHashMap.get(integer));
+        for (UserContacts integer : userContactsHashMap) {
+            if(data.equals(integer.getUserID())){
+                User channelFromId = UserUtils.getUserFromId(userHashMap,integer.getUser2ID());
                 if(channelFromId!=null){
                     tmp.add(channelFromId);
                 }
-
+            }
+            if(data.equals(integer.getUser2ID())){
+                User channelFromId = UserUtils.getUserFromId(userHashMap,integer.getUserID());
+                if(channelFromId!=null){
+                    tmp.add(channelFromId);
+                }
             }
         }
         return tmp;
     }
-    public static ArrayList<Integer> getMyContactsID(HashMap<Integer, User> userHashMap, HashMap<Integer, Integer> userContactsHashMap, Integer data) {
-
+    public static ArrayList<Integer> getMyContactsID(HashMap<Integer, User> userHashMap,  ArrayList<UserContacts> userContactsHashMap, Integer data) {
         ArrayList<Integer> tmp = new ArrayList<Integer>();
 
-        for (Integer integer : userContactsHashMap.keySet()) {
-            if(integer.equals(data)){
-                User channelFromId = UserUtils.getUserFromId(userHashMap,userContactsHashMap.get(integer));
-                if(channelFromId!=null){
-                    tmp.add(userContactsHashMap.get(integer));
+        for (User integer : getMyContacts(  userHashMap,   userContactsHashMap,   data) ) {
+            tmp.add(integer.getUserID());
+        }
+        return tmp;
+    }
+
+    public static UserContacts isMyContacts(HashMap<Integer, User> userHashMap,  ArrayList<UserContacts> userContactsHashMap, Integer data, Integer data2 ) {
+
+        for (UserContacts integer : userContactsHashMap) {
+            if(data.equals(integer.getUserID())){
+                if(data2.equals(integer.getUser2ID())){
+                    return integer;
                 }
 
             }
+            if(data.equals(integer.getUser2ID())){
+                if(data2.equals(integer.getUserID())){
+                    return integer;
+                }
+             }
         }
-        return tmp;
+        return null;
     }
 
     @SuppressWarnings("Since15")
-    public static Boolean addMyContacts(HashMap<Integer, User> userHashMap, HashMap<Integer, Integer> userContactsHashMap, Contact idUser) {
+    public static Boolean addMyContacts(HashMap<Integer, User> userHashMap,  ArrayList<UserContacts> userContactsHashMap, Contact idUser) {
 
+        UserContacts myContacts = isMyContacts(userHashMap, userContactsHashMap, idUser.getIdUser1(), idUser.getIdUser2());
 
         if(idUser.getAction().equals(Action.AJOUTER)){
-            if (! getMyContactsID(userHashMap,userContactsHashMap,idUser.getIdUser1()).contains(idUser.getIdUser2())){
-                userContactsHashMap.putIfAbsent(idUser.getIdUser1(),idUser.getIdUser2());
-                userContactsHashMap.putIfAbsent(idUser.getIdUser2(),idUser.getIdUser1());
+            if (myContacts== null){
+                userContactsHashMap.add(new UserContacts(idUser.getIdUser1(),idUser.getIdUser2()));
+
 
                 return true;
             }else {
@@ -60,9 +79,10 @@ public class ContactUtils {
             }
         }
         if(idUser.getAction().equals(Action.SUPPRIMER)){
-            if (getMyContactsID(userHashMap,userContactsHashMap,idUser.getIdUser1()).contains(idUser.getIdUser2())){
-                userContactsHashMap.remove(idUser.getIdUser1(),idUser.getIdUser2());
-                userContactsHashMap.remove(idUser.getIdUser2(),idUser.getIdUser1());
+            if (myContacts != null){
+
+                userContactsHashMap.remove(myContacts);
+
 
                 return true;
             }else {

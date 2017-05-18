@@ -1,11 +1,16 @@
 package Objet.Channel;
 
+import Objet.LinkObjects.UserChannels;
+import Objet.LinkObjects.UserContacts;
 import Objet.Message.Message;
 import Objet.User.User;
 import Objet.User.UserUtils;
+import Objet.Utils.Action;
+import Server.Data.Singleton_Data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * Created by theobeaudenon on 25/04/2017.
@@ -40,12 +45,14 @@ public class ChannelUtils {
     }
 
 
-    public static ArrayList<Channel> getMyChannels(HashMap<Integer, Channel> channelHashMap, HashMap<Integer, Integer> userChannelsHashMap, Integer data) {
+    public static ArrayList<Channel> getMyChannels(HashMap<Integer, Channel> channelHashMap, ArrayList<UserChannels> userChannelsHashMap, Integer data) {
 
         ArrayList<Channel> tmp = new ArrayList<Channel>();
-        for (Integer integer : userChannelsHashMap.keySet()) {
-            if(integer.equals(data)){
-                Channel channelFromId = getChannelFromId(channelHashMap, userChannelsHashMap.get(integer));
+
+
+        for (UserChannels integer : userChannelsHashMap) {
+            if(data.equals(integer.getUserID()) ){
+                Channel channelFromId = getChannelFromId(channelHashMap, integer.getChannelID());
                 if(channelFromId!=null){
                     tmp.add(channelFromId);
                 }
@@ -56,7 +63,18 @@ public class ChannelUtils {
         return tmp;
     }
 
-    public static Boolean operation(HashMap<Integer, Channel> channelHashMap, HashMap<Integer, Integer> userChannelsHashMap, ChannelOpperation channelOpperation) {
+    public static Boolean operation(HashMap<Integer, Channel> channelHashMap, ArrayList<UserChannels> userChannelsHashMap, ChannelOpperation channelOpperation) {
+
+
+        if(channelOpperation.getAction().equals(Action.AJOUTER)){
+
+            Integer channelIncrement = Singleton_Data.getInstance().getChannelIncrement();
+            channelOpperation.getChanneldata().setIdChannel(channelIncrement);
+            channelHashMap.put(channelIncrement,channelOpperation.getChanneldata());
+            userChannelsHashMap.add(new UserChannels(channelOpperation.getChanneldata().getIdCreator(),channelIncrement));
+            return true;
+        }
+
 
 
 

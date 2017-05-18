@@ -72,9 +72,9 @@ public class Channels_Events {
                 //server.getBroadcastOperations().sendEvent("chatevent", data);
 
                 Boolean publicChannels = ChannelUtils.operation(Singleton_Data.getInstance().getChannelHashMap(),Singleton_Data.getInstance().getUserChannelsHashMap(),channelOpperation);
-                if(publicChannels){
-                    server.getBroadcastOperations().sendEvent("channelupdate", true);
 
+                if(ackRequest.isAckRequested()){
+                    ackRequest.sendAckData(publicChannels);
                 }
 
                 System.out.print("channelOpperation : "+publicChannels);

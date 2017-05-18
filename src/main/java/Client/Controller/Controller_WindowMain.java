@@ -216,9 +216,9 @@ public class Controller_WindowMain implements Initializable {
             ChannelOpperation channelOpperation = new ChannelOpperation(null, channel, Action.AJOUTER);
             Singleton_ClientSocket.getInstance().socket.emit("channelOpperation", channelOpperation, new Ack() {
                 public void call(final Object... args) {
-                    if ((boolean)args[0]){
+                    /*if ((boolean)args[0]){
                         EventHandler_UserChan.loadUserChan_UserChan(chanelPan);
-                    }
+                    }*/
                 }
             });
             chanAddText.setText("");

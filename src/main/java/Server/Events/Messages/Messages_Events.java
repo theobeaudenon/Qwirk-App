@@ -3,6 +3,7 @@ package Server.Events.Messages;
 import Objet.Bot.ActionBot;
 import Objet.Bot.Bot;
 import Objet.Bot.Commandes;
+import Objet.LinkObjects.BotChannel;
 import Objet.Message.Message;
 import Objet.Message.MessageUtils;
 import Objet.User.User;
@@ -22,37 +23,58 @@ import java.util.Map;
  */
 public class Messages_Events {
 
-    public static String bot1 = "{\n" +
-            "  \"commandes\": [\n" +
-            "    {\n" +
-            "      \"action\": \"KICK\",\n" +
-            "      \"cmd\": \"kick\",\n" +
-            "      \"message\": \"Le marteau du ban a frappé\"\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"action\": \"BAN\",\n" +
-            "      \"cmd\": \"ban\",\n" +
-            "      \"message\": \"Le marteau du ban a frappé\"\n" +
-            "    },\n" +
-            "    {\n" +
-            "      \"action\": \"MESSAGE\",\n" +
-            "      \"cmd\": \"hey\",\n" +
-            "      \"message\": \"Coucou\"\n" +
-            "    }\n" +
-            "  ],\n" +
-            "  \"name\": \"nom du bot\"\n" +
-            "}";
-
 
     public static void newMessage(final SocketIOServer server){
 
         server.addEventListener("chatevent", Message.class, new DataListener<Message>() {
             public void onData(SocketIOClient client, Message data, AckRequest ackRequest) {
                 if(! data.getImage()){
-                    if(data.getMessage().charAt(0) == '/'){
-                         for (Map.Entry<Integer, Integer> entry : Singleton_Data.getInstance().getBotChannelHashMap().entrySet()) {
-                             if(entry.getKey().equals(data.getChannel())){
-                                 Integer value = entry.getValue();
+                    if(data.getMessage().charAt(0) == ':'){
+
+                        String[] splits = data.getMessage().split(" ");
+                        if("/invite".equals(splits[0])){
+
+                            try {
+                                Integer integer = Integer.valueOf(splits[1]);
+                                Bot botArrayList = Singleton_Data.getInstance().getBotArrayList(integer);
+                                if(botArrayList != null){
+                                    for (BotChannel entry : Singleton_Data.getInstance().getBotChannelHashMap()) {
+                                       if(data.getChannel().equals(entry.getChannelID())){
+                                           client.sendEvent("alerte","Ce bot est déjà dans le channel");
+                                           return;
+                                       }else {
+                                           Singleton_Data.getInstance().getBotChannelHashMap().add(new BotChannel(integer,data.getChannel()));
+                                           client.sendEvent("alerte","Le bot a bien été ajouté");
+                                           return;
+                                       }
+                                    }
+
+                                    }else {
+                                    client.sendEvent("alerte","Ce bot n'existe pas");
+                                    return;
+                                 }
+                            }catch (Exception e){
+                                client.sendEvent("alerte","Erreur dans l'ajout du bot");
+                                 return;
+                            }
+
+
+
+
+                        }
+
+
+
+
+
+
+
+
+
+                         for (BotChannel entry : Singleton_Data.getInstance().getBotChannelHashMap()) {
+
+                             if(data.getChannel().equals(entry.getChannelID())  ){
+                                 Integer value = entry.getBotID();
                                  Bot botArrayList = Singleton_Data.getInstance().getBotArrayList(value);
                                  for (Commandes commandes : botArrayList.getCommandes()) {
                                      String[] split = data.getMessage().split(" ");
@@ -60,13 +82,31 @@ public class Messages_Events {
 
                                          if(ActionBot.BAN.equals(commandes.getActionBot())){
                                              client.sendEvent("alerte",commandes.getMessage());
+                                             System.out.printf("ban");
+                                             return;
 
                                          }
                                          if(ActionBot.MESSAGE.equals(commandes.getActionBot())){
-                                             client.sendEvent("alerte",commandes.getMessage());
+                                             //client.sendEvent("alerte",commandes.getMessage());
+
+                                             Integer newID = Singleton_Data.getInstance().getMessageIncrement();
+
+                                             Singleton_Data.getInstance().getMessageHashMap().put(newID,data);
+                                             data.setMessage(commandes.getMessage());
+                                             data.setUserName(botArrayList.getName());
+                                             data.setUser(-1);
+                                             // broadcast messages to all clients
+                                             server.getBroadcastOperations().sendEvent("newmessage", data);
+
+
+                                             System.out.printf("message");
+                                             return;
+
                                          }
                                          if(ActionBot.KICK.equals(commandes.getActionBot())){
                                              client.sendEvent("alerte",commandes.getMessage());
+                                             System.out.printf("kick");
+                                             return;
 
                                          }
 
@@ -76,7 +116,7 @@ public class Messages_Events {
                          }
 
 
-                        client.sendEvent("alerte","commande");
+                        client.sendEvent("alerte","commande Inconue");
 
                         return;
                     }
