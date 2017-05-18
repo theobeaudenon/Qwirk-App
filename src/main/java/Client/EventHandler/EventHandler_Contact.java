@@ -88,6 +88,7 @@ public class EventHandler_Contact {
                                 userContactList.getItems().stream().filter(component_label_contact -> ((Component_Label_Contact) component_label_contact).getUser().getUserID().equals(contact.getIdUser1())).forEach(nodesToRemove::add);
                             }
                             userContactList.getItems().removeAll(nodesToRemove);
+
                         }
                     }
                 });
