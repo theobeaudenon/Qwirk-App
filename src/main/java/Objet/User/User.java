@@ -13,6 +13,7 @@ public class User implements Serializable{
     String mail;
     String pass;
     Integer userID;
+    String verif;
 
     public User(Integer userID ,String userName, String mail, String pass) {
         this.userName = userName;
@@ -29,6 +30,7 @@ public class User implements Serializable{
         this.userName = grupoAplicacao.getUserName();
         this.pass = grupoAplicacao.getPass();
         this.userID = grupoAplicacao.getUserID();
+        this.verif = grupoAplicacao.getVerif();
 
     }
 
@@ -74,5 +76,13 @@ public class User implements Serializable{
 
     public Integer getUserID() {
         return userID;
+    }
+
+    public String getVerif() {
+        return verif;
+    }
+
+    public void setVerif(String verif) {
+        this.verif = verif;
     }
 }

@@ -78,4 +78,21 @@ public class UserUtils {
         }
         return null;
     }
+
+    public static Boolean resetUser(HashMap<Integer, User> userHashMap, User user) {
+        User userFromMail = getUserFromMail(userHashMap, user.getMail());
+        if(userFromMail !=null ){
+
+            if(userFromMail.getVerif().equals(user.getVerif())){
+                userFromMail.setPass(user.getPass());
+                return true;
+
+            }else {
+                return false;
+            }
+        }else {
+            return false;
+        }
+
+    }
 }

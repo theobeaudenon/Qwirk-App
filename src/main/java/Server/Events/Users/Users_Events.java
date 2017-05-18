@@ -38,4 +38,26 @@ public class Users_Events {
 
 
     }
+
+
+    public static void resetUserID(SocketIOServer server){
+
+        server.addEventListener("resetUser", User.class, new DataListener<User>() {
+            public void onData(SocketIOClient client, User user, AckRequest ackRequest) {
+
+                Boolean publicChannels = UserUtils.resetUser(Singleton_Data.getInstance().getUserHashMap(),user);
+
+                if (ackRequest.isAckRequested()) {
+                    // send ack response with data to client
+                    ackRequest.sendAckData(publicChannels);
+                }
+
+                System.out.println("resetUser : "+publicChannels);
+
+            }
+        });
+
+
+
+    }
 }

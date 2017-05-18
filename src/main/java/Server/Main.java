@@ -131,6 +131,7 @@ public class Main {
 
         //USER EVENT
         Users_Events.getUserID(server);
+        Users_Events.resetUserID(server);
 
 
         //LOGIN SIGNUP EVENTS
