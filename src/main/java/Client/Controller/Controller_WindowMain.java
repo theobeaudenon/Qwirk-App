@@ -188,22 +188,6 @@ public class Controller_WindowMain implements Initializable {
 
     }
 
-    public void userContactClick(Event event) {
-        Parent root;
-        try {
-            root  = FXMLLoader.load(getClass().getResource("/soloChat.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("My New Stage Title");
-            stage.setScene(new Scene(root, 600, 600));
-            stage.show();
-            // Hide this current window (if this is what you want)
-//            ((Node)(event.getSource())).getScene().getWindow().hide();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void addUserAction(Event event) {
         if (!addUserTextBox.getText().equals("")) {
             String contactMail = addUserTextBox.getText();

@@ -18,6 +18,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.Observable;
 
@@ -64,30 +66,28 @@ public class EventHandler_Contact {
                             }
                             Singleton_ClientSocket.getInstance().socket.emit("getUserID", idContact, new Ack() {
                                 public void call(final Object... args) {
-                                    final JSONObject obj = (JSONObject)args[0];
-                                    User user = new User(obj.toString());
-                                    Component_Label_Contact label = new Component_Label_Contact();
-                                    label.setUser(user);
-                                    label.setText(user.getUserName());
-                                    userContactList.getItems().add(label);
+                                    Platform.runLater(new Runnable() {
+                                        public void run() {
+                                            final JSONObject obj = (JSONObject)args[0];
+                                            User user = new User(obj.toString());
+                                            Component_Label_Contact label = new Component_Label_Contact();
+                                            label.setUser(user);
+                                            label.setText(user.getUserName());
+                                            userContactList.getItems().add(label);
+                                        }
+                                    });
                                 }
                             });
                         }
                         else if(contact.getAction() == Action.SUPPRIMER){
+                            List<Object> nodesToRemove = new ArrayList<>();
                             if(contact.getIdUser1().equals(Singleton_UserInfo.getInstance().getUser().getUserID())){
-                                for (Object component_label_contact: userContactList.getItems()) {
-                                    if (((Component_Label_Contact) component_label_contact).getUser().getUserID().equals(contact.getIdUser2())){
-                                        userContactList.getItems().remove(component_label_contact);
-                                    }
-                                }
+                                userContactList.getItems().stream().filter(component_label_contact -> ((Component_Label_Contact) component_label_contact).getUser().getUserID().equals(contact.getIdUser2())).forEach(nodesToRemove::add);
                             }
                             else if(contact.getIdUser2().equals(Singleton_UserInfo.getInstance().getUser().getUserID())){
-                                for (Object component_label_contact: userContactList.getItems()) {
-                                    if (((Component_Label_Contact) component_label_contact).getUser().getUserID().equals(contact.getIdUser1())){
-                                        userContactList.getItems().remove(component_label_contact);
-                                    }
-                                }
+                                userContactList.getItems().stream().filter(component_label_contact -> ((Component_Label_Contact) component_label_contact).getUser().getUserID().equals(contact.getIdUser1())).forEach(nodesToRemove::add);
                             }
+                            userContactList.getItems().removeAll(nodesToRemove);
                         }
                     }
                 });
