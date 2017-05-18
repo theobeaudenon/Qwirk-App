@@ -55,7 +55,6 @@ public class EventHandler_Contact {
                     public void run() {
                         Contact contact = new Contact(obj.toString());
                         if (contact.getAction() == Action.AJOUTER){
-                            Component_Label_Contact label = new Component_Label_Contact();
                             int idContact = 0;
                             if (contact.getIdUser1().equals(Singleton_UserInfo.getInstance().getUser().getUserID())){
                                 idContact = contact.getIdUser2();
@@ -67,6 +66,7 @@ public class EventHandler_Contact {
                                 public void call(final Object... args) {
                                     final JSONObject obj = (JSONObject)args[0];
                                     User user = new User(obj.toString());
+                                    Component_Label_Contact label = new Component_Label_Contact();
                                     label.setUser(user);
                                     label.setText(user.getUserName());
                                     userContactList.getItems().add(label);
