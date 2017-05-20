@@ -13,7 +13,7 @@ import javafx.scene.shape.Shape;
 
 public class BubbledLabel extends Label {
 
-	private BubbleSpec bs = BubbleSpec.FACE_LEFT_CENTER;
+	private BubbleSpec bs = BubbleSpec.NONE;
 	private double pading = 5.0;
 	private boolean systemCall = false;
 
@@ -123,6 +123,9 @@ public class BubbledLabel extends Label {
 					(this.getBoundsInLocal().getWidth()*((Bubble)getShape()).drawRectBubbleIndicatorRule)/2
 					+pading,
 					pading,pading,pading));
+			break;
+		case NONE:
+			setPadding(new Insets(pading, pading, pading, pading));
 			break;
 
 		default:

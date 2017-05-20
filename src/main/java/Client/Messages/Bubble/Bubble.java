@@ -29,11 +29,24 @@ public class Bubble extends Path{
 		case FACE_TOP:
 			drawRectBubbleToplineIndicator();
 			break;
+		case NONE:
+			drawRectBubble();
+			break;
 
 		default:
 			break;
 		}
 
+	}
+
+	private void drawRectBubble() {
+        getElements().addAll(new MoveTo(2.8f, 2.5f),
+                new LineTo(2.8f, 2.4f),
+                new HLineTo(0f),
+                new VLineTo(4f),
+                new HLineTo(2.8f)
+
+        );
 	}
 
 	private void drawRectBubbleToplineIndicator() {

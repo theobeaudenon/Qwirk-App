@@ -8,6 +8,15 @@
     -fx-background-color: #dbdbdb;
 }
 
+
+#Messagelist .list-cell:even {
+    -fx-background-color: #ffffff;
+}
+#Messagelist .list-cell:odd {
+    -fx-background-color: #ffffff;
+}
+
+
 .list-view {
     -fx-border-image-width: 0;
 }
