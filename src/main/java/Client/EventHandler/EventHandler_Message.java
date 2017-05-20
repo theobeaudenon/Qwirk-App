@@ -7,6 +7,7 @@ import Client.Singleton.Singleton_ClientSocket;
 import Client.Singleton.Singleton_UserInfo;
 import Objet.Message.Message;
 import com.jfoenix.controls.JFXListView;
+import emoji4j.EmojiUtils;
 import io.socket.client.Ack;
 import io.socket.emitter.Emitter;
 import javafx.application.Application;
@@ -20,16 +21,21 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -126,6 +132,7 @@ public class EventHandler_Message {
             if (message.getUser() == Singleton_UserInfo.getInstance().getUser().getUserID()){
                 String messageString = message.getMessage();
                 String linkString = message.getMessage().substring(matchStart, matchEnd);
+                boolean linkIsAnImage = false   ;
                 // si le lien est en première position dans le msg
                 if (matchStart == 0){
                     BubbledLabel bl6 = new BubbledLabel();
@@ -134,42 +141,51 @@ public class EventHandler_Message {
                     bl6.setTextFill(Color.web(ourMessageColor));
 
                     BubbledLabel bl7 = new BubbledLabel();
-                    bl7.setText("" + messageString.substring(matchEnd, messageString.length()));
+                    bl7.setText("" + EmojiUtils.emojify(messageString.substring(matchEnd, messageString.length())));
                     bl7.setBackground(new Background(new BackgroundFill(Color.web(ourMessageColorBackground),null, null)));
                     bl7.setTextFill(Color.web(ourMessageColor));
                     bl7.setBubbleSpec(BubbleSpec.FACE_RIGHT_CENTER);
+                    if (linkIsAnImage){
+                        ImageView hyperlink = new ImageView(linkString);
+                        HBox hBox = new HBox();
+                        hBox.setAlignment(Pos.TOP_RIGHT);
+                        hBox.getChildren().addAll(bl6, hyperlink ,bl7);
+                        list.getItems().add(hBox);
+                    }
+                    else {
+                        BubbledLink hyperlink = new BubbledLink();
+                        hyperlink.setText(linkString);
+                        hyperlink.setBackground(new Background(new BackgroundFill(Color.web(ourMessageColorBackground),null, null)));
+                        hyperlink.setOnAction(new EventHandler<ActionEvent>() {
 
-                    BubbledLink hyperlink = new BubbledLink();
-                    hyperlink.setText(linkString);
-                    hyperlink.setBackground(new Background(new BackgroundFill(Color.web(ourMessageColorBackground),null, null)));
-                    hyperlink.setOnAction(new EventHandler<ActionEvent>() {
-
-                        @Override
-                        public void handle(ActionEvent t) {
-                            try {
-                                Desktop.getDesktop().browse(new URI(hyperlink.getText()));
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            } catch (URISyntaxException e) {
-                                e.printStackTrace();
+                            @Override
+                            public void handle(ActionEvent t) {
+                                try {
+                                    Desktop.getDesktop().browse(new URI(hyperlink.getText()));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                } catch (URISyntaxException e) {
+                                    e.printStackTrace();
+                                }
                             }
-                        }
-                    });
+                        });
 
-                    HBox hBox = new HBox();
-                    hBox.setAlignment(Pos.TOP_RIGHT);
-                    hBox.getChildren().addAll(bl6, hyperlink ,bl7);
-                    list.getItems().add(hBox);
+                        HBox hBox = new HBox();
+                        hBox.setAlignment(Pos.TOP_RIGHT);
+                        hBox.getChildren().addAll(bl6, hyperlink ,bl7);
+                        list.getItems().add(hBox);
+                    }
+
                 }
                 // si le lien est au milieu du msg
                 else {
                     BubbledLabel bl6 = new BubbledLabel();
-                    bl6.setText( message.getUserName() + " : " + messageString.substring(0, matchStart));
+                    bl6.setText( message.getUserName() + " : " + EmojiUtils.emojify(messageString.substring(0, matchStart)));
                     bl6.setBackground(new Background(new BackgroundFill(Color.web(ourMessageColorBackground),null, null)));
                     bl6.setTextFill(Color.web(ourMessageColor));
 
                     BubbledLabel bl7 = new BubbledLabel();
-                    bl7.setText("" + messageString.substring(matchEnd, messageString.length()));
+                    bl7.setText("" + EmojiUtils.emojify(messageString.substring(matchEnd, messageString.length())));
                     bl7.setBackground(new Background(new BackgroundFill(Color.web(ourMessageColorBackground),null, null)));
                     bl7.setTextFill(Color.web(ourMessageColor));
                     bl7.setBubbleSpec(BubbleSpec.FACE_RIGHT_CENTER);
@@ -210,7 +226,7 @@ public class EventHandler_Message {
                     bl6.setBubbleSpec(BubbleSpec.FACE_LEFT_CENTER);
 
                     BubbledLabel bl7 = new BubbledLabel();
-                    bl7.setText("" + messageString.substring(matchEnd, messageString.length()));
+                    bl7.setText("" + EmojiUtils.emojify(messageString.substring(matchEnd, messageString.length())));
                     bl7.setBackground(new Background(new BackgroundFill(Color.web(theirMessageColorBackgroud),null, null)));
                     bl7.setTextFill(Color.web(theirMessageColor));
 
@@ -238,13 +254,13 @@ public class EventHandler_Message {
                 // si le lien est au milieu du msg
                 else {
                     BubbledLabel bl6 = new BubbledLabel();
-                    bl6.setText( message.getUserName() + " : " + messageString.substring(0, matchStart));
+                    bl6.setText( message.getUserName() + " : " + EmojiUtils.emojify(messageString.substring(0, matchStart)));
                     bl6.setBackground(new Background(new BackgroundFill(Color.web(theirMessageColorBackgroud),null, null)));
                     bl6.setTextFill(Color.web(theirMessageColor));
                     bl6.setBubbleSpec(BubbleSpec.FACE_LEFT_CENTER);
 
                     BubbledLabel bl7 = new BubbledLabel();
-                    bl7.setText("" + messageString.substring(matchEnd, messageString.length()));
+                    bl7.setText("" + EmojiUtils.emojify(messageString.substring(matchEnd, messageString.length())));
                     bl7.setBackground(new Background(new BackgroundFill(Color.web(theirMessageColorBackgroud),null, null)));
                     bl7.setTextFill(Color.web(theirMessageColor));
 
@@ -272,14 +288,12 @@ public class EventHandler_Message {
             }
         }
         
-        
-        
         // si il n'y a pas de lien dans le msg
         else {
             if (message.getUser() == Singleton_UserInfo.getInstance().getUser().getUserID()){
                 // x.setMaxWidth(list.getWidth() - 20);
                 BubbledLabel bl6 = new BubbledLabel();
-                bl6.setText( message.getUserName() + " : " + message.getMessage());
+                bl6.setText( message.getUserName() + " : " + EmojiUtils.emojify(message.getMessage()));
                 bl6.setBackground(new Background(new BackgroundFill(Color.web(ourMessageColorBackground),null, null)));
                 bl6.setTextFill(Color.web(ourMessageColor));
                 bl6.setBubbleSpec(BubbleSpec.FACE_RIGHT_CENTER);
@@ -290,7 +304,7 @@ public class EventHandler_Message {
             }
             else {
                 BubbledLabel bl6 = new BubbledLabel();
-                bl6.setText( message.getUserName() + " : " + message.getMessage());
+                bl6.setText( message.getUserName() + " : " + EmojiUtils.emojify(message.getMessage()));
                 bl6.setBackground(new Background(new BackgroundFill(Color.web(theirMessageColorBackgroud),null, null)));
                 bl6.setTextFill(Color.web(theirMessageColor));
                 bl6.setBubbleSpec(BubbleSpec.FACE_LEFT_CENTER);
@@ -307,5 +321,30 @@ public class EventHandler_Message {
                     + "(([\\w\\-]+\\.){1,}?([\\w\\-.~]+\\/?)*"
                     + "[\\p{Alnum}.,%_=?&#\\-+()\\[\\]\\*$~@!:/{};']*)",
             Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL);
+
+
+    public static Boolean testImage(String url){
+        try {
+            URL url2 = new URL(url);
+            Image image = ImageIO.read(url2.openStream());
+            //BufferedImage image = ImageIO.read(new URL("http://someimage.jpg"));
+            if(image != null){
+                return true;
+            } else{
+                return false;
+            }
+
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            System.err.println("URL error with image");
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            System.err.println("IO error with image");
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
 

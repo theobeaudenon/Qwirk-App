@@ -7,6 +7,7 @@ import Client.Component.Component_Label_Group;
 import Client.EventHandler.*;
 import Client.EventHandler.ContextMenu.EventHander_ContextMenu_Contact_DeleteAction;
 import Client.EventHandler.ContextMenu.EventHandler_ContextMenu_Contact;
+import Client.EventHandler.DragAndDrop.MouseDragDropped;
 import Client.Singleton.Singleton_ClientSocket;
 import Client.Singleton.Singleton_UserInfo;
 import Objet.Channel.Channel;
@@ -29,11 +30,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -104,17 +104,30 @@ public class Controller_WindowMain implements Initializable {
     @FXML
     private JFXButton deconectButton;
 
+    final KeyCombination kb = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.ALT_DOWN);
+
+    private JFXSnackbar messageNotifOk;
+    private JFXSnackbar messageNotifError;
+
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
 
         list.setFocusTraversable(false);
         list.setId("Messagelist");
 
        // userContactList.getItems().add(new Label("test"));
 
+        messageNotifOk =  new JFXSnackbar(principalPane);
+        messageNotifError = new JFXSnackbar(principalPane);
 
+        final String cssUrl1 = getClass().getResource("/style/notifOK.css").toExternalForm();
+        final String cssUrl2 = getClass().getResource("/style/notifError.css").toExternalForm();
+        messageNotifOk.getStylesheets().add(cssUrl1);
+        messageNotifError.getStylesheets().add(cssUrl2);
 
         homeDisplay();
         EventHandler_Home.loadPublicChan_Home(homeChan);
@@ -177,6 +190,39 @@ public class Controller_WindowMain implements Initializable {
         deconectButton.setGraphic(deco);
         deconectButton.setRipplerFill(Color.GRAY);
 
+        chatSendBox.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke) {
+                if (kb.match(ke)){
+                    chatSendBox.appendText("\n");
+                }
+                else if (ke.getCode().equals(KeyCode.ENTER)) {
+                    sendButtonEvent();
+                    ke.consume(); // necessary to prevent event handlers for this event
+                }
+            }
+        });
+
+        chatSendBox.setOnDragOver(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                event.acceptTransferModes(TransferMode.COPY);
+            }
+        });
+
+        chatSendBox.setOnDragDropped(new EventHandler<DragEvent>() {
+            @Override
+            public void handle(DragEvent event) {
+                if (MouseDragDropped.isFileOk(event)){
+                    System.out.println(MouseDragDropped.getFile(event));
+                    messageNotifOk.show("Le fichier : " +MouseDragDropped.getFile(event) + " a bien été ajouter", 3000);
+                }
+                else {
+                    messageNotifError.show("Le fichier : " +MouseDragDropped.getFile(event) + " n'a le bon format", 3000);
+                }
+            }
+        });
+
 
     }
 
@@ -213,15 +259,7 @@ public class Controller_WindowMain implements Initializable {
         controllerChat.setManaged(false);
     }
 
-    public void chatSendEventHandler(KeyEvent event) {
-        if (chatSendBox.isVisible()){
-            if (event.getCode() == KeyCode.ENTER){
-
-            }
-        }
-    }
-
-    public void sendButtonEvent(Event event) {
+    public void sendButtonEvent() {
         System.out.println(chatSendBox.getText());
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 

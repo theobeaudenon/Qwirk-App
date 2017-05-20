@@ -16,6 +16,13 @@
     -fx-background-color: #ffffff;
 }
 
+.jfx-snackbar-content{
+    -fx-background-color: #2cc700;
+}
+
+.jfx-snackbar-toast{
+    -fx-text-fill: #ffffff;
+}
 
 .list-view {
     -fx-border-image-width: 0;

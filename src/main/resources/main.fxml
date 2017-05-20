@@ -56,9 +56,6 @@
       </left>
       <center>
          <BorderPane fx:id="centerPan" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <center>
-               <JFXMasonryPane fx:id="homeChan" BorderPane.alignment="CENTER" />
-            </center>
             <top>
                <ImageView fx:id="chatGroupBanner" fitHeight="111.0" fitWidth="680.0" pickOnBounds="true" visible="false" BorderPane.alignment="CENTER">
                   <image>
@@ -69,13 +66,16 @@
             <bottom>
                <BorderPane fx:id="controllerChat" prefHeight="44.0" prefWidth="680.0" BorderPane.alignment="CENTER">
                   <center>
-                     <TextArea fx:id="chatSendBox" onKeyPressed="#chatSendEventHandler" prefHeight="44.0" prefWidth="581.0" BorderPane.alignment="CENTER" />
+                     <TextArea fx:id="chatSendBox" prefHeight="44.0" prefWidth="581.0" BorderPane.alignment="CENTER" />
                   </center>
                   <right>
                      <JFXButton fx:id="sendButton" onMouseClicked="#sendButtonEvent" prefHeight="46.0" prefWidth="43.0" text="Send" BorderPane.alignment="CENTER" />
                   </right>
                </BorderPane>
             </bottom>
+            <left>
+               <JFXMasonryPane fx:id="homeChan" BorderPane.alignment="CENTER" />
+            </left>
          </BorderPane>
       </center>
       <right>
