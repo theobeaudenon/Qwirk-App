@@ -10,6 +10,7 @@ import com.github.sarxos.webcam.Webcam;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.svg.SVGGlyph;
 import io.socket.client.Ack;
+import io.socket.emitter.Emitter;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -28,7 +29,8 @@ import javafx.scene.paint.Color;
 import org.json.JSONObject;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
+import java.awt.image.*;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
@@ -55,10 +57,13 @@ public class Controller_WindowSoloChat implements Initializable {
     private Pane theirWebCamPane;
 
     private ImageView imgWebCamCapturedImage;
+    private ImageView imgWebCamCapturedImage2;
     private Webcam webCam = null;
     private boolean stopCamera = false;
     private ObjectProperty<Image> imageProperty = new SimpleObjectProperty<Image>();
+    private ObjectProperty<Image> imageProperty2 = new SimpleObjectProperty<Image>();
     private BorderPane webCamPane;
+    private BorderPane webCamPane2;
 
     protected boolean isSever = false;
 
@@ -96,6 +101,14 @@ public class Controller_WindowSoloChat implements Initializable {
         webCamPane.setPrefHeight(ourWebCamPane.getHeight());
         ourWebCamPane.getChildren().addAll(webCamPane);
 
+        webCamPane2 = new BorderPane();
+        webCamPane2.setStyle("-fx-background-color: #ccc;");
+        imgWebCamCapturedImage2 = new ImageView();
+        webCamPane2.setCenter(imgWebCamCapturedImage2);
+        webCamPane2.setPrefWidth(theirWebCamPane.getWidth());
+        webCamPane2.setPrefHeight(theirWebCamPane.getHeight());
+        theirWebCamPane.getChildren().addAll(webCamPane2);
+
         Platform.runLater(new Runnable() {
 
             @Override
@@ -104,8 +117,32 @@ public class Controller_WindowSoloChat implements Initializable {
             }
         });
 
+
+        Singleton_ClientSocket.getInstance().socket.on("callInboud", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                byte[] obj = (byte[]) args[0];
+                Image image = convertToJavaFXImage(obj, 170,160);
+                imageProperty2.set(image);
+            }
+        });
+
+        imgWebCamCapturedImage2.imageProperty().bind(imageProperty2);
+
         initializeWebCam(0);
 
+    }
+
+    private static Image convertToJavaFXImage(byte[] raw, final int width, final int height) {
+        WritableImage image = new WritableImage(width, height);
+        try {
+            ByteArrayInputStream bis = new ByteArrayInputStream(raw);
+            BufferedImage read = ImageIO.read(bis);
+            image = SwingFXUtils.toFXImage(read, null);
+        } catch (IOException ex) {
+            ex.getStackTrace();
+        }
+        return image;
     }
 
     public void caller(){
@@ -167,6 +204,8 @@ public class Controller_WindowSoloChat implements Initializable {
         th.start();
         imgWebCamCapturedImage.imageProperty().bind(imageProperty);
     }
+
+
 
     protected void initializeWebCam(final int webCamIndex) {
 

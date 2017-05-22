@@ -110,16 +110,6 @@ public class EventHandler_Call {
             }
         });
 
-        Singleton_ClientSocket.getInstance().socket.on("callInboud", new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                byte[] obj = (byte[]) args[0];
-
-
-            }
-        });
-
-
 
         Singleton_ClientSocket.getInstance().socket.on("callprosses", new Emitter.Listener() {
             @Override
