@@ -9,7 +9,7 @@
    <top>
       <BorderPane prefHeight="188.0" prefWidth="400.0" style="-fx-background-color: #0088fd;" BorderPane.alignment="CENTER">
          <right>
-            <JFXButton fx:id="callButton" prefHeight="73.0" prefWidth="82.0" BorderPane.alignment="CENTER">
+            <JFXButton fx:id="callButton" prefHeight="73.0" prefWidth="82.0" BorderPane.alignment="CENTER" onMouseClicked="#makeACall">
                <BorderPane.margin>
                   <Insets right="20.0" />
                </BorderPane.margin>

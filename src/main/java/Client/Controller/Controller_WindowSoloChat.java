@@ -1,12 +1,15 @@
 package Client.Controller;
 
+import Client.Singleton.Singleton_ClientSocket;
 import Client.Singleton.Singleton_UserInfo;
+import Objet.Alerte.Call;
 import Objet.User.User;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.svg.SVGGlyph;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
@@ -51,6 +54,12 @@ public class Controller_WindowSoloChat implements Initializable {
         callButton.setRipplerFill(Color.GREENYELLOW);
 
 
+
+    }
+
+    public void makeACall(MouseEvent mouseEvent) {
+        Call call = new Call(Singleton_UserInfo.getInstance().getUser().getUserID(), contactUser.getUserID());
+        Singleton_ClientSocket.getInstance().socket.emit("makeACall", call.toJson());
 
     }
 }

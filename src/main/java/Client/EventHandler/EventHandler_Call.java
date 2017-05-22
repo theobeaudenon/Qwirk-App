@@ -28,7 +28,7 @@ public class EventHandler_Call {
                 final JSONObject obj = (JSONObject)args[0];
                 Call alerte = new Call(obj.toString());
                 if(Singleton_UserInfo.getInstance().getUser().getUserID().equals(alerte.getCalled())){
-                     Platform.runLater(new Runnable() {
+                    Platform.runLater(new Runnable() {
                         public void run() {
 
                             JFXDialogLayout content = new JFXDialogLayout();
@@ -48,7 +48,6 @@ public class EventHandler_Call {
                                 @Override
                                 public void handle(ActionEvent event) {
                                     Singleton_ClientSocket.getInstance().socket.emit("acceptedCall", alerte.toJson());
-                                    //Singleton_ClientSocket.getInstance().socket.emit("makeACall", alerte.toJson());
 
                                     dialog.close();
 
@@ -56,6 +55,31 @@ public class EventHandler_Call {
                             });
 
                             content.setActions(button,buttonapcepter);
+                            dialog.show();
+
+                            /*final Stage dialog = new Stage();
+                            dialog.initModality(Modality.APPLICATION_MODAL);
+                           // dialog.initOwner(Controller_WindowMain);
+                            VBox dialogVbox = new VBox(20);
+                            dialogVbox.getChildren().add(new Text(message));
+                            Scene dialogScene = new Scene(dialogVbox, 300, 200);
+                            dialog.setScene(dialogScene);
+                            dialog.show();*/
+                        }
+                    });
+                }
+
+                if(Singleton_UserInfo.getInstance().getUser().getUserID().equals(alerte.getCaller())){
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+
+                            JFXDialogLayout content = new JFXDialogLayout();
+                            content.setHeading(new Text("Appel en cours"));
+                            content.setBody(new Text("Vous etes en train d'appeler "+alerte.getUserCalled().getUserName()));
+                            JFXDialog dialog = new JFXDialog(controller_windowMain.getPrincipalPane() , content , JFXDialog.DialogTransition.CENTER );
+
+
+                           // content.setActions(button,buttonapcepter);
                             dialog.show();
 
                             /*final Stage dialog = new Stage();
@@ -81,7 +105,20 @@ public class EventHandler_Call {
                 Call alerte = new Call(obj.toString());
                 if(Singleton_UserInfo.getInstance().getUser().getUserID().equals(alerte.getCalled()) || Singleton_UserInfo.getInstance().getUser().getUserID().equals(alerte.getCaller())){
 
+                    Platform.runLater(new Runnable() {
+                        public void run() {
 
+                            JFXDialogLayout content = new JFXDialogLayout();
+                            content.setHeading(new Text("Appel OK"));
+                            //content.setBody(new Text("Vous etes en train d'appeler "+alerte.getUserCalled().getUserName()));
+                            JFXDialog dialog = new JFXDialog(controller_windowMain.getPrincipalPane() , content , JFXDialog.DialogTransition.CENTER );
+
+
+                            // content.setActions(button,buttonapcepter);
+                            dialog.show();
+
+                        }
+                    });
 
                 }
             }
