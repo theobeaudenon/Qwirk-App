@@ -56,7 +56,7 @@ public class Main {
 
         //Demarage du serveur
         Configuration config = new Configuration();
-        config.setHostname("localhost");
+        config.setHostname("10.29.16.249");
         config.setPort(9092);
         config.setUpgradeTimeout(10000000);
         config.setPingTimeout(10000000);
