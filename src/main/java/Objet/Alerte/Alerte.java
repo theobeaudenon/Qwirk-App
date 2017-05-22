@@ -40,4 +40,9 @@ public class Alerte implements Serializable {
     public void setMessage(String message) {
         this.message = message;
     }
+    public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+
+    }
 }

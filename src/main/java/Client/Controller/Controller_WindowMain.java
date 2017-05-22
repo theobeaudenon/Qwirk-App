@@ -2,7 +2,6 @@ package Client.Controller;/**
  * Created by Boufle on 24/04/2017.
  */
 
-import Client.Component.Component_Label_Contact;
 import Client.Component.Component_Label_Group;
 import Client.EventHandler.*;
 import Client.EventHandler.ContextMenu.EventHander_ContextMenu_Contact_DeleteAction;
@@ -18,8 +17,6 @@ import Objet.Utils.Action;
 import com.jfoenix.controls.*;
 import com.jfoenix.svg.SVGGlyph;
 import io.socket.client.Ack;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -33,16 +30,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class Controller_WindowMain implements Initializable {
@@ -135,6 +127,8 @@ public class Controller_WindowMain implements Initializable {
         EventHandler_Message.updateMessage(list);
         EventHandler_Contact.loadContact_Contact(userContactList);
         EventHandler_Alerte.updateMessage(this);
+        EventHandler_Call.incommingCall(this);
+        EventHandler_Call.callprosses(this);
         EventHandler_Contact.updateContact(userContactList);
 
 

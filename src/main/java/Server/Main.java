@@ -5,6 +5,7 @@ import Objet.Bot.Bot;
 import Objet.Bot.Commandes;
 import Objet.LinkObjects.BotChannel;
 import Server.Data.Singleton_Data;
+import Server.Events.Call.Call_Events;
 import Server.Events.Channels.Channels_Events;
 import Server.Events.Contacts.Contacts_Events;
 import Server.Events.Login_Signup.Login_Signup_Events;
@@ -150,6 +151,9 @@ public class Main {
         Messages_Events.newMessage(server);
         Messages_Events.getAllmessagesFromChannel(server);
 
+        //Call Events
+        Call_Events.makeACall(server);
+        Call_Events.acceptedCall(server);
 
         //Contact Events
         Contacts_Events.getMyContacts(server);
