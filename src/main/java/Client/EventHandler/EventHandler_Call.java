@@ -107,12 +107,12 @@ public class EventHandler_Call {
 
                     Platform.runLater(new Runnable() {
                         public void run() {
-
                             JFXDialogLayout content = new JFXDialogLayout();
                             content.setHeading(new Text("Appel OK"));
                             //content.setBody(new Text("Vous etes en train d'appeler "+alerte.getUserCalled().getUserName()));
                             JFXDialog dialog = new JFXDialog(controller_windowMain.getPrincipalPane() , content , JFXDialog.DialogTransition.CENTER );
 
+                            Singleton_UserInfo.getInstance().setInCall(true);
 
                             // content.setActions(button,buttonapcepter);
                             dialog.show();

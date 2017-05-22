@@ -19,6 +19,7 @@ public class Singleton_UserInfo {
     private User user;
     private ArrayList<User> contactList;
     private User userSoloChat;
+    private boolean isInCall = false;
 
     /** Point d'accès pour l'instance unique du singleton */
     public static synchronized Singleton_UserInfo getInstance()
@@ -57,5 +58,13 @@ public class Singleton_UserInfo {
 
     public void setUserSoloChat(User userSoloChat) {
         this.userSoloChat = userSoloChat;
+    }
+
+    public boolean isInCall() {
+        return isInCall;
+    }
+
+    public void setInCall(boolean inCall) {
+        isInCall = inCall;
     }
 }

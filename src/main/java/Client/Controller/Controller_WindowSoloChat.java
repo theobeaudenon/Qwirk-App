@@ -4,16 +4,32 @@ import Client.Singleton.Singleton_ClientSocket;
 import Client.Singleton.Singleton_UserInfo;
 import Objet.Alerte.Call;
 import Objet.User.User;
+import com.github.sarxos.webcam.Webcam;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.svg.SVGGlyph;
+import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.concurrent.Task;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Created by Boufle on 18/05/2017.
@@ -27,6 +43,21 @@ public class Controller_WindowSoloChat implements Initializable {
 
     @FXML
     private JFXButton callButton;
+
+    @FXML
+    private Pane ourWebCamPane;
+
+    @FXML
+    private Pane theirWebCamPane;
+
+    private ImageView imgWebCamCapturedImage;
+    private Webcam webCam = null;
+    private boolean stopCamera = false;
+    private ObjectProperty<Image> imageProperty = new SimpleObjectProperty<Image>();
+    private BorderPane webCamPane;
+
+    protected boolean isSever = false;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,13 +84,131 @@ public class Controller_WindowSoloChat implements Initializable {
         callButton.setGraphic(call);
         callButton.setRipplerFill(Color.GREENYELLOW);
 
+        webCamPane = new BorderPane();
+        webCamPane.setStyle("-fx-background-color: #ccc;");
+        imgWebCamCapturedImage = new ImageView();
+        webCamPane.setCenter(imgWebCamCapturedImage);
+        webCamPane.setPrefWidth(ourWebCamPane.getWidth());
+        webCamPane.setPrefHeight(ourWebCamPane.getHeight());
+        ourWebCamPane.getChildren().addAll(webCamPane);
 
+        Platform.runLater(new Runnable() {
+
+            @Override
+            public void run() {
+                setImageViewSize();
+            }
+        });
+
+        initializeWebCam(0);
+
+    }
+
+    public void caller(){
+
+    }
+
+    protected void startWebCamStream() {
+
+        stopCamera = false;
+
+        Task<Void> task = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+
+                final AtomicReference<WritableImage> ref = new AtomicReference<>();
+                BufferedImage img = null;
+
+                while (!stopCamera) {
+                    try {
+                        if ((img = webCam.getImage()) != null) {
+
+                            ref.set(SwingFXUtils.toFXImage(img, ref.get()));
+                            img.flush();
+
+                            Platform.runLater(new Runnable(){
+
+                                @Override
+                                public void run() {
+                                    imageProperty.set(ref.get());
+                                    //socket du caller
+                                    if (Singleton_UserInfo.getInstance().isInCall()){
+                                        BufferedImage bImage = SwingFXUtils.fromFXImage(ref.get(), null);
+                                        ByteArrayOutputStream s = new ByteArrayOutputStream();
+                                        try {
+                                            ImageIO.write(bImage, "png", s);
+                                            byte[] res  = s.toByteArray();
+                                            //on envoie l'image au client
+                                            s.close();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                return null;
+            }
+        };
+
+        Thread th = new Thread(task);
+        th.setDaemon(true);
+        th.start();
+        imgWebCamCapturedImage.imageProperty().bind(imageProperty);
+    }
+
+    protected void initializeWebCam(final int webCamIndex) {
+
+        Task<Void> webCamTask = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+
+                if (webCam != null) {
+                    disposeWebCamCamera();
+                }
+
+                webCam = Webcam.getWebcams().get(webCamIndex);
+                webCam.open();
+
+                startWebCamStream();
+
+                return null;
+            }
+        };
+
+        Thread webCamThread = new Thread(webCamTask);
+        webCamThread.setDaemon(true);
+        webCamThread.start();
+
+    }
+
+    protected void disposeWebCamCamera() {
+        stopCamera = true;
+        webCam.close();
+    }
+
+    protected void setImageViewSize() {
+
+        double height = webCamPane.getHeight();
+        double width = webCamPane.getWidth();
+
+        imgWebCamCapturedImage.setFitHeight(height);
+        imgWebCamCapturedImage.setFitWidth(width);
+        imgWebCamCapturedImage.prefHeight(height);
+        imgWebCamCapturedImage.prefWidth(width);
+        imgWebCamCapturedImage.setPreserveRatio(true);
 
     }
 
     public void makeACall(MouseEvent mouseEvent) {
         Call call = new Call(Singleton_UserInfo.getInstance().getUser().getUserID(), contactUser.getUserID());
         Singleton_ClientSocket.getInstance().socket.emit("makeACall", call.toJson());
-
     }
 }

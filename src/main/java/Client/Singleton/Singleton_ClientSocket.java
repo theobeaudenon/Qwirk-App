@@ -29,9 +29,6 @@ public class Singleton_ClientSocket {
 
     private Singleton_ClientSocket()  {
 
-
-
-
         IO.Options opt = new IO.Options();
         opt.reconnectionDelay = 3000;
         opt.timeout = 15000 ;
