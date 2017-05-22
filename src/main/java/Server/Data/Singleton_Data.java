@@ -1,6 +1,8 @@
 package Server.Data;
 
+import Objet.Bot.ActionBot;
 import Objet.Bot.Bot;
+import Objet.Bot.Commandes;
 import Objet.Channel.Channel;
 import Objet.LinkObjects.BotChannel;
 import Objet.LinkObjects.UserChannels;
@@ -8,6 +10,10 @@ import Objet.LinkObjects.UserContacts;
 import Objet.Message.Message;
 import Objet.User.User;
 import Objet.Utils.Tuple;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -95,7 +101,66 @@ public class Singleton_Data implements Serializable{
 
         userContactsHashMap.add(new UserContacts(0,1));
 
+        String bot1 = "{\n" +
+                "  \"commandes\": [\n" +
+                "    {\n" +
+                "      \"action\": \"KICK\",\n" +
+                "      \"cmd\": \":kick\",\n" +
+                "      \"message\": \"Le marteau du ban a frappé\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"action\": \"BAN\",\n" +
+                "      \"cmd\": \":ban\",\n" +
+                "      \"message\": \"Le marteau du ban a frappé\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"action\": \"MESSAGE\",\n" +
+                "      \"cmd\": \":bite\",\n" +
+                "      \"message\": \"chatte\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"action\": \"MESSAGE\",\n" +
+                "      \"cmd\": \":hey\",\n" +
+                "      \"message\": \"Coucou\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"name\": \"nom du bot\"\n" +
+                "}";
 
+        try {
+            JsonParser parser = new JsonParser();
+            JsonObject rootObj = parser.parse(bot1).getAsJsonObject();
+
+            ArrayList<Commandes> commandes = new ArrayList<Commandes>();
+
+            JsonArray locObj = rootObj.getAsJsonArray("commandes");
+            for (JsonElement pa : locObj) {
+                JsonObject paymentObj = pa.getAsJsonObject();
+                String     action     = paymentObj.get("action").getAsString();
+                String     quoteid     = paymentObj.get("cmd").getAsString();
+                String     message     = paymentObj.get("message").getAsString();
+                ActionBot actionBot=null;
+                if(ActionBot.BAN.toString().equals(action)){
+                    actionBot = ActionBot.BAN;
+                }
+                if(ActionBot.MESSAGE.toString().equals(action)){
+                    actionBot = ActionBot.MESSAGE;
+                }
+                if(ActionBot.KICK.toString().equals(action)){
+                    actionBot = ActionBot.KICK;
+                }
+                if(action== null){
+                    throw new Exception();
+                }
+                commandes.add(new Commandes(actionBot,quoteid,message));
+            }
+            Bot name = new Bot(commandes, rootObj.get("name").getAsString(),this.getBotIncrement());
+            this.getBotArrayList().add(name);
+            this.getBotChannelHashMap().add(new BotChannel(name.getIdBot(),6));
+
+        }catch (Exception e){
+
+        }
 
     }
 
