@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.Controller_WindowSoloChat">
+<BorderPane maxHeight="700.0" maxWidth="400.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.Controller_WindowSoloChat">
    <top>
-      <BorderPane prefHeight="188.0" prefWidth="400.0" style="-fx-background-color: #0088fd;" BorderPane.alignment="CENTER">
+      <BorderPane prefHeight="100.0" prefWidth="400.0" style="-fx-background-color: #0088fd;" BorderPane.alignment="CENTER">
          <right>
             <JFXButton fx:id="callButton" onMouseClicked="#makeACall" prefHeight="73.0" prefWidth="82.0" BorderPane.alignment="CENTER">
                <BorderPane.margin>
@@ -23,10 +23,10 @@
       </BorderPane>
    </top>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox maxHeight="600.0" maxWidth="400.0" prefHeight="600.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
-            <Pane fx:id="ourWebCamPane" prefHeight="200.0" prefWidth="200.0" />
-            <Pane fx:id="theirWebCamPane" prefHeight="200.0" prefWidth="200.0" />
+            <Pane fx:id="ourWebCamPane" />
+            <Pane fx:id="theirWebCamPane" />
          </children>
       </VBox>
    </center>

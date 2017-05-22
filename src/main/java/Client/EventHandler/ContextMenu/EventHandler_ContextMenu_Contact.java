@@ -44,7 +44,8 @@ public class EventHandler_ContextMenu_Contact implements EventHandler<MouseEvent
                 root  = FXMLLoader.load(getClass().getResource("/soloChat.fxml"));
                 Stage stage = new Stage();
                 stage.setTitle("My New Stage Title");
-                stage.setScene(new Scene(root, 600, 600));
+                stage.setScene(new Scene(root, 400, 700));
+                stage.setResizable(false);
                 stage.show();
                 // Hide this current window (if this is what you want)
 //            ((Node)(event.getSource())).getScene().getWindow().hide();

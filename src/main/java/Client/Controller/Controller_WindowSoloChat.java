@@ -97,16 +97,16 @@ public class Controller_WindowSoloChat implements Initializable {
         webCamPane.setStyle("-fx-background-color: #ccc;");
         imgWebCamCapturedImage = new ImageView();
         webCamPane.setCenter(imgWebCamCapturedImage);
-        webCamPane.setPrefWidth(ourWebCamPane.getWidth());
-        webCamPane.setPrefHeight(ourWebCamPane.getHeight());
+        webCamPane.setPrefWidth(400);
+        webCamPane.setPrefHeight(300);
         ourWebCamPane.getChildren().addAll(webCamPane);
 
         webCamPane2 = new BorderPane();
         webCamPane2.setStyle("-fx-background-color: #ccc;");
         imgWebCamCapturedImage2 = new ImageView();
         webCamPane2.setCenter(imgWebCamCapturedImage2);
-        webCamPane2.setPrefWidth(theirWebCamPane.getWidth());
-        webCamPane2.setPrefHeight(theirWebCamPane.getHeight());
+        webCamPane2.setPrefWidth(400);
+        webCamPane2.setPrefHeight(300);
         theirWebCamPane.getChildren().addAll(webCamPane2);
 
         Platform.runLater(new Runnable() {
@@ -122,7 +122,7 @@ public class Controller_WindowSoloChat implements Initializable {
             @Override
             public void call(Object... args) {
                 byte[] obj = (byte[]) args[0];
-                Image image = convertToJavaFXImage(obj, 170,160);
+                Image image = convertToJavaFXImage(obj, 400,300);
                 imageProperty2.set(image);
             }
         });
@@ -178,7 +178,7 @@ public class Controller_WindowSoloChat implements Initializable {
                                         BufferedImage bImage = SwingFXUtils.fromFXImage(ref.get(), null);
                                         ByteArrayOutputStream s = new ByteArrayOutputStream();
                                         try {
-                                            ImageIO.write(bImage, "png", s);
+                                            ImageIO.write(bImage, "jpg", s);
                                             byte[] res  = s.toByteArray();
                                             //on envoie l'image au client
                                             Singleton_ClientSocket.getInstance().socket.emit("callFlux",new CallData(Singleton_UserInfo.getInstance().getCall(),res).toJson());
