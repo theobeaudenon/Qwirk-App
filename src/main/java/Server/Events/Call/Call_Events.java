@@ -1,6 +1,7 @@
 package Server.Events.Call;
 
 import Objet.Alerte.Call;
+import Objet.Call.CallData;
 import Objet.Channel.Channel;
 import Objet.Channel.ChannelUtils;
 import Objet.User.User;
@@ -26,8 +27,10 @@ public class Call_Events {
                 // broadcast messages to all clients
                 //server.getBroadcastOperations().sendEvent("chatevent", data);
 
+                idUser.setCallerUUID(client.getSessionId());
                 idUser.setUserCalled( UserUtils.getUserFromId(Singleton_Data.getInstance().getUserHashMap(), idUser.getCalled()));
                 idUser.setUserCaller( UserUtils.getUserFromId(Singleton_Data.getInstance().getUserHashMap(), idUser.getCaller()));
+
 
                 if (ackRequest.isAckRequested()) {
                     // send ack response with data to client
@@ -49,6 +52,7 @@ public class Call_Events {
 
         server.addEventListener("acceptedCall", Call.class, new DataListener<Call>() {
             public void onData(SocketIOClient client, Call idUser, AckRequest ackRequest) {
+                idUser.setCalledUUID(client.getSessionId());
 
                 server.getBroadcastOperations().sendEvent("callprosses", idUser);
 
@@ -69,6 +73,30 @@ public class Call_Events {
                 server.getBroadcastOperations().sendEvent("deniedCallBack", idUser);
 
                 System.out.print("deniedCall : "+idUser.getCaller() +" " + idUser.getCalled());
+                // System.out.print(data.getPass());
+
+            }
+        });
+
+    }
+
+
+
+    public static void callFlux(SocketIOServer server){
+
+        server.addEventListener("callFlux", CallData.class, new DataListener<CallData>() {
+            public void onData(SocketIOClient client, CallData idUser, AckRequest ackRequest) {
+
+                if(client.getSessionId().equals(idUser.getCalledUUID())){
+                    server.getClient(idUser.getCallerUUID()).sendEvent("callInboud", idUser.getData());
+
+                }else{
+                    server.getClient(idUser.getCalledUUID()).sendEvent("callInboud", idUser.getData());
+
+                }
+                //server.getBroadcastOperations().sendEvent("deniedCallBack", idUser);
+
+                //System.out.print("deniedCall : "+idUser.getCaller() +" " + idUser.getCalled());
                 // System.out.print(data.getPass());
 
             }

@@ -1,12 +1,15 @@
 package Client.Controller;
 
+import Client.Component.Component_Label_Contact;
 import Client.Singleton.Singleton_ClientSocket;
 import Client.Singleton.Singleton_UserInfo;
 import Objet.Alerte.Call;
+import Objet.Call.CallData;
 import Objet.User.User;
 import com.github.sarxos.webcam.Webcam;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.svg.SVGGlyph;
+import io.socket.client.Ack;
 import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -22,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import org.json.JSONObject;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -140,6 +144,7 @@ public class Controller_WindowSoloChat implements Initializable {
                                             ImageIO.write(bImage, "png", s);
                                             byte[] res  = s.toByteArray();
                                             //on envoie l'image au client
+                                            Singleton_ClientSocket.getInstance().socket.emit("callFlux",new CallData(Singleton_UserInfo.getInstance().getCall(),res));
                                             s.close();
                                         } catch (IOException e) {
                                             e.printStackTrace();

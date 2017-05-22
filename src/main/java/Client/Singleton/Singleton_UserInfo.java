@@ -1,5 +1,6 @@
 package Client.Singleton;
 
+import Objet.Alerte.Call;
 import Objet.User.User;
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -20,6 +21,7 @@ public class Singleton_UserInfo {
     private ArrayList<User> contactList;
     private User userSoloChat;
     private boolean isInCall = false;
+    private Call call;
 
     /** Point d'accès pour l'instance unique du singleton */
     public static synchronized Singleton_UserInfo getInstance()
@@ -66,5 +68,13 @@ public class Singleton_UserInfo {
 
     public void setInCall(boolean inCall) {
         isInCall = inCall;
+    }
+
+    public void setCall(Call call) {
+        this.call = call;
+    }
+
+    public Call getCall() {
+        return call;
     }
 }

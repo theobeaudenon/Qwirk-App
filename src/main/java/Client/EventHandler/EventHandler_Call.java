@@ -110,6 +110,17 @@ public class EventHandler_Call {
             }
         });
 
+        Singleton_ClientSocket.getInstance().socket.on("callInboud", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                byte[] obj = (byte[]) args[0];
+
+
+            }
+        });
+
+
+
         Singleton_ClientSocket.getInstance().socket.on("callprosses", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
@@ -119,7 +130,12 @@ public class EventHandler_Call {
 
                     Platform.runLater(new Runnable() {
                         public void run() {
+                            Singleton_UserInfo.getInstance().setCall(alerte);
+                            Singleton_UserInfo.getInstance().setInCall(true);
+
                             dialog.close();
+
+
 
                           //  content.setHeading(new Text("Appel OK"));
                            // content.setBody(new Text(" "));

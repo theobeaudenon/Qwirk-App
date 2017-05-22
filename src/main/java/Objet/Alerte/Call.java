@@ -4,6 +4,7 @@ import Objet.User.User;
 import com.google.gson.Gson;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * Objet.Alerte
@@ -12,6 +13,9 @@ import java.io.Serializable;
 public class Call implements Serializable {
     int caller;
     int called;
+
+    UUID callerUUID;
+    UUID calledUUID;
 
     User userCaller;
     User userCalled;
@@ -28,6 +32,8 @@ public class Call implements Serializable {
         this.called = grupoAplicacao.getCalled();
         this.userCaller = grupoAplicacao.getUserCaller();
         this.userCalled = grupoAplicacao.getUserCalled();
+        this.callerUUID = grupoAplicacao.getCallerUUID();
+        this.calledUUID = grupoAplicacao.getCalledUUID();
     }
 
     public int getCaller() {
@@ -65,5 +71,21 @@ public class Call implements Serializable {
         Gson gson = new Gson();
         return gson.toJson(this);
 
+    }
+
+    public UUID getCallerUUID() {
+        return callerUUID;
+    }
+
+    public void setCallerUUID(UUID callerUUID) {
+        this.callerUUID = callerUUID;
+    }
+
+    public UUID getCalledUUID() {
+        return calledUUID;
+    }
+
+    public void setCalledUUID(UUID calledUUID) {
+        this.calledUUID = calledUUID;
     }
 }
