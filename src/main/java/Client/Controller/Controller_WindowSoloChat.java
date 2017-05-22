@@ -192,6 +192,7 @@ public class Controller_WindowSoloChat implements Initializable {
     protected void disposeWebCamCamera() {
         stopCamera = true;
         webCam.close();
+
     }
 
     protected void setImageViewSize() {
