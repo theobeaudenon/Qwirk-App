@@ -181,7 +181,7 @@ public class Controller_WindowSoloChat implements Initializable {
                                             ImageIO.write(bImage, "png", s);
                                             byte[] res  = s.toByteArray();
                                             //on envoie l'image au client
-                                            Singleton_ClientSocket.getInstance().socket.emit("callFlux",new CallData(Singleton_UserInfo.getInstance().getCall(),res));
+                                            Singleton_ClientSocket.getInstance().socket.emit("callFlux",new CallData(Singleton_UserInfo.getInstance().getCall(),res).toJson());
                                             s.close();
                                         } catch (IOException e) {
                                             e.printStackTrace();
