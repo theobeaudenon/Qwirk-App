@@ -61,6 +61,22 @@ public class Call_Events {
     }
 
 
+    public static void deniedCall(SocketIOServer server){
+
+        server.addEventListener("deniedCall", Call.class, new DataListener<Call>() {
+            public void onData(SocketIOClient client, Call idUser, AckRequest ackRequest) {
+
+                server.getBroadcastOperations().sendEvent("deniedCallBack", idUser);
+
+                System.out.print("deniedCall : "+idUser.getCaller() +" " + idUser.getCalled());
+                // System.out.print(data.getPass());
+
+            }
+        });
+
+    }
+
+
 
 
 }

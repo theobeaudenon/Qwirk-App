@@ -22,6 +22,11 @@ public class EventHandler_Call {
 
 
     public static void incommingCall(final Controller_WindowMain controller_windowMain){
+        JFXDialogLayout content = new JFXDialogLayout();
+        JFXDialog dialog = new JFXDialog(controller_windowMain.getPrincipalPane() , content , JFXDialog.DialogTransition.CENTER );
+
+
+
         Singleton_ClientSocket.getInstance().socket.on("incommingCall", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
@@ -30,21 +35,22 @@ public class EventHandler_Call {
                 if(Singleton_UserInfo.getInstance().getUser().getUserID().equals(alerte.getCalled())){
                     Platform.runLater(new Runnable() {
                         public void run() {
-
-                            JFXDialogLayout content = new JFXDialogLayout();
                             content.setHeading(new Text("Appel Entrant"));
+
                             content.setBody(new Text("Vous avez un appel de "+alerte.getUserCaller().getUserName()));
-                            JFXDialog dialog = new JFXDialog(controller_windowMain.getPrincipalPane() , content , JFXDialog.DialogTransition.CENTER );
+
                             JFXButton button = new JFXButton("Refuser");
                             button.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent event) {
+                                    Singleton_ClientSocket.getInstance().socket.emit("deniedCall", alerte.toJson());
+
                                     dialog.close();
                                 }
                             });
 
                             JFXButton buttonapcepter = new JFXButton("Apcepter");
-                            button.setOnAction(new EventHandler<ActionEvent>() {
+                            buttonapcepter.setOnAction(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent event) {
                                     Singleton_ClientSocket.getInstance().socket.emit("acceptedCall", alerte.toJson());
@@ -73,31 +79,37 @@ public class EventHandler_Call {
                     Platform.runLater(new Runnable() {
                         public void run() {
 
-                            JFXDialogLayout content = new JFXDialogLayout();
-                            content.setHeading(new Text("Appel en cours"));
+                             content.setHeading(new Text("Appel en cours"));
                             content.setBody(new Text("Vous etes en train d'appeler "+alerte.getUserCalled().getUserName()));
-                            JFXDialog dialog = new JFXDialog(controller_windowMain.getPrincipalPane() , content , JFXDialog.DialogTransition.CENTER );
 
 
                            // content.setActions(button,buttonapcepter);
                             dialog.show();
-
-                            /*final Stage dialog = new Stage();
-                            dialog.initModality(Modality.APPLICATION_MODAL);
-                           // dialog.initOwner(Controller_WindowMain);
-                            VBox dialogVbox = new VBox(20);
-                            dialogVbox.getChildren().add(new Text(message));
-                            Scene dialogScene = new Scene(dialogVbox, 300, 200);
-                            dialog.setScene(dialogScene);
-                            dialog.show();*/
                         }
                     });
                 }
             }
         });
-    }
 
-    public static void callprosses(final Controller_WindowMain controller_windowMain){
+
+        Singleton_ClientSocket.getInstance().socket.on("deniedCallBack", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                final JSONObject obj = (JSONObject) args[0];
+                Call alerte = new Call(obj.toString());
+                if( Singleton_UserInfo.getInstance().getUser().getUserID().equals(alerte.getCaller())){
+
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            dialog.close();
+
+                        }
+                    });
+
+                }
+            }
+        });
+
         Singleton_ClientSocket.getInstance().socket.on("callprosses", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
@@ -107,15 +119,13 @@ public class EventHandler_Call {
 
                     Platform.runLater(new Runnable() {
                         public void run() {
+                            dialog.close();
 
-                            JFXDialogLayout content = new JFXDialogLayout();
-                            content.setHeading(new Text("Appel OK"));
-                            //content.setBody(new Text("Vous etes en train d'appeler "+alerte.getUserCalled().getUserName()));
-                            JFXDialog dialog = new JFXDialog(controller_windowMain.getPrincipalPane() , content , JFXDialog.DialogTransition.CENTER );
-
+                          //  content.setHeading(new Text("Appel OK"));
+                           // content.setBody(new Text(" "));
 
                             // content.setActions(button,buttonapcepter);
-                            dialog.show();
+                            //dialog.show();
 
                         }
                     });
@@ -123,7 +133,21 @@ public class EventHandler_Call {
                 }
             }
         });
+
     }
+
+    public static void callprosses(final Controller_WindowMain controller_windowMain){
+
+
+
+
+    }
+
+
+    public static void deniedCallBack(final Controller_WindowMain controller_windowMain){
+
+    }
+
 
 
 }

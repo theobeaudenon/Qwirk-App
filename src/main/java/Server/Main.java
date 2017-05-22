@@ -154,6 +154,7 @@ public class Main {
         //Call Events
         Call_Events.makeACall(server);
         Call_Events.acceptedCall(server);
+        Call_Events.deniedCall(server);
 
         //Contact Events
         Contacts_Events.getMyContacts(server);
