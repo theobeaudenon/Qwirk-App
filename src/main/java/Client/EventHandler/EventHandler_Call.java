@@ -12,8 +12,14 @@ import io.socket.emitter.Emitter;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 /**
  * Created by Boufle on 26/04/2017.
@@ -122,10 +128,25 @@ public class EventHandler_Call {
                         public void run() {
                             Singleton_UserInfo.getInstance().setCall(alerte);
                             Singleton_UserInfo.getInstance().setInCall(true);
+                            if (alerte.getCalled() == Singleton_UserInfo.getInstance().getUser().getUserID()){
+                                Singleton_UserInfo.getInstance().setUserSoloChat(alerte.getUserCaller());
+                                Parent root;
+                                try {
+                                    root  = FXMLLoader.load(getClass().getResource("/soloChat.fxml"));
+                                    Stage stage = new Stage();
+                                    stage.setTitle("My New Stage Title");
+                                    stage.setScene(new Scene(root, 400, 400));
+                                    stage.setResizable(false);
+                                    stage.show();
+                                    // Hide this current window (if this is what you want)
+//            ((Node)(event.getSource())).getScene().getWindow().hide();
+                                }
+                                catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
 
                             dialog.close();
-
-
 
                           //  content.setHeading(new Text("Appel OK"));
                            // content.setBody(new Text(" "));
@@ -143,8 +164,6 @@ public class EventHandler_Call {
     }
 
     public static void callprosses(final Controller_WindowMain controller_windowMain){
-
-
 
 
     }

@@ -18,13 +18,13 @@ import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.json.JSONObject;
 
@@ -51,10 +51,7 @@ public class Controller_WindowSoloChat implements Initializable {
     private JFXButton callButton;
 
     @FXML
-    private Pane ourWebCamPane;
-
-    @FXML
-    private Pane theirWebCamPane;
+    private StackPane webCamPaneContainer;
 
     private ImageView imgWebCamCapturedImage;
     private ImageView imgWebCamCapturedImage2;
@@ -62,8 +59,8 @@ public class Controller_WindowSoloChat implements Initializable {
     private boolean stopCamera = false;
     private ObjectProperty<Image> imageProperty = new SimpleObjectProperty<Image>();
     private ObjectProperty<Image> imageProperty2 = new SimpleObjectProperty<Image>();
-    private BorderPane webCamPane;
-    private BorderPane webCamPane2;
+    private AnchorPane webCamPane;
+    private HBox webCamPane2;
 
     protected boolean isSever = false;
 
@@ -93,21 +90,28 @@ public class Controller_WindowSoloChat implements Initializable {
         callButton.setGraphic(call);
         callButton.setRipplerFill(Color.GREENYELLOW);
 
-        webCamPane = new BorderPane();
-        webCamPane.setStyle("-fx-background-color: #ccc;");
+        webCamPane = new AnchorPane();
+        webCamPane.setStyle("-fx-background-color:transparent;");
         imgWebCamCapturedImage = new ImageView();
-        webCamPane.setCenter(imgWebCamCapturedImage);
-        webCamPane.setPrefWidth(400);
-        webCamPane.setPrefHeight(300);
-        ourWebCamPane.getChildren().addAll(webCamPane);
+        webCamPane.getChildren().addAll(imgWebCamCapturedImage);
+        webCamPane.setPrefWidth(10);
+        webCamPane.setMaxWidth(130);
+        webCamPane.setPrefSize(130,100);
+        webCamPane.setMaxHeight(100);
+        webCamPane.setPrefHeight(100);
+        //ourWebCamPan.getChildren().addAll(webCamPane);
 
-        webCamPane2 = new BorderPane();
-        webCamPane2.setStyle("-fx-background-color: #ccc;");
+        webCamPane2 = new HBox();
+        webCamPane2.setStyle("-fx-background-color: #fff;");
         imgWebCamCapturedImage2 = new ImageView();
-        webCamPane2.setCenter(imgWebCamCapturedImage2);
+        webCamPane2.getChildren().addAll(imgWebCamCapturedImage2);
         webCamPane2.setPrefWidth(400);
         webCamPane2.setPrefHeight(300);
-        theirWebCamPane.getChildren().addAll(webCamPane2);
+        //theirWebCamPane.getChildren().addAll(webCamPane2);
+
+        webCamPaneContainer.getChildren().addAll(webCamPane2, webCamPane); // hbox with button and text on top of image view
+        webCamPaneContainer.setMargin(webCamPane, new Insets(180, 0,0,240));
+
 
         Platform.runLater(new Runnable() {
 
@@ -249,6 +253,15 @@ public class Controller_WindowSoloChat implements Initializable {
         imgWebCamCapturedImage.prefHeight(height);
         imgWebCamCapturedImage.prefWidth(width);
         imgWebCamCapturedImage.setPreserveRatio(true);
+
+        double height2 = webCamPane2.getHeight();
+        double width2 = webCamPane2.getWidth();
+
+        imgWebCamCapturedImage2.setFitHeight(height2);
+        imgWebCamCapturedImage2.setFitWidth(width2);
+        imgWebCamCapturedImage2.prefHeight(height2);
+        imgWebCamCapturedImage2.prefWidth(width2);
+        imgWebCamCapturedImage2.setPreserveRatio(true);
 
     }
 

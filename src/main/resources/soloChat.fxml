@@ -4,10 +4,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
 
-<BorderPane maxHeight="700.0" maxWidth="400.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.Controller_WindowSoloChat">
+<BorderPane maxHeight="400.0" maxWidth="400.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.Controller_WindowSoloChat">
    <top>
       <BorderPane prefHeight="100.0" prefWidth="400.0" style="-fx-background-color: #0088fd;" BorderPane.alignment="CENTER">
          <right>
@@ -23,11 +22,6 @@
       </BorderPane>
    </top>
    <center>
-      <VBox maxHeight="600.0" maxWidth="400.0" prefHeight="600.0" prefWidth="400.0" BorderPane.alignment="CENTER">
-         <children>
-            <Pane fx:id="ourWebCamPane" />
-            <Pane fx:id="theirWebCamPane" />
-         </children>
-      </VBox>
+      <StackPane fx:id="webCamPaneContainer" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
