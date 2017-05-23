@@ -166,9 +166,10 @@ public class Controller_WindowSoloChat implements Initializable {
         Singleton_ClientSocket.getInstance().socket.on("audioCallInboud", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-
-                byte[] obj = (byte[]) args[0];
-                speakers.write(obj, 0,1024);
+                if (args != null){
+                    byte[] obj = (byte[]) args[0];
+                    speakers.write(obj, 0,1024);
+                }
             }
         });
 
@@ -177,18 +178,14 @@ public class Controller_WindowSoloChat implements Initializable {
         initializeWebCam(0);
         startMicro();
         startSpeaker();
-
-
-
     }
 
     public void shutdown() {
-       disposeWebCamCamera();
-        dispoMircro();
-        dispoSpeaker();
         Singleton_UserInfo.getInstance().setInCall(false);
         Singleton_UserInfo.getInstance().setSoloChatOpen(false);
-
+        disposeWebCamCamera();
+        dispoMircro();
+        dispoSpeaker();
     }
 
     private static Image convertToJavaFXImage(byte[] raw, final int width, final int height) {
@@ -350,7 +347,9 @@ public class Controller_WindowSoloChat implements Initializable {
 
     protected void disposeWebCamCamera() {
         stopCamera = true;
-        webCam.close();
+        if (!System.getProperty("os.name").equals("Mac OS X")) {
+            webCam.close();
+        }
     }
 
     protected void dispoMircro(){
