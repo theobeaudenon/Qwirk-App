@@ -14,6 +14,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Text;
@@ -21,6 +22,7 @@ import javafx.stage.Stage;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Boufle on 26/04/2017.
@@ -89,7 +91,7 @@ public class EventHandler_Call {
                              content.setHeading(new Text("Appel en cours"));
                             content.setBody(new Text("Vous etes en train d'appeler "+alerte.getUserCalled().getUserName()));
 
-
+                            content.setActions(new ArrayList<Node>());
                            // content.setActions(button,buttonapcepter);
                             dialog.show();
                         }

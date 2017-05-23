@@ -72,8 +72,9 @@ public class Singleton_Data implements Serializable{
 
 
         //VAleurs par defaut
-        userHashMap.put(0,new User(0,"theo","theo@beaudenon.pro","toto","reset"));
+        userHashMap.put(0,new User(0,"test2","test2@test","toto","reset"));
         userHashMap.put(1,new User(1,"test","test@test","test","reset"));
+        userHashMap.put(2,new User(2,"test1","test1@test","test","reset"));
 
         Integer channelIncrement = getChannelIncrement();
         channelHashMap.put(channelIncrement,new Channel(channelIncrement,"toto","",1493132555,0,true));
@@ -100,6 +101,8 @@ public class Singleton_Data implements Serializable{
         userChannelsHashMap.add(new UserChannels(0,6));
 
         userContactsHashMap.add(new UserContacts(0,1));
+        userContactsHashMap.add(new UserContacts(0,2));
+        userContactsHashMap.add(new UserContacts(1,2));
 
         String bot1 = "{\n" +
                 "  \"commandes\": [\n" +

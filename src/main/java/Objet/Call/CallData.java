@@ -4,12 +4,13 @@ import Objet.Alerte.Alerte;
 import Objet.Alerte.Call;
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
  * Created by theobeaudenon on 22/05/2017.
  */
-public class CallData {
+public class CallData implements Serializable{
 
     UUID callerUUID;
     UUID calledUUID;
