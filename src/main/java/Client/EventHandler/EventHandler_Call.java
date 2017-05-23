@@ -1,6 +1,7 @@
 package Client.EventHandler;
 
 import Client.Controller.Controller_WindowMain;
+import Client.Controller.Controller_WindowSoloChat;
 import Client.Singleton.Singleton_ClientSocket;
 import Client.Singleton.Singleton_UserInfo;
 import Objet.Alerte.Alerte;
@@ -132,11 +133,16 @@ public class EventHandler_Call {
                                 Singleton_UserInfo.getInstance().setUserSoloChat(alerte.getUserCaller());
                                 Parent root;
                                 try {
-                                    root  = FXMLLoader.load(getClass().getResource("/soloChat.fxml"));
                                     Stage stage = new Stage();
+                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/soloChat.fxml"));
+                                    root  = loader.load();
                                     stage.setTitle("My New Stage Title");
                                     stage.setScene(new Scene(root, 400, 400));
                                     stage.setResizable(false);
+
+                                    Controller_WindowSoloChat controller = loader.getController();
+                                    stage.setOnHidden(e -> controller.shutdown());
+
                                     stage.show();
                                     // Hide this current window (if this is what you want)
 //            ((Node)(event.getSource())).getScene().getWindow().hide();

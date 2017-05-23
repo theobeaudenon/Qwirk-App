@@ -5,6 +5,7 @@ import Objet.User.User;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
+import javafx.stage.Stage;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Singleton_UserInfo {
     private ArrayList<User> contactList;
     private User userSoloChat;
     private boolean isInCall = false;
+    private boolean isSoloChatOpen = false;
     private Call call;
 
     /** Point d'accès pour l'instance unique du singleton */
@@ -77,4 +79,13 @@ public class Singleton_UserInfo {
     public Call getCall() {
         return call;
     }
+
+    public boolean isSoloChatOpen() {
+        return isSoloChatOpen;
+    }
+
+    public void setSoloChatOpen(boolean soloChatOpen) {
+        isSoloChatOpen = soloChatOpen;
+    }
+
 }
