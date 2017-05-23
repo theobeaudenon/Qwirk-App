@@ -105,6 +105,27 @@ public class Call_Events {
     }
 
 
+    public static void audioCallFlux(SocketIOServer server){
+
+        server.addEventListener("audioCallFlux", CallData.class, new DataListener<CallData>() {
+            public void onData(SocketIOClient client, CallData idUser, AckRequest ackRequest) {
+
+                if(client.getSessionId().equals(idUser.getCalledUUID())){
+                    server.getClient(idUser.getCallerUUID()).sendEvent("audioCallInboud", idUser.getData());
+
+                }else{
+                    server.getClient(idUser.getCalledUUID()).sendEvent("audioCallInboud", idUser.getData());
+
+                }
+                //server.getBroadcastOperations().sendEvent("deniedCallBack", idUser);
+
+                //System.out.print("deniedCall : "+idUser.getCaller() +" " + idUser.getCalled());
+                // System.out.print(data.getPass());
+
+            }
+        });
+
+    }
 
 
 }

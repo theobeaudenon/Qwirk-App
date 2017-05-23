@@ -91,6 +91,7 @@ public class Main {
         Call_Events.acceptedCall(server);
         Call_Events.deniedCall(server);
         Call_Events.callFlux(server);
+        Call_Events.audioCallFlux(server);
 
         //Contact Events
         Contacts_Events.getMyContacts(server);
