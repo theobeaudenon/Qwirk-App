@@ -30,6 +30,7 @@ import javafx.scene.paint.Color;
 import org.json.JSONObject;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.*;
 import java.awt.event.WindowEvent;
 import java.awt.image.*;
 import java.io.ByteArrayInputStream;
@@ -65,6 +66,13 @@ public class Controller_WindowSoloChat implements Initializable {
     private HBox webCamPane2;
 
     private boolean isInCall = false;
+
+    TargetDataLine microphone;
+    SourceDataLine speakers;
+    AudioFormat format = new AudioFormat(8000.0f, 16, 1, true, true);
+
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -154,9 +162,20 @@ public class Controller_WindowSoloChat implements Initializable {
             }
         });
 
+        Singleton_ClientSocket.getInstance().socket.on("audioCallInboud", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+
+                byte[] obj = (byte[]) args[0];
+                speakers.write(obj, 0,1024);
+            }
+        });
+
         imgWebCamCapturedImage2.imageProperty().bind(imageProperty2);
 
         initializeWebCam(0);
+        startMicro();
+        startSpeaker();
 
 
 
@@ -238,6 +257,80 @@ public class Controller_WindowSoloChat implements Initializable {
         th.setDaemon(true);
         th.start();
         imgWebCamCapturedImage.imageProperty().bind(imageProperty);
+    }
+
+    public void startMicro(){
+
+        try {
+            microphone = AudioSystem.getTargetDataLine(format);
+
+            DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
+            microphone = (TargetDataLine) AudioSystem.getLine(info);
+            microphone.open(format);
+
+
+            int CHUNK_SIZE = 1024;
+            byte[] data = new byte[microphone.getBufferSize() / 5];
+            microphone.start();
+
+
+            Task<Void> task = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    Platform.runLater(new Runnable(){
+                        int numBytesRead;
+                        int bytesRead = 0;
+                        @Override
+                        public void run() {
+                            if (Singleton_UserInfo.getInstance().isInCall()){
+                                numBytesRead = microphone.read(data, 0, CHUNK_SIZE);
+                                bytesRead += numBytesRead;
+                                // write the mic data to a stream for use later
+                                Singleton_ClientSocket.getInstance().socket.emit("audioCallFlux",new CallData(Singleton_UserInfo.getInstance().getCall(),data).toJson());
+                                //out.write(data, 0, numBytesRead);
+                            }
+                        }
+                    });
+
+                    return null;
+                }
+            };
+
+
+            Thread th = new Thread(task);
+            th.setDaemon(true);
+            th.start();
+
+
+        }
+        catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void startSpeaker(){
+
+        try{
+            int bytesRead = 0;
+            DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, format);
+            speakers = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
+            speakers.open(format);
+            speakers.start();
+        }
+        catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void closeMirco(){
+        microphone.close();
+    }
+
+    public void closeSpeaker(){
+        speakers.drain();
+        speakers.close();
     }
 
 
