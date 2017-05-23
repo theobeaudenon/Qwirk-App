@@ -184,8 +184,10 @@ public class Controller_WindowSoloChat implements Initializable {
 
     public void shutdown() {
        disposeWebCamCamera();
+
         Singleton_UserInfo.getInstance().setInCall(false);
         Singleton_UserInfo.getInstance().setSoloChatOpen(false);
+
     }
 
     private static Image convertToJavaFXImage(byte[] raw, final int width, final int height) {
@@ -359,6 +361,15 @@ public class Controller_WindowSoloChat implements Initializable {
     protected void disposeWebCamCamera() {
         stopCamera = true;
         webCam.close();
+    }
+
+    protected void dispoMircro(){
+        stopMicro = true;
+        microphone.close();
+    }
+
+    protected void dispoSpeaker(){
+        speakers.close();
     }
 
     protected void setImageViewSize() {
