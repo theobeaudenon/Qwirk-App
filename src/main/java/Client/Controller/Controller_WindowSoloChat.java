@@ -71,6 +71,7 @@ public class Controller_WindowSoloChat implements Initializable {
     SourceDataLine speakers;
     AudioFormat format = new AudioFormat(8000.0f, 16, 1, true, true);
 
+    private boolean stopMicro = false;
 
 
 
@@ -277,21 +278,15 @@ public class Controller_WindowSoloChat implements Initializable {
             Task<Void> task = new Task<Void>() {
                 @Override
                 protected Void call() throws Exception {
-                    Platform.runLater(new Runnable(){
-                        int numBytesRead;
-                        int bytesRead = 0;
-                        @Override
-                        public void run() {
-                            if (Singleton_UserInfo.getInstance().isInCall()){
-                                numBytesRead = microphone.read(data, 0, CHUNK_SIZE);
-                                bytesRead += numBytesRead;
-                                // write the mic data to a stream for use later
-                                Singleton_ClientSocket.getInstance().socket.emit("audioCallFlux",new CallData(Singleton_UserInfo.getInstance().getCall(),data).toJson());
-                                //out.write(data, 0, numBytesRead);
-                            }
-                        }
-                    });
+                    while (!stopMicro){
+                        if (Singleton_UserInfo.getInstance().isInCall()){
+                            microphone.read(data, 0, CHUNK_SIZE);
+                            // write the mic data to a stream for use later
 
+                            Singleton_ClientSocket.getInstance().socket.emit("audioCallFlux",new CallData(Singleton_UserInfo.getInstance().getCall(),data).toJson());
+                            //out.write(data, 0, numBytesRead);
+                        }
+                    }
                     return null;
                 }
             };
