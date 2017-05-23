@@ -268,19 +268,40 @@ public class Controller_WindowSoloChat implements Initializable {
             microphone = (TargetDataLine) AudioSystem.getLine(info);
             microphone.open(format);
 
-            int numBytesRead;
+
             int CHUNK_SIZE = 1024;
             byte[] data = new byte[microphone.getBufferSize() / 5];
             microphone.start();
-            int bytesRead = 0;
 
-            while (Singleton_UserInfo.getInstance().isInCall()){
-                numBytesRead = microphone.read(data, 0, CHUNK_SIZE);
-                bytesRead += numBytesRead;
-                // write the mic data to a stream for use later
-                Singleton_ClientSocket.getInstance().socket.emit("audioCallFlux",new CallData(Singleton_UserInfo.getInstance().getCall(),data).toJson());
-                //out.write(data, 0, numBytesRead);
-            }
+
+            Task<Void> task = new Task<Void>() {
+                @Override
+                protected Void call() throws Exception {
+                    Platform.runLater(new Runnable(){
+                        int numBytesRead;
+                        int bytesRead = 0;
+                        @Override
+                        public void run() {
+                            if (Singleton_UserInfo.getInstance().isInCall()){
+                                numBytesRead = microphone.read(data, 0, CHUNK_SIZE);
+                                bytesRead += numBytesRead;
+                                // write the mic data to a stream for use later
+                                Singleton_ClientSocket.getInstance().socket.emit("audioCallFlux",new CallData(Singleton_UserInfo.getInstance().getCall(),data).toJson());
+                                //out.write(data, 0, numBytesRead);
+                            }
+                        }
+                    });
+
+                    return null;
+                }
+            };
+
+
+            Thread th = new Thread(task);
+            th.setDaemon(true);
+            th.start();
+
+
         }
         catch (LineUnavailableException e) {
             e.printStackTrace();
