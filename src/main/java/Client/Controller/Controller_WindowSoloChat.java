@@ -184,7 +184,8 @@ public class Controller_WindowSoloChat implements Initializable {
 
     public void shutdown() {
        disposeWebCamCamera();
-
+        dispoMircro();
+        dispoSpeaker();
         Singleton_UserInfo.getInstance().setInCall(false);
         Singleton_UserInfo.getInstance().setSoloChatOpen(false);
 
@@ -321,17 +322,6 @@ public class Controller_WindowSoloChat implements Initializable {
 
     }
 
-    public void closeMirco(){
-        microphone.close();
-    }
-
-    public void closeSpeaker(){
-        speakers.drain();
-        speakers.close();
-    }
-
-
-
     protected void initializeWebCam(final int webCamIndex) {
 
         Task<Void> webCamTask = new Task<Void>() {
@@ -370,6 +360,7 @@ public class Controller_WindowSoloChat implements Initializable {
 
     protected void dispoSpeaker(){
         speakers.close();
+        speakers.drain();
     }
 
     protected void setImageViewSize() {
