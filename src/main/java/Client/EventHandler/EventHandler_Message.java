@@ -129,8 +129,7 @@ public class EventHandler_Message {
             }
         }
 
-
-        // si l'utilisateur envoie un lien
+        // si l'utilisateur envoie un fichier de type image
         if (message.getData() != null && message.getImage()){
             if (message.getUser() == Singleton_UserInfo.getInstance().getUser().getUserID()){
                 // x.setMaxWidth(list.getWidth() - 20);
@@ -144,19 +143,45 @@ public class EventHandler_Message {
                 list.getItems().add(hBox);
             }
             else {
-                BubbledLabel bl6 = new BubbledLabel();
-                bl6.setText( message.getUserName() + " : " + EmojiUtils.emojify(message.getMessage()));
-                bl6.setBackground(new Background(new BackgroundFill(Color.web(theirMessageColorBackgroud),null, null)));
-                bl6.setTextFill(Color.web(theirMessageColor));
-                bl6.setBubbleSpec(BubbleSpec.FACE_LEFT_CENTER);
+                // x.setMaxWidth(list.getWidth() - 20);
+                Component_Button_Chat_Fichier bl6 = new Component_Button_Chat_Fichier();
+                bl6.setFile(message.getData());
+                bl6.setFileName(message.getDataName());
+                bl6.setOnAction(new EventHandler_Message_Fichier());
                 HBox hBox = new HBox();
                 hBox.getChildren().addAll(bl6);
                 list.getItems().add(hBox);
             }
         }
-        if (message.getData() != null && !message.getImage()){
 
+        // si l'utilisateur envoie un fichier de type autre qu'une image
+
+        if (message.getData() != null && !message.getImage()){
+            if (message.getUser() == Singleton_UserInfo.getInstance().getUser().getUserID()){
+                // x.setMaxWidth(list.getWidth() - 20);
+                Component_Button_Chat_Fichier bl6 = new Component_Button_Chat_Fichier();
+                bl6.setFile(message.getData());
+                bl6.setFileName(message.getDataName());
+                bl6.setOnAction(new EventHandler_Message_Fichier());
+                HBox hBox = new HBox();
+                hBox.setAlignment(Pos.TOP_RIGHT);
+                hBox.getChildren().addAll(bl6);
+                list.getItems().add(hBox);
+            }
+            else {
+                // x.setMaxWidth(list.getWidth() - 20);
+                Component_Button_Chat_Fichier bl6 = new Component_Button_Chat_Fichier();
+                bl6.setFile(message.getData());
+                bl6.setFileName(message.getDataName());
+                bl6.setOnAction(new EventHandler_Message_Fichier());
+                HBox hBox = new HBox();
+                hBox.getChildren().addAll(bl6);
+                list.getItems().add(hBox);
+            }
         }
+
+        // si l'utilisateur envoie un lien
+
         if (matchEnd != 0){
             // si on est le mec qui envoie le msg avec un lien
             if (message.getUser() == Singleton_UserInfo.getInstance().getUser().getUserID()){
@@ -319,7 +344,7 @@ public class EventHandler_Message {
         }
         
         // si il n'y a pas de lien dans le msg
-        else {
+        else if(matchEnd == 0 && message.getMessage() != null) {
             if (message.getUser() == Singleton_UserInfo.getInstance().getUser().getUserID()){
                 // x.setMaxWidth(list.getWidth() - 20);
                 BubbledLabel bl6 = new BubbledLabel();

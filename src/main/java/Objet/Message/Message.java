@@ -15,13 +15,13 @@ public class Message implements Serializable{
     private Integer user;
 
 
-    private Boolean isImage;
+    private boolean isImage;
     private byte[] data;
     private String dataName;
 
 
 
-    public Message(String userName, String message, Integer date, Integer channel,Integer user, Boolean isImage, byte[] data,String dataName) {
+    public Message(String userName, String message, Integer date, Integer channel,Integer user, boolean isImage, byte[] data,String dataName) {
         super();
         this.userName = userName;
         this.message = message;
