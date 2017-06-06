@@ -12,6 +12,7 @@ import Server.Events.Login_Signup.Login_Signup_Events;
 import Server.Events.Messages.Messages_Events;
 import Server.Events.Users.Users_Events;
 import Server.Saving.Saving;
+import com.corundumstudio.socketio.AckMode;
 import com.corundumstudio.socketio.Configuration;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
@@ -58,12 +59,14 @@ public class Main {
         Configuration config = new Configuration();
         config.setHostname("10.29.18.4");
         config.setPort(9092);
-        config.setUpgradeTimeout(10000000);
-        config.setPingTimeout(10000000);
-        config.setPingInterval(10000000);
+       // config.setUpgradeTimeout(10000000);
+        //config.setPingTimeout(10000000);
+        //config.setPingInterval(10000000);
         config.setMaxFramePayloadLength(1024 * 1024);
         config.setMaxHttpContentLength(1024 * 1024);
+
         SocketIOServer server = new SocketIOServer(config);
+
 
 
         //USER EVENT

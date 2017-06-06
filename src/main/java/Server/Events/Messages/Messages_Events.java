@@ -155,9 +155,14 @@ public class Messages_Events {
 
                 ArrayList<Message> messageFromChannel = MessageUtils.getMessageFromChannel(Singleton_Data.getInstance().getMessageHashMap(), channelID);
 
+                for (Message message : messageFromChannel) {
+                   // message.setData(null);
+                    client.sendEvent("newmessage",message);
+                }
+
                 if (ackRequest.isAckRequested()) {
                     // send ack response with data to client
-                    ackRequest.sendAckData(messageFromChannel);
+                   // ackRequest.sendAckData(messageFromChannel.get(0));
                 }
 
                 System.out.println("channelMessages : "+messageFromChannel.size());

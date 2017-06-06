@@ -1,6 +1,7 @@
 package Objet.Message;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
@@ -14,7 +15,7 @@ public class Message implements Serializable{
     private Integer channel;
     private Integer user;
 
-
+    @SerializedName("image")
     private boolean isImage;
     private byte[] data;
     private String dataName;
