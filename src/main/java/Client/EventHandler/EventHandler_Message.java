@@ -1,6 +1,7 @@
 package Client.EventHandler;
 
 import Client.Component.Component_Button_Chat_Fichier;
+import Client.Component.Component_Button_Chat_Image;
 import Client.Messages.Bubble.BubbleSpec;
 import Client.Messages.Bubble.BubbledLabel;
 import Client.Messages.Bubble.BubbledLink;
@@ -133,9 +134,7 @@ public class EventHandler_Message {
         if (message.getData() != null && message.getImage()){
             if (message.getUser() == Singleton_UserInfo.getInstance().getUser().getUserID()){
                 // x.setMaxWidth(list.getWidth() - 20);
-                Component_Button_Chat_Fichier bl6 = new Component_Button_Chat_Fichier();
-                bl6.setFile(message.getData());
-                bl6.setFileName(message.getDataName());
+                Component_Button_Chat_Image bl6 = new Component_Button_Chat_Image(message.getData(), message.getDataName());
                 bl6.setOnAction(new EventHandler_Message_Fichier());
                 HBox hBox = new HBox();
                 hBox.setAlignment(Pos.TOP_RIGHT);
@@ -144,9 +143,7 @@ public class EventHandler_Message {
             }
             else {
                 // x.setMaxWidth(list.getWidth() - 20);
-                Component_Button_Chat_Fichier bl6 = new Component_Button_Chat_Fichier();
-                bl6.setFile(message.getData());
-                bl6.setFileName(message.getDataName());
+                Component_Button_Chat_Image bl6 = new Component_Button_Chat_Image(message.getData(), message.getDataName());
                 bl6.setOnAction(new EventHandler_Message_Fichier());
                 HBox hBox = new HBox();
                 hBox.getChildren().addAll(bl6);
