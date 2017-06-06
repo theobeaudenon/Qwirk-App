@@ -135,7 +135,7 @@ public class Controller_WindowMain implements Initializable {
         homeDisplay();
         EventHandler_Home.loadPublicChan_Home(homeChan);
         EventHandler_UserChan.loadUserChan_UserChan(chanelPan);
-        EventHandler_Message.updateMessage(list);
+        EventHandler_Message.updateMessage(list, chanelPan);
         EventHandler_Contact.loadContact_Contact(userContactList);
         EventHandler_Alerte.updateMessage(this);
         EventHandler_Call.incommingCall(this);

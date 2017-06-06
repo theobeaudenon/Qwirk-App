@@ -2,6 +2,7 @@ package Client.EventHandler;
 
 import Client.Component.Component_Button_Chat_Fichier;
 import Client.Component.Component_Button_Chat_Image;
+import Client.Component.Component_Label_Group;
 import Client.Messages.Bubble.BubbleSpec;
 import Client.Messages.Bubble.BubbledLabel;
 import Client.Messages.Bubble.BubbledLink;
@@ -100,18 +101,21 @@ public class EventHandler_Message {
         centerPan.setCenter(pane);
     }
 
-    public static void updateMessage(final ListView list){
+    public static void updateMessage(final ListView list, JFXListView chanelPan){
         Singleton_ClientSocket.getInstance().socket.on("newmessage", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
                 final JSONObject obj = (JSONObject)args[0];
                 Platform.runLater(new Runnable() {
                     public void run() {
+
                         Message message = new Message(obj.toString());
-                        messageFormate(list, message);
-                        list.refresh();
-                       // ScrollPane scrollPane = (ScrollPane) list.getParent().getParent().getParent().getParent();
-                        //scrollPane.setVvalue(1.0);
+                        if(message.getChannel() ==((Component_Label_Group)chanelPan.getSelectionModel().getSelectedItem()).getChannel().getIdChannel()){
+                            messageFormate(list, message);
+                            list.refresh();
+                            // ScrollPane scrollPane = (ScrollPane) list.getParent().getParent().getParent().getParent();
+                            //scrollPane.setVvalue(1.0);
+                        }
                     }
                 });
             }
