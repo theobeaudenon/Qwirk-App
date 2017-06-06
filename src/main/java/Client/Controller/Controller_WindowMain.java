@@ -142,6 +142,7 @@ public class Controller_WindowMain implements Initializable {
         EventHandler_Call.incommingCall(this);
         EventHandler_Call.callprosses(this);
         EventHandler_Contact.updateContact(userContactList);
+        EventHandler_UserChan.updateChanel(chanelPan);
 
 
         addToChanAction.setOnAction(new EventHander_ContextMenu_Group_JoinAction(chanelPan, userContactList));
@@ -334,7 +335,27 @@ public class Controller_WindowMain implements Initializable {
     }
 
     public void optionAction(Event event) {
+        Parent root;
+        try {
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/config.fxml"));
+            root  = loader.load();
+            stage.setTitle("Configuration");
+            stage.setScene(new Scene(root, 600, 400));
+           // stage.setResizable(false);
 
+           /* Controller_WindowSoloChat controller = loader.getController();
+            stage.setOnHidden(e -> controller.shutdown());
+*/
+            stage.show();
+
+
+            // Hide this current window (if this is what you want)
+//            ((Node)(event.getSource())).getScene().getWindow().hide();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void deconectAction(Event event) {
