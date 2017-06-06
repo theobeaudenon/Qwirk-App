@@ -60,8 +60,11 @@ public class EventHandler_Action {
                                 dialog.show();
 
                             }
+                            if(banChan.banID == Singleton_UserInfo.getInstance().getUser().getUserID()){
+                                controller_windowMain.homeDisplay();
+
+                            }
                             chanelPan.getItems().removeAll(nodesToRemove);
-                            controller_windowMain.homeDisplay();
                         }else if(banChan.type.equals("kick")){
                             if(banChan.banID == Singleton_UserInfo.getInstance().getUser().getUserID()){
                                 chanelPan.getItems().stream().filter(component_label_group -> ((Component_Label_Group) component_label_group).getChannel().getIdChannel().equals(banChan.channelID)).forEach(nodesToRemove::add);

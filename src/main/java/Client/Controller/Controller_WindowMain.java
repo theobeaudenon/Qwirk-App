@@ -273,6 +273,8 @@ public class Controller_WindowMain implements Initializable {
         chatGroupBanner.setManaged(true);
         controllerChat.setVisible(true);
         controllerChat.setManaged(true);
+        list.setVisible(true);
+        list.setManaged(true);
 
     }
 
@@ -284,6 +286,8 @@ public class Controller_WindowMain implements Initializable {
         chatGroupBanner.setManaged(false);
         controllerChat.setVisible(false);
         controllerChat.setManaged(false);
+        list.setVisible(false);
+        list.setManaged(false);
     }
 
     public void sendButtonEvent() {
