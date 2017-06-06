@@ -109,6 +109,7 @@ public class EventHandler_Message {
                     public void run() {
                         Message message = new Message(obj.toString());
                         messageFormate(list, message);
+                        list.refresh();
                        // ScrollPane scrollPane = (ScrollPane) list.getParent().getParent().getParent().getParent();
                         //scrollPane.setVvalue(1.0);
                     }
