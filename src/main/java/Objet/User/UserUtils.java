@@ -99,4 +99,15 @@ public class UserUtils {
         }
 
     }
+
+    public static User getUserFromName(HashMap<Integer, User> userHashMap, String s) {
+        for (User message:
+                userHashMap.values()) {
+            if (message.getUserName().equals(s) ){
+                return message;
+            }
+        }
+        return null;
+
+    }
 }

@@ -4,6 +4,7 @@ import Objet.Bot.ActionBot;
 import Objet.Bot.Bot;
 import Objet.Bot.Commandes;
 import Objet.Channel.Channel;
+import Objet.LinkObjects.BanChannel;
 import Objet.LinkObjects.BotChannel;
 import Objet.LinkObjects.UserChannels;
 import Objet.LinkObjects.UserContacts;
@@ -38,6 +39,7 @@ public class Singleton_Data implements Serializable{
     ArrayList<UserChannels> userChannelsHashMap = new ArrayList<UserChannels>();
     ArrayList<UserContacts> userContactsHashMap = new ArrayList<UserContacts>();
     ArrayList<BotChannel> botChannelHashMap = new ArrayList<BotChannel>();
+    ArrayList<BanChannel> banChannelHashMap = new ArrayList<BanChannel>();
 
 
 
@@ -236,6 +238,14 @@ public class Singleton_Data implements Serializable{
 
     public ArrayList<BotChannel> getBotChannelHashMap() {
         return botChannelHashMap;
+    }
+
+    public ArrayList<BanChannel> getBanChannelHashMap() {
+        return banChannelHashMap;
+    }
+
+    public void setBanChannelHashMap(ArrayList<BanChannel> banChannelHashMap) {
+        this.banChannelHashMap = banChannelHashMap;
     }
 
     public void setBotChannelHashMap(ArrayList<BotChannel> botChannelHashMap) {

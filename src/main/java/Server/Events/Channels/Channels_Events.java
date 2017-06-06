@@ -97,7 +97,7 @@ public class Channels_Events {
                     server.getBroadcastOperations().sendEvent("inviteContactChannel", userChannels);
 
                 }else {
-                    client.sendEvent("alerte",new Alerte("Erreur","Votre contact n'a pas été ajouté..."));
+                    client.sendEvent("alerte",new Alerte("Erreur","Votre contact n'a pas été ajouté ( Déjà dans le channel / Banni ) ..."));
                 }
 
 

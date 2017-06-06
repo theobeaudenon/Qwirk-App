@@ -1,5 +1,6 @@
 package Objet.Channel;
 
+import Objet.LinkObjects.BanChannel;
 import Objet.LinkObjects.UserChannels;
 import Objet.Utils.Action;
 import Server.Data.Singleton_Data;
@@ -98,6 +99,12 @@ public class ChannelUtils {
     public static Boolean joinChannel(ArrayList<UserChannels> userChannelsHashMap, UserChannels userChannels) {
 
         if(!inChannel(userChannelsHashMap,userChannels)){
+            for (BanChannel banChannel : Singleton_Data.getInstance().getBanChannelHashMap()) {
+                if(banChannel.getBanID() == userChannels.getUserID() && userChannels.getChannelID() == banChannel.getChannelID()){
+                    return false;
+                }
+            }
+
             userChannelsHashMap.add(userChannels);
             return true;
         }else {

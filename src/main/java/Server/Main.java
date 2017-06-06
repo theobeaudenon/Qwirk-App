@@ -62,8 +62,8 @@ public class Main {
        // config.setUpgradeTimeout(10000000);
         //config.setPingTimeout(10000000);
         //config.setPingInterval(10000000);
-        config.setMaxFramePayloadLength(1024 * 1024);
-        config.setMaxHttpContentLength(1024 * 1024);
+        config.setMaxFramePayloadLength(1024 * 1024 * 3);
+        config.setMaxHttpContentLength(1024 * 1024 * 3);
 
         SocketIOServer server = new SocketIOServer(config);
 

@@ -4,6 +4,7 @@ import Objet.Alerte.Alerte;
 import Objet.Bot.ActionBot;
 import Objet.Bot.Bot;
 import Objet.Bot.Commandes;
+import Objet.LinkObjects.BanChannel;
 import Objet.LinkObjects.BotChannel;
 import Objet.Message.Message;
 import Objet.Message.MessageUtils;
@@ -83,9 +84,39 @@ public class Messages_Events {
                                          if(commandes.getValue().equals(split[0])){
 
                                              if(ActionBot.BAN.equals(commandes.getActionBot())){
-                                                 client.sendEvent("alerte",new Alerte("Info",commandes.getMessage()));
-                                                 System.out.printf("ban");
-                                                 return;
+                                                 try {
+
+                                                     if(split[1] != null){
+                                                         if(!"".equals(split[1])){
+                                                             User userFromName = UserUtils.getUserFromName(Singleton_Data.getInstance().getUserHashMap(), split[1]);
+                                                             if(userFromName != null){
+                                                                 BanChannel ban = new BanChannel(1, entry.getChannelID(), "ban");
+                                                                 Singleton_Data.getInstance().getBanChannelHashMap().add(ban);
+                                                                 for (SocketIOClient socketIOClient : server.getAllClients()) {
+                                                                     socketIOClient.sendEvent("banKickEvent", ban);
+                                                                 }
+
+
+                                                                 client.sendEvent("alerte",new Alerte("Info",commandes.getMessage()));
+                                                                 System.out.printf("ban");
+                                                             }else {
+                                                                 client.sendEvent("alerte",new Alerte("Erreur","Nom invalide"));
+
+                                                             }
+
+                                                             return;
+                                                         }
+
+                                                     }
+                                                     client.sendEvent("alerte",new Alerte("Erreur","Erreur dans la commande de Ban"));
+
+                                                     return;
+                                                 }catch (ArrayIndexOutOfBoundsException e){
+                                                     client.sendEvent("alerte",new Alerte("Erreur","Erreur dans la commande de Ban"));
+
+                                                     return;
+                                                 }
+
 
                                              }
                                              if(ActionBot.MESSAGE.equals(commandes.getActionBot())){
@@ -134,7 +165,11 @@ public class Messages_Events {
                 // broadcast messages to all clients
 
                 System.out.println("newmessage : "+data.getMessage());
-                server.getBroadcastOperations().sendEvent("newmessage", data);
+                for (SocketIOClient socketIOClient : server.getAllClients()) {
+                    socketIOClient.sendEvent("newmessage", data);
+                }
+
+              //  server.getBroadcastOperations().sendEvent("newmessage", data);
                 //System.out.print(data.getUserName());
                 //System.out.print(data.getMessage());
 
