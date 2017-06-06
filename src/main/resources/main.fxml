@@ -6,6 +6,7 @@
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
@@ -31,7 +32,36 @@
                            <JFXButton fx:id="addContact" onMouseClicked="#addUserAction" prefHeight="37.0" prefWidth="55.0" />
                         </children>
                      </HBox>
-                  </bottom></BorderPane>
+                  </bottom>
+                  <top>
+                     <HBox prefHeight="58.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <children>
+                           <ImageView fx:id="imageProfil" fitHeight="63.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                 <Image url="@Gravatar%20API_1.png" />
+                              </image>
+                           </ImageView>
+                           <Label fx:id="nameProfil" prefHeight="63.0" prefWidth="141.0" text="Label">
+                              <HBox.margin>
+                                 <Insets />
+                              </HBox.margin>
+                              <padding>
+                                 <Insets left="10.0" />
+                              </padding>
+                           </Label>
+                        </children>
+                     </HBox>
+                  </top>
+                  <center>
+                     <HBox prefHeight="61.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                        <padding>
+                           <Insets bottom="20.0" />
+                        </padding>
+                        <children>
+                           <JFXButton fx:id="homeButton" prefHeight="46.0" prefWidth="52.0" text="Homr" />
+                        </children>
+                     </HBox>
+                  </center></BorderPane>
             </top>
             <center>
                <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-focus-color: transparent; -fx-border-color: black;" BorderPane.alignment="CENTER">
