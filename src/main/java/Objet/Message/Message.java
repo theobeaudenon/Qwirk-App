@@ -82,11 +82,11 @@ public class Message implements Serializable{
         return channel;
     }
 
-    public Boolean getImage() {
+    public boolean getImage() {
         return isImage;
     }
 
-    public void setImage(Boolean image) {
+    public void setImage(boolean image) {
         isImage = image;
     }
 

@@ -56,12 +56,13 @@ public class Main {
 
         //Demarage du serveur
         Configuration config = new Configuration();
-        config.setHostname("10.29.16.249");
+        config.setHostname("10.29.18.4");
         config.setPort(9092);
         config.setUpgradeTimeout(10000000);
         config.setPingTimeout(10000000);
         config.setPingInterval(10000000);
-
+        config.setMaxFramePayloadLength(1024 * 1024);
+        config.setMaxHttpContentLength(1024 * 1024);
         SocketIOServer server = new SocketIOServer(config);
 
 
