@@ -56,6 +56,8 @@ public class Controller_WindowLogin extends Application implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
         Singleton_ClientSocket.getInstance();
         if (Singleton_UserInfo.getInstance().getUser() != null){
             login.setText(Singleton_UserInfo.getInstance().getUser().getMail());

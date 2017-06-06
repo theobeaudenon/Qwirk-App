@@ -56,7 +56,7 @@
                         </Label>
                         <JFXComboBox fx:id="webcamList" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <JFXComboBox fx:id="microphoneList" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <JFXTextField fx:id="port" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <JFXTextField fx:id="port" text="9092" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                         <Label text="OPTIONS">
                            <GridPane.margin>
                               <Insets left="50.0" />

@@ -1,5 +1,7 @@
 package Client.Controller;
 
+import Client.Singleton.Singleton_Configuration;
+import Objet.Configuration.Configuration;
 import com.github.sarxos.webcam.Webcam;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
@@ -37,7 +39,9 @@ public class Controller_Config implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        webcamList.getItems().addAll(Webcam.getWebcams());
+        if (!System.getProperty("os.name").equals("Mac OS X")) {
+            webcamList.getItems().addAll(Webcam.getWebcams());
+        }
 
         Mixer.Info[] mixers = AudioSystem.getMixerInfo();
         for (Mixer.Info mixerInfo : mixers){
@@ -50,10 +54,17 @@ public class Controller_Config implements Initializable {
                 speakerList.getItems().add(mixerInfo.getName());
             }
         }
+
+        webcamList.getSelectionModel().selectFirst();
+        microphoneList.getSelectionModel().selectFirst();
+        speakerList.getSelectionModel().selectFirst();
     }
 
     public void configEditAction(ActionEvent actionEvent) {
 
+
+        Configuration conf = new Configuration((Webcam) webcamList.getSelectionModel().getSelectedItem(), Integer.parseInt(port.getText()));
+        Singleton_Configuration.getInstance().setConfiguration(conf);
 
 
         Node node=(Node) actionEvent.getSource();
