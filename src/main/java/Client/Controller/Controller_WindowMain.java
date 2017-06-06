@@ -133,6 +133,7 @@ public class Controller_WindowMain implements Initializable {
         messageNotifError.getStylesheets().add(cssUrl2);
 
         homeDisplay();
+        EventHandler_Action.updateAction(chanelPan, this);
         EventHandler_Home.loadPublicChan_Home(homeChan);
         EventHandler_UserChan.loadUserChan_UserChan(chanelPan);
         EventHandler_Message.updateMessage(list, chanelPan);
