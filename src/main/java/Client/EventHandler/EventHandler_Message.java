@@ -1,5 +1,6 @@
 package Client.EventHandler;
 
+import Client.Component.Component_Button_Chat_Fichier;
 import Client.Messages.Bubble.BubbleSpec;
 import Client.Messages.Bubble.BubbledLabel;
 import Client.Messages.Bubble.BubbledLink;
@@ -17,9 +18,9 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.control.Hyperlink;
+import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -117,16 +118,45 @@ public class EventHandler_Message {
 
     private static void messageFormate(ListView list, Message message){
 
-        Matcher matcher = urlPattern.matcher(message.getMessage());
         int matchStart = 0;
         int matchEnd = 0;
-        while (matcher.find()) {
-             matchStart = matcher.start(1);
-             matchEnd = matcher.end();
-            // now you have the offsets of a URL match
+        if (message.getMessage() != null){
+            Matcher matcher = urlPattern.matcher(message.getMessage());
+            while (matcher.find()) {
+                matchStart = matcher.start(1);
+                matchEnd = matcher.end();
+                // now you have the offsets of a URL match
+            }
         }
 
-        // si l'utilisateur envoie un lien 
+
+        // si l'utilisateur envoie un lien
+        if (message.getData() != null && message.getImage()){
+            if (message.getUser() == Singleton_UserInfo.getInstance().getUser().getUserID()){
+                // x.setMaxWidth(list.getWidth() - 20);
+                Component_Button_Chat_Fichier bl6 = new Component_Button_Chat_Fichier();
+                bl6.setFile(message.getData());
+                bl6.setFileName(message.getDataName());
+                bl6.setOnAction(new EventHandler_Message_Fichier());
+                HBox hBox = new HBox();
+                hBox.setAlignment(Pos.TOP_RIGHT);
+                hBox.getChildren().addAll(bl6);
+                list.getItems().add(hBox);
+            }
+            else {
+                BubbledLabel bl6 = new BubbledLabel();
+                bl6.setText( message.getUserName() + " : " + EmojiUtils.emojify(message.getMessage()));
+                bl6.setBackground(new Background(new BackgroundFill(Color.web(theirMessageColorBackgroud),null, null)));
+                bl6.setTextFill(Color.web(theirMessageColor));
+                bl6.setBubbleSpec(BubbleSpec.FACE_LEFT_CENTER);
+                HBox hBox = new HBox();
+                hBox.getChildren().addAll(bl6);
+                list.getItems().add(hBox);
+            }
+        }
+        if (message.getData() != null && !message.getImage()){
+
+        }
         if (matchEnd != 0){
             // si on est le mec qui envoie le msg avec un lien
             if (message.getUser() == Singleton_UserInfo.getInstance().getUser().getUserID()){

@@ -32,8 +32,12 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
@@ -96,6 +100,12 @@ public class Controller_WindowMain implements Initializable {
     @FXML
     private JFXButton deconectButton;
 
+    @FXML
+    private ImageView imageProfil;
+
+    @FXML
+    private Label nameProfil;
+
     final KeyCombination kb = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.ALT_DOWN);
 
     private JFXSnackbar messageNotifOk;
@@ -107,6 +117,7 @@ public class Controller_WindowMain implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
 
+        nameProfil.setText(Singleton_UserInfo.getInstance().getUser().getUserName());
 
         list.setFocusTraversable(false);
         list.setId("Messagelist");
@@ -208,8 +219,29 @@ public class Controller_WindowMain implements Initializable {
             @Override
             public void handle(DragEvent event) {
                 if (MouseDragDropped.isFileOk(event)){
+
+                    final boolean isImage = event.getDragboard().getFiles().get(0).getName().toLowerCase().endsWith(".png")
+                            || event.getDragboard().getFiles().get(0).getName().toLowerCase().endsWith(".jpg");
+
                     System.out.println(MouseDragDropped.getFile(event));
                     messageNotifOk.show("Le fichier : " +MouseDragDropped.getFile(event) + " a bien été ajouter", 3000);
+
+                    Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+                    String file = event.getDragboard().getFiles().get(0).getAbsolutePath();
+                    Path path = Paths.get(file);
+                    byte[] data = null;
+                    try {
+                        data = Files.readAllBytes(path);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Envoi du message
+                    Message message = new Message(Singleton_UserInfo.getInstance().getUser().getUserName(), null, new Integer((int) timestamp.getTime()), channel.getIdChannel(), Singleton_UserInfo.getInstance().getUser().getUserID(),isImage,data,event.getDragboard().getFiles().get(0).getName());
+                    Singleton_ClientSocket.getInstance().socket.emit("chatevent", message.toJson());
+
+                    chatSendBox.setText("");
                 }
                 else {
                     messageNotifError.show("Le fichier : " +MouseDragDropped.getFile(event) + " n'a le bon format", 3000);
