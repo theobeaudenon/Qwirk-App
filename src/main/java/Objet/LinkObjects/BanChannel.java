@@ -1,5 +1,7 @@
 package Objet.LinkObjects;
 
+import com.google.gson.Gson;
+
 import java.io.Serializable;
 
 /**
@@ -42,4 +44,20 @@ public class BanChannel implements Serializable {
     public void setChannelID(int channelID) {
         this.channelID = channelID;
     }
-}
+
+
+
+    public BanChannel(String messageJson) {
+        Gson gson = new Gson();
+        BanChannel grupoAplicacao = gson.fromJson(messageJson, BanChannel.class);
+        this.banID = grupoAplicacao.getBanID();
+        this.channelID = grupoAplicacao.getChannelID();
+        this.type = grupoAplicacao.getType();
+
+    }
+    public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
+    }
+
+    }
