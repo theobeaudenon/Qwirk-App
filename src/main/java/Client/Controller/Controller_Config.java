@@ -1,20 +1,29 @@
 package Client.Controller;
 
+import Client.Singleton.Singleton_ClientSocket;
 import Client.Singleton.Singleton_Configuration;
+import Client.Singleton.Singleton_UserInfo;
+import Objet.Call.CallData;
 import Objet.Configuration.Configuration;
 import com.github.sarxos.webcam.Webcam;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Mixer;
 import javax.sound.sampled.Port;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -51,6 +60,13 @@ public class Controller_Config implements Initializable {
             protected Void call() throws Exception {
 
                 webcamList.getItems().addAll(Webcam.getWebcams());
+                Platform.runLater(new Runnable(){
+
+                    @Override
+                    public void run() {
+                        webcamList.getSelectionModel().selectFirst();
+                    }
+                });
 
                 return null;
             }
@@ -73,7 +89,6 @@ public class Controller_Config implements Initializable {
             }
         }
 
-        webcamList.getSelectionModel().selectFirst();
         microphoneList.getSelectionModel().selectFirst();
         speakerList.getSelectionModel().selectFirst();
     }
