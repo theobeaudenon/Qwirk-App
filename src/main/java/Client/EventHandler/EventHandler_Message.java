@@ -57,7 +57,7 @@ public class EventHandler_Message {
 
         Singleton_ClientSocket.getInstance().socket.emit("channelMessages", chanId, new Ack() {
             public void call(final Object... args) {
-                if(args[0] != null){
+                /*if(args[0] != null){
 
                     JSONArray array = (JSONArray) args[0];
 
@@ -84,7 +84,7 @@ public class EventHandler_Message {
                 }else{
                     System.out.printf("Erreur mdp/User");
                     //error.setVisible(true);
-                }
+                }*/
             }
         });
 
@@ -108,8 +108,8 @@ public class EventHandler_Message {
                     public void run() {
                         Message message = new Message(obj.toString());
                         messageFormate(list, message);
-                        ScrollPane scrollPane = (ScrollPane) list.getParent().getParent().getParent().getParent();
-                        scrollPane.setVvalue(1.0);
+                       // ScrollPane scrollPane = (ScrollPane) list.getParent().getParent().getParent().getParent();
+                        //scrollPane.setVvalue(1.0);
                     }
                 });
             }
@@ -120,7 +120,7 @@ public class EventHandler_Message {
 
         int matchStart = 0;
         int matchEnd = 0;
-        if (message.getMessage() != null){
+        if (message.getData() == null){
             Matcher matcher = urlPattern.matcher(message.getMessage());
             while (matcher.find()) {
                 matchStart = matcher.start(1);
@@ -344,7 +344,7 @@ public class EventHandler_Message {
         }
         
         // si il n'y a pas de lien dans le msg
-        else if(matchEnd == 0 && message.getMessage() != null) {
+        else if(matchEnd == 0 && message.getData() == null) {
             if (message.getUser() == Singleton_UserInfo.getInstance().getUser().getUserID()){
                 // x.setMaxWidth(list.getWidth() - 20);
                 BubbledLabel bl6 = new BubbledLabel();

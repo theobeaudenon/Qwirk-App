@@ -32,7 +32,7 @@ public class EventHandler_Message_Fichier implements EventHandler<ActionEvent> {
         if (outputFolder != null) {
             FileOutputStream fos = null;
             try {
-                fos = new FileOutputStream(outputFolder+"\\"+fichierButton.getFileName());
+                fos = new FileOutputStream(outputFolder+"/"+fichierButton.getFileName());
                 fos.write(fichierButton.getFile());
                 fos.close();
             } catch (FileNotFoundException e) {
