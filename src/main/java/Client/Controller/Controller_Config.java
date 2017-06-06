@@ -5,6 +5,7 @@ import Objet.Configuration.Configuration;
 import com.github.sarxos.webcam.Webcam;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,10 +40,25 @@ public class Controller_Config implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        if (System.getProperty("os.name").equals("Mac OS X")) {
+/*        if (System.getProperty("os.name").equals("Mac OS X")) {
             webcamList.getItems().addAll(Webcam.getWebcams().get(0));
         }
-        webcamList.getItems().addAll(Webcam.getWebcams());
+        webcamList.getItems().addAll(Webcam.getWebcams());*/
+
+        Task<Void> webCamTask = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+
+                webcamList.getItems().addAll(Webcam.getWebcams());
+
+                return null;
+            }
+        };
+
+        Thread webCamThread = new Thread(webCamTask);
+        webCamThread.setDaemon(true);
+        webCamThread.start();
 
 
         Mixer.Info[] mixers = AudioSystem.getMixerInfo();
