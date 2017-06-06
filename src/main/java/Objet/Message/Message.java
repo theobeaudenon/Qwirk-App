@@ -16,12 +16,12 @@ public class Message implements Serializable{
 
 
     private Boolean isImage;
-    private Byte[] data;
+    private byte[] data;
     private String dataName;
 
 
 
-    public Message(String userName, String message, Integer date, Integer channel,Integer user, Boolean isImage,Byte[] data,String dataName) {
+    public Message(String userName, String message, Integer date, Integer channel,Integer user, Boolean isImage, byte[] data,String dataName) {
         super();
         this.userName = userName;
         this.message = message;
@@ -90,11 +90,11 @@ public class Message implements Serializable{
         isImage = image;
     }
 
-    public Byte[] getData() {
+    public byte[] getData() {
         return data;
     }
 
-    public void setData(Byte[] data) {
+    public void setData(byte[] data) {
         this.data = data;
     }
 
