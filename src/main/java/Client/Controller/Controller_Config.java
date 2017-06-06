@@ -39,9 +39,11 @@ public class Controller_Config implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        if (!System.getProperty("os.name").equals("Mac OS X")) {
-            webcamList.getItems().addAll(Webcam.getWebcams());
+        if (System.getProperty("os.name").equals("Mac OS X")) {
+            webcamList.getItems().addAll(Webcam.getWebcams().get(0));
         }
+        webcamList.getItems().addAll(Webcam.getWebcams());
+
 
         Mixer.Info[] mixers = AudioSystem.getMixerInfo();
         for (Mixer.Info mixerInfo : mixers){
