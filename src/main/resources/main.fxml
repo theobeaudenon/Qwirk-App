@@ -14,68 +14,80 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
 <StackPane fx:id="principalPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.Controller_WindowMain">
    <BorderPane>
       <left>
          <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <top>
-               <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <BorderPane prefHeight="195.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                   <bottom>
-                     <HBox prefHeight="37.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <HBox prefHeight="47.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                         <children>
-                           <JFXTextField fx:id="addUserTextBox" labelFloat="true" prefHeight="37.0" prefWidth="171.0" promptText="Ajouter un utilisateur">
+                           <JFXTextField fx:id="addUserTextBox" labelFloat="true" prefHeight="49.0" prefWidth="140.0" promptText="Ajouter un utilisateur">
                               <HBox.margin>
                                  <Insets left="10.0" />
                               </HBox.margin>
                            </JFXTextField>
-                           <JFXButton fx:id="addContact" onMouseClicked="#addUserAction" prefHeight="37.0" prefWidth="55.0" />
+                           <JFXButton fx:id="addContact" onMouseClicked="#addUserAction" prefHeight="52.0" prefWidth="53.0" />
                         </children>
                      </HBox>
                   </bottom>
                   <top>
-                     <HBox prefHeight="58.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                     <HBox maxHeight="96.0" minHeight="96.0" prefHeight="96.0" prefWidth="200.0" style="-fx-background-color: #23272A;" BorderPane.alignment="CENTER">
                         <children>
                            <ImageView fx:id="imageProfil" fitHeight="63.0" fitWidth="63.0" pickOnBounds="true" preserveRatio="true">
                               <image>
                                  <Image url="@Gravatar%20API_1.png" />
                               </image>
+                              <HBox.margin>
+                                 <Insets bottom="15.0" left="15.0" top="15.0" />
+                              </HBox.margin>
                            </ImageView>
-                           <Label fx:id="nameProfil" prefHeight="63.0" prefWidth="141.0" text="Label">
+                           <Label fx:id="nameProfil" prefHeight="48.0" prefWidth="122.0" text="Label" textFill="WHITE">
                               <HBox.margin>
                                  <Insets />
                               </HBox.margin>
                               <padding>
                                  <Insets left="10.0" />
                               </padding>
+                              <font>
+                                 <Font name="System Bold" size="18.0" />
+                              </font>
                            </Label>
                         </children>
                      </HBox>
                   </top>
                   <center>
-                     <HBox prefHeight="61.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-                        <padding>
-                           <Insets bottom="20.0" />
-                        </padding>
+                     <HBox prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #2C2F33;" BorderPane.alignment="CENTER">
                         <children>
-                           <JFXButton fx:id="homeButton" prefHeight="46.0" prefWidth="52.0" text="Homr" />
+                           <JFXButton fx:id="homeButton" buttonType="RAISED" maxHeight="61.0" prefHeight="61.0" prefWidth="57.0" text="Home" textFill="WHITE">
+                              <font>
+                                 <Font name="System Italic" size="14.0" />
+                              </font></JFXButton>
+                           <JFXButton buttonType="RAISED" prefHeight="61.0" prefWidth="57.0" text="But1" textFill="WHITE">
+                              <font>
+                                 <Font name="System Italic" size="14.0" />
+                              </font>
+                           </JFXButton>
                         </children>
                      </HBox>
                   </center></BorderPane>
             </top>
             <center>
-               <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-focus-color: transparent; -fx-border-color: black;" BorderPane.alignment="CENTER">
+               <ScrollPane fitToHeight="true" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-focus-color: transparent;" BorderPane.alignment="CENTER">
                   <content>
                      <StackPane prefHeight="150.0" prefWidth="200.0">
                         <children>
-                           <JFXListView fx:id="userContactList" style="-fx-background-color: #3c3f41;" />
+                           <JFXListView fx:id="userContactList" prefHeight="474.0" prefWidth="200.0" style="-fx-background-color: #3c3f41; -fx-background-insets: 0;" styleClass="list" />
                         </children>
                      </StackPane>
                   </content>
                </ScrollPane>
             </center>
             <bottom>
-               <HBox prefHeight="44.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <HBox prefHeight="44.0" prefWidth="200.0" style="-fx-background-color: #23272A;" BorderPane.alignment="CENTER">
                   <children>
                      <JFXButton fx:id="optionButton" onMouseClicked="#optionAction" prefHeight="52.0" prefWidth="52.0" />
                      <JFXButton fx:id="deconectButton" onMouseClicked="#deconectAction" prefHeight="62.0" prefWidth="52.0" />
@@ -86,39 +98,48 @@
       </left>
       <center>
          <BorderPane fx:id="centerPan" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <top>
-               <ImageView fx:id="chatGroupBanner" fitHeight="111.0" fitWidth="680.0" pickOnBounds="true" visible="false" BorderPane.alignment="CENTER">
-                  <image>
-                     <Image url="@banniere1.png" />
-                  </image>
-               </ImageView>
-            </top>
             <bottom>
                <BorderPane fx:id="controllerChat" prefHeight="44.0" prefWidth="680.0" BorderPane.alignment="CENTER">
                   <center>
-                     <TextArea fx:id="chatSendBox" prefHeight="44.0" prefWidth="581.0" BorderPane.alignment="CENTER" />
+                     <TextArea fx:id="chatSendBox" prefHeight="44.0" prefWidth="581.0" promptText="Entrez votre text ici ..." style="-fx-background-insets: 0; -fx-background-color: #99AAB5;" BorderPane.alignment="CENTER">
+                        <padding>
+                           <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                        </padding></TextArea>
                   </center>
-                  <right>
-                     <JFXButton fx:id="sendButton" onMouseClicked="#sendButtonEvent" prefHeight="46.0" prefWidth="43.0" text="Send" BorderPane.alignment="CENTER" />
-                  </right>
                </BorderPane>
             </bottom>
             <left>
                <JFXMasonryPane fx:id="homeChan" BorderPane.alignment="CENTER" />
             </left>
+            <top>
+               <HBox fx:id="chatBanner" maxHeight="96.0" minHeight="96.0" prefHeight="96.0" prefWidth="200.0" style="-fx-background-color: #2C2F33;" BorderPane.alignment="CENTER">
+                  <children>
+                     <Label maxWidth="1.7976931348623157E308" minWidth="170.0" prefHeight="96.0" prefWidth="170.0" />
+                     <Label fx:id="chanelName" alignment="CENTER" contentDisplay="RIGHT" maxWidth="358.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="96.0" prefWidth="358.0" text="Label" textFill="WHITE">
+                        <font>
+                           <Font name="System Bold Italic" size="20.0" />
+                        </font>
+                     </Label>
+                     <Label maxWidth="1.7976931348623157E308" minWidth="170.0" prefHeight="96.0" prefWidth="170.0" />
+                  </children>
+               </HBox>
+            </top>
          </BorderPane>
       </center>
       <right>
          <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <right>
-               <ScrollPane fitToHeight="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: black; -fx-focus-color: transparent;" BorderPane.alignment="CENTER">
+               <ScrollPane fitToHeight="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-focus-color: transparent; -fx-background-insets: 0;" BorderPane.alignment="CENTER">
                   <content>
-                     <StackPane maxHeight="1080.0" minHeight="200.0" prefHeight="718.0" prefWidth="200.0">
+                     <StackPane maxHeight="1080.0" minHeight="200.0" prefHeight="718.0" prefWidth="200.0" style="-fx-background-insets: 0;">
                         <children>
-                           <JFXListView fx:id="chanelPan" maxHeight="3400.0" minHeight="200.0" onMouseClicked="#userChanClicked" prefHeight="664.0" prefWidth="200.0" style="-fx-background-color: #3c3f41;" />
+                           <JFXListView fx:id="chanelPan" maxHeight="3400.0" minHeight="200.0" onMouseClicked="#userChanClicked" prefHeight="664.0" prefWidth="200.0" style="-fx-background-color: #3c3f41; -fx-background-insets: 0;" styleClass="list" />
                         </children>
                      </StackPane>
                   </content>
+                  <padding>
+                     <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
+                  </padding>
                </ScrollPane>
             </right>
             <bottom>

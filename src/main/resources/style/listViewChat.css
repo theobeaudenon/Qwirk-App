@@ -1,5 +1,5 @@
 #Messagelist.list-cell {
-    -fx-cell-size: 50 ;
+    -fx-cell-size: 100 ;
     -fx-animated: true;
     -fx-padding: 1px;
 }
@@ -51,6 +51,25 @@
 
 #chanelPan.list-cell:even {
     -fx-background-color: #2b2b2b;
+}
+
+.list.list-cell{
+    -fx-background-insets : 0;
+    -fx-border-insets: 0;
+}
+
+.text-area .content {
+    -fx-background-color: #383b3f;
+    -fx-text-fill: #f9fdff;
+}
+
+.text-area {
+    -fx-text-fill: #f9fdff;
+}
+
+.list {
+    -fx-background-insets : 0;
+    -fx-border-insets: 0;
 }
 
 

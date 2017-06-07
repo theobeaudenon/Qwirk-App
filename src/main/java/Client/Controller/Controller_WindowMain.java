@@ -25,11 +25,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.File;
@@ -53,7 +57,7 @@ public class Controller_WindowMain implements Initializable {
     private JFXMasonryPane homeChan;
 
     @FXML
-    private ImageView chatGroupBanner;
+    private HBox chatBanner;
 
     @FXML
     private TextArea chatSendBox;
@@ -106,6 +110,9 @@ public class Controller_WindowMain implements Initializable {
     @FXML
     private Label nameProfil;
 
+    @FXML
+    private Label chanelName;
+
     final KeyCombination kb = new KeyCodeCombination(KeyCode.ENTER, KeyCombination.ALT_DOWN);
 
     private JFXSnackbar messageNotifOk;
@@ -116,11 +123,25 @@ public class Controller_WindowMain implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        Rectangle clip = new Rectangle(
+                imageProfil.getFitWidth(), imageProfil.getFitHeight()
+        );
+        clip.setArcWidth(63);
+        clip.setArcHeight(63);
+        imageProfil.setClip(clip);
+        SnapshotParameters parameters = new SnapshotParameters();
+        parameters.setFill(Color.TRANSPARENT);
+        WritableImage image = imageProfil.snapshot(parameters, null);
+        imageProfil.setClip(null);
+        imageProfil.setEffect(new DropShadow(10, Color.WHITE));
+        imageProfil.setImage(image);
+
 
         nameProfil.setText(Singleton_UserInfo.getInstance().getUser().getUserName());
 
         list.setFocusTraversable(false);
         list.setId("Messagelist");
+        list.setStyle("-fx-background-insets: 0;");
 
        // userContactList.getItems().add(new Label("test"));
 
@@ -180,7 +201,7 @@ public class Controller_WindowMain implements Initializable {
                         "        l0.544-1.293c0,0,2.963-1.143,2.963-1.299v-2.32C21.59,9.425,18.622,8.371,18.622,8.371z M14.256,10.794\n" +
                         "        c0,1.867-1.553,3.387-3.461,3.387c-1.906,0-3.461-1.52-3.461-3.387s1.555-3.385,3.461-3.385\n" +
                         "        C12.704,7.41,14.256,8.927,14.256,10.794z",
-                Color.web("#000"));
+                Color.web("#FFF"));
         option.setSize(26, 26);
         optionButton.setGraphic(option);
         optionButton.setRipplerFill(Color.GRAY);
@@ -192,7 +213,7 @@ public class Controller_WindowMain implements Initializable {
                         "        s-41.586,92.701-92.701,92.701c-30.845,0-59.584-15.283-76.878-40.881c-4.639-6.865-13.961-8.669-20.827-4.032\n" +
                         "        c-6.864,4.638-8.67,13.962-4.032,20.826c22.881,33.868,60.913,54.087,101.737,54.087C274.956,287.701,330,232.658,330,165\n" +
                         "        S274.956,42.299,207.299,42.299z" ,
-                Color.web("#000"));
+                Color.web("#FFF"));
         deco.setSize(26, 26);
         deconectButton.setGraphic(deco);
         deconectButton.setRipplerFill(Color.GRAY);
@@ -262,6 +283,7 @@ public class Controller_WindowMain implements Initializable {
                 list.getItems().clear();
                 showGroupChat();
                 EventHandler_Message.loadHistory_Message(centerPan, channel.getIdChannel(), list);
+                chanelName.setText(channel.getChannelName());
             }
         }
     }
@@ -270,8 +292,8 @@ public class Controller_WindowMain implements Initializable {
 
         homeChan.setVisible(false);
         homeChan.setManaged(false);
-        chatGroupBanner.setVisible(true);
-        chatGroupBanner.setManaged(true);
+        chatBanner.setVisible(true);
+        chatBanner.setManaged(true);
         controllerChat.setVisible(true);
         controllerChat.setManaged(true);
         list.setVisible(true);
@@ -283,8 +305,8 @@ public class Controller_WindowMain implements Initializable {
 
         homeChan.setVisible(true);
         homeChan.setManaged(true);
-        chatGroupBanner.setVisible(false);
-        chatGroupBanner.setManaged(false);
+        chatBanner.setVisible(false);
+        chatBanner.setManaged(false);
         controllerChat.setVisible(false);
         controllerChat.setManaged(false);
         list.setVisible(false);
