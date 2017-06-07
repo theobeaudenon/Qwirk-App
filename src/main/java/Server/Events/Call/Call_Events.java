@@ -20,6 +20,12 @@ import java.util.ArrayList;
  */
 public class Call_Events {
 
+    /*
+      Event : makeACall
+      Paramètres : Call
+      Broadcast : Call
+      Permet a un client d'appeler
+   */
     public static void makeACall(SocketIOServer server){
 
         server.addEventListener("makeACall", Call.class, new DataListener<Call>() {
@@ -47,7 +53,12 @@ public class Call_Events {
 
     }
 
-
+    /*
+      Event : acceptedCall
+      Paramètres : Call
+      Broadcast : Call
+      Permet a un client d'accepter l'appel
+   */
     public static void acceptedCall(SocketIOServer server){
 
         server.addEventListener("acceptedCall", Call.class, new DataListener<Call>() {
@@ -64,7 +75,12 @@ public class Call_Events {
 
     }
 
-
+    /*
+      Event : deniedCall
+      Paramètres : Call
+      Broadcast : Call
+      Permet a un client de refuser l'appel
+   */
     public static void deniedCall(SocketIOServer server){
 
         server.addEventListener("deniedCall", Call.class, new DataListener<Call>() {
@@ -81,7 +97,12 @@ public class Call_Events {
     }
 
 
-
+    /*
+      Event : callFlux
+      Paramètres : CallData
+      return : callInboud : data
+      Permet a envoyer les données de l'appel ( Vidéo ) a l'autre
+   */
     public static void callFlux(SocketIOServer server){
 
         server.addEventListener("callFlux", CallData.class, new DataListener<CallData>() {
@@ -105,6 +126,12 @@ public class Call_Events {
     }
 
 
+    /*
+      Event : audioCallFlux
+      Paramètres : CallData
+      return : audioCallInboud : data
+      Permet a envoyer les données de l'appel ( audio ) a l'autre
+   */
     public static void audioCallFlux(SocketIOServer server){
 
         server.addEventListener("audioCallFlux", CallData.class, new DataListener<CallData>() {

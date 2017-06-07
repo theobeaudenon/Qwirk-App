@@ -22,6 +22,12 @@ import java.util.ArrayList;
  */
 public class Contacts_Events {
 
+    /*
+    Event : getMyContacts
+    Paramètres : Integer
+    Return : ArrayList<User>
+     Permet a un client de recuprer ses contacts
+     */
     public static void getMyContacts(SocketIOServer server) {
 
         server.addEventListener("getMyContacts", Integer.class, new DataListener<Integer>() {
@@ -43,7 +49,12 @@ public class Contacts_Events {
         });
     }
 
-
+    /*
+    Event : oppContacts
+    Paramètres : Contact
+    Return : Alerte
+    Permet a un client d'effectuer une operation sur les contacts
+     */
     public static void oppContact(final SocketIOServer server) {
 
         server.addEventListener("oppContacts",  Contact.class, new DataListener<Contact>() {

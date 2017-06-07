@@ -27,7 +27,14 @@ import java.util.Map;
  */
 public class Messages_Events {
 
-
+    /*
+    Event : chatevent
+    Paramètres : Message
+    Return : null
+    Broadcast : Message
+    Permet a un client d'envoyer un message sur le serveur
+    il est ici traité ( bot / invitation ) ici. Le message est ensuite envoyé sur tout les clients pour traiter et afficher le message
+     */
     public static void newMessage(final SocketIOServer server){
 
         server.addEventListener("chatevent", Message.class, new DataListener<Message>() {
@@ -225,7 +232,12 @@ public class Messages_Events {
 
     }
 
-
+    /*
+      Event : channelMessages
+      Paramètres : Integer
+      Return : ArrayList<Message>
+      Permet a un client de recuoerer les messages d'un channel en particulier
+       */
     public static void getAllmessagesFromChannel(SocketIOServer server) {
         server.addEventListener("channelMessages", Integer.class, new DataListener<Integer>() {
             public void onData(SocketIOClient client, Integer channelID, AckRequest ackRequest) {

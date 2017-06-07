@@ -12,6 +12,7 @@ public class User implements Serializable{
     String userName;
     String mail;
     String pass;
+    String humeur = "";
     Integer userID;
     String verif;
 
@@ -33,12 +34,21 @@ public class User implements Serializable{
         this.pass = grupoAplicacao.getPass();
         this.userID = grupoAplicacao.getUserID();
         this.verif = grupoAplicacao.getVerif();
-
+        this.verif = grupoAplicacao.getVerif();
+        this.humeur = grupoAplicacao.getHumeur();
     }
 
     public User(String mail, String pass) {
         this.mail = mail;
         this.pass = pass;
+    }
+
+    public String getHumeur() {
+        return humeur;
+    }
+
+    public void setHumeur(String humeur) {
+        this.humeur = humeur;
     }
 
     public void setUserID(Integer userID) {

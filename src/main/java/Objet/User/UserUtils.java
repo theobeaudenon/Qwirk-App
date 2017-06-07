@@ -110,4 +110,16 @@ public class UserUtils {
         return null;
 
     }
+
+    public static Boolean updateUser(HashMap<Integer, User> userHashMap, User user) {
+        User userFromId = getUserFromId(userHashMap, user.getUserID());
+        if(userFromId != null){
+            user.setHumeur(user.getHumeur());
+            user.setUserName(user.getUserName());
+            return true;
+        }else {
+            return false;
+        }
+
+    }
 }

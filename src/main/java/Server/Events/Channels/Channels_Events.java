@@ -20,6 +20,12 @@ import java.util.ArrayList;
  */
 public class Channels_Events {
 
+    /*
+    Event : getPublicChannels
+    Paramètres : Integer
+    Return : ArrayList<Channel>
+    Permet a un client de recuperer les channels public afin de s'y connecter
+     */
     public static void getPublicChannels(SocketIOServer server){
 
         server.addEventListener("getPublicChannels", Integer.class, new DataListener<Integer>() {
@@ -42,7 +48,12 @@ public class Channels_Events {
 
     }
 
-
+    /*
+    Event : joinChannel
+    Paramètres : UserChannels
+    Return : Boolean
+    Permet a un client de rejoindre un channel sur le serveur
+     */
     public static void joinChannel(SocketIOServer server){
 
         server.addEventListener("joinChannel", UserChannels.class, new DataListener<UserChannels>() {
@@ -63,7 +74,12 @@ public class Channels_Events {
 
     }
 
-
+    /*
+    Event : leaveChannel
+    Paramètres : UserChannels
+    Return : Boolean
+    Permet a un client de quitter un channel sur le serveur
+     */
     public static void leaveChannel(SocketIOServer server){
 
         server.addEventListener("leaveChannel", UserChannels.class, new DataListener<UserChannels>() {
@@ -85,7 +101,12 @@ public class Channels_Events {
     }
 
 
-
+    /*
+    Event : inviteChannel
+    Paramètres : UserChannels
+    Return : Alerte
+    Permet a un client d'inviter un autre client sur un channel
+     */
     public static void inviteChannel(SocketIOServer server){
 
         server.addEventListener("inviteChannel", UserChannels.class, new DataListener<UserChannels>() {
@@ -111,7 +132,12 @@ public class Channels_Events {
 
     }
 
-
+    /*
+    Event : getMyChannels
+    Paramètres : Integer
+    Return : ArrayList<Channel>
+    Permet a un client de recuperer ses channels afin de s'y connecter
+     */
     public static void getMyChannels(SocketIOServer server) {
 
         server.addEventListener("getMyChannels", Integer.class, new DataListener<Integer>() {
@@ -132,7 +158,12 @@ public class Channels_Events {
             }
         });
     }
-
+    /*
+    Event : channelOpperation
+    Paramètres : ChannelOpperation
+    Return : Boolean
+    Permet a un client d'effectuer une modification sur un channel
+     */
     public static void channelOpperation(final SocketIOServer server) {
 
         server.addEventListener("channelOpperation", ChannelOpperation.class, new DataListener<ChannelOpperation>() {

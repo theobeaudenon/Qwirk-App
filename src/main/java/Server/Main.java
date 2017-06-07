@@ -45,8 +45,10 @@ public class Main {
             Saving.serializeSingleton();
         }
 
+        /*
+        Programation de la sauvegarde du serveur sur un fichier plat
+         */
         Timer timer = new Timer();
-
         timer.schedule( new TimerTask() {
             public void run() {
                 Saving.serializeSingleton();
@@ -57,21 +59,22 @@ public class Main {
 
         //Demarage du serveur
         Configuration config = new Configuration();
-        config.setHostname("10.29.18.4");
+        config.setHostname("10.29.18.65");
         config.setPort(9092);
-       // config.setUpgradeTimeout(10000000);
-        //config.setPingTimeout(10000000);
-        //config.setPingInterval(10000000);
-        config.setMaxFramePayloadLength(1024 * 1024 * 3);
-        config.setMaxHttpContentLength(1024 * 1024 * 3);
+        config.setMaxFramePayloadLength(1024 * 1024 * 10);
+        config.setMaxHttpContentLength(1024 * 1024 * 10);
 
         SocketIOServer server = new SocketIOServer(config);
 
+        /*
+        Definitions des events socket du serveur
+         */
 
 
         //USER EVENT
         Users_Events.getUserID(server);
         Users_Events.resetUserID(server);
+        Users_Events.updateUser(server);
 
         //LOGIN SIGNUP EVENTS
         Login_Signup_Events.socketLoginEvent(server);
@@ -102,13 +105,7 @@ public class Main {
         Contacts_Events.oppContact(server);
 
 
-
-        server.addConnectListener(new ConnectListener() {
-            public void onConnect(SocketIOClient socketIOClient) {
-                //System.out.printf("con");
-            }
-        });
-
+        //Démarage du serveur
         server.start();
 
 

@@ -13,7 +13,12 @@ import com.corundumstudio.socketio.listener.DataListener;
  */
 public class Login_Signup_Events {
 
-
+    /*
+    Event : login
+    Paramètres : User
+    Return : User
+    Permet a un client de reset de ce connecter a son compte
+     */
     public static void socketLoginEvent(SocketIOServer server) {
         server.addEventListener("login", User.class, new DataListener<User>() {
             public void onData(SocketIOClient client, User data, AckRequest ackRequest) {
@@ -34,10 +39,13 @@ public class Login_Signup_Events {
         });
     }
 
+    /*
+    Event : singup
+    Paramètres : User
+    Return : User
+    Permet a un client de creer un compte sur le serveur
+     */
     public static void socketSingupEvent(SocketIOServer server) {
-
-
-
         server.addEventListener("singup", User.class, new DataListener<User>() {
             public void onData(SocketIOClient client, User data, AckRequest ackRequest) {
                 // broadcast messages to all clients

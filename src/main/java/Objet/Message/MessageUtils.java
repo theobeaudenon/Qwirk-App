@@ -3,6 +3,8 @@ package Objet.Message;
 import Objet.Channel.Channel;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 /**
@@ -39,6 +41,12 @@ public class MessageUtils {
                 messagestemp.add(message);
             }
         }
+        Collections.sort(messagestemp, new Comparator<Message>() {
+            @Override
+            public int compare(Message o1, Message o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        });
         return messagestemp;
 
     }
