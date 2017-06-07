@@ -6,6 +6,7 @@ import Objet.Bot.Bot;
 import Objet.Bot.Commandes;
 import Objet.LinkObjects.BanChannel;
 import Objet.LinkObjects.BotChannel;
+import Objet.LinkObjects.UserChannels;
 import Objet.Message.Message;
 import Objet.Message.MessageUtils;
 import Objet.User.User;
@@ -18,6 +19,7 @@ import com.corundumstudio.socketio.listener.DataListener;
 import com.google.gson.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -90,8 +92,21 @@ public class Messages_Events {
                                                          if(!"".equals(split[1])){
                                                              User userFromName = UserUtils.getUserFromName(Singleton_Data.getInstance().getUserHashMap(), split[1]);
                                                              if(userFromName != null){
-                                                                 BanChannel ban = new BanChannel(1, entry.getChannelID(), "ban");
+                                                                 BanChannel ban = new BanChannel(userFromName.getUserID(), entry.getChannelID(), "ban");
                                                                  Singleton_Data.getInstance().getBanChannelHashMap().add(ban);
+                                                                 List<UserChannels> nodesToRemove = new ArrayList<>();
+
+                                                                 for (UserChannels userChannels : Singleton_Data.getInstance().getUserChannelsHashMap()) {
+
+                                                                     if(userChannels.getChannelID() == entry.getChannelID() && userFromName.getUserID().equals(userChannels.getUserID())){
+                                                                        nodesToRemove.add(userChannels);
+                                                                        break;
+                                                                     }
+
+                                                                 }
+                                                                 Singleton_Data.getInstance().getUserChannelsHashMap().removeAll(nodesToRemove);
+
+
                                                                  for (SocketIOClient socketIOClient : server.getAllClients()) {
                                                                      socketIOClient.sendEvent("banKickEvent", ban);
                                                                  }
@@ -137,9 +152,38 @@ public class Messages_Events {
 
                                              }
                                              if(ActionBot.KICK.equals(commandes.getActionBot())){
-                                                 client.sendEvent("alerte",new Alerte("Succès",commandes.getMessage()));
-                                                 System.out.printf("kick");
-                                                 return;
+                                                 try {
+
+                                                     if(split[1] != null){
+                                                         if(!"".equals(split[1])){
+                                                             User userFromName = UserUtils.getUserFromName(Singleton_Data.getInstance().getUserHashMap(), split[1]);
+                                                             if(userFromName != null){
+                                                                 BanChannel ban = new BanChannel(1, entry.getChannelID(), "kick");
+                                                                 for (SocketIOClient socketIOClient : server.getAllClients()) {
+                                                                     socketIOClient.sendEvent("banKickEvent", ban);
+                                                                 }
+
+
+                                                                 client.sendEvent("alerte",new Alerte("Info",commandes.getMessage()));
+                                                                 System.out.printf("ban");
+                                                             }else {
+                                                                 client.sendEvent("alerte",new Alerte("Erreur","Nom invalide"));
+
+                                                             }
+
+                                                             return;
+                                                         }
+
+                                                     }
+                                                     client.sendEvent("alerte",new Alerte("Erreur","Erreur dans la commande du Kick"));
+
+                                                     return;
+                                                 }catch (ArrayIndexOutOfBoundsException e){
+                                                     client.sendEvent("alerte",new Alerte("Erreur","Erreur dans la commande du kick"));
+
+                                                     return;
+                                                 }
+
 
                                              }
 
