@@ -2,106 +2,155 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.Controller_Config">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2b2b2b;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Client.Controller.Controller_Config">
    <children>
-      <GridPane>
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="365.0" minHeight="10.0" prefHeight="353.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="194.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <GridPane prefHeight="405.0" prefWidth="300.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints maxHeight="94.0" minHeight="0.0" prefHeight="85.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="112.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="191.0" minHeight="10.0" prefHeight="107.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="191.0" minHeight="10.0" prefHeight="107.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Label text="Webcam" GridPane.rowIndex="1">
-                           <GridPane.margin>
-                              <Insets left="20.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="Microphone" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="20.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <Label text="Internet port" GridPane.rowIndex="4">
-                           <GridPane.margin>
-                              <Insets left="20.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <JFXComboBox fx:id="webcamList" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <JFXComboBox fx:id="microphoneList" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <JFXTextField fx:id="port" text="9092" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text="OPTIONS">
-                           <GridPane.margin>
-                              <Insets left="50.0" />
-                           </GridPane.margin>
-                           <font>
-                              <Font name="System Bold Italic" size="18.0" />
-                           </font>
-                        </Label>
-                        <Label text="Speaker" GridPane.rowIndex="3">
-                           <GridPane.margin>
-                              <Insets left="20.0" />
-                           </GridPane.margin>
-                        </Label>
-                        <JFXComboBox fx:id="speakerList" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                     </children>
-                  </GridPane>
-               </children>
-            </VBox>
-            <GridPane GridPane.columnIndex="1">
+      <BorderPane prefHeight="200.0" prefWidth="200.0">
+         <center>
+            <GridPane prefHeight="373.0" prefWidth="600.0" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="238.0" minHeight="10.0" prefHeight="99.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="219.0" minHeight="10.0" prefHeight="219.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="365.0" minHeight="10.0" prefHeight="353.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label text="PROFIL ">
+                  <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: #2b2b2b; -fx-border-width: 0 1 0 0;">
+                     <children>
+                        <GridPane prefHeight="405.0" prefWidth="300.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints maxHeight="94.0" minHeight="0.0" prefHeight="85.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="112.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="191.0" minHeight="10.0" prefHeight="107.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="191.0" minHeight="10.0" prefHeight="107.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="95.0" minHeight="10.0" prefHeight="95.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Webcam" textFill="WHITE" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Microphone" textFill="WHITE" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <Label text="Internet port" textFill="WHITE" GridPane.rowIndex="4">
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <JFXComboBox fx:id="webcamList" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets right="5.0" />
+                                 </GridPane.margin>
+                              </JFXComboBox>
+                              <JFXComboBox fx:id="microphoneList" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets right="5.0" />
+                                 </GridPane.margin>
+                              </JFXComboBox>
+                              <JFXTextField fx:id="port" text="9092" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                 <GridPane.margin>
+                                    <Insets right="5.0" />
+                                 </GridPane.margin>
+                              </JFXTextField>
+                              <Label text="OPTIONS" textFill="WHITE">
+                                 <GridPane.margin>
+                                    <Insets left="50.0" />
+                                 </GridPane.margin>
+                                 <font>
+                                    <Font name="System Bold Italic" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Speaker" textFill="WHITE" GridPane.rowIndex="3">
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Label>
+                              <JFXComboBox fx:id="speakerList" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <GridPane.margin>
+                                    <Insets right="5.0" />
+                                 </GridPane.margin>
+                              </JFXComboBox>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+                  <GridPane GridPane.columnIndex="1">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="238.0" minHeight="10.0" prefHeight="78.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="219.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="219.0" minHeight="10.0" prefHeight="148.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="PROFIL " textFill="WHITE">
+                           <font>
+                              <Font name="System Bold Italic" size="18.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="50.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <Label text="Pseudo" textFill="WHITE" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Label>
+                        <JFXTextField fx:id="pseudo" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </JFXTextField>
+                        <JFXTextArea fx:id="moodMsg" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets right="5.0" />
+                           </GridPane.margin>
+                        </JFXTextArea>
+                        <Label text="Label" textFill="WHITE" GridPane.rowIndex="2">
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Label>
+                     </children>
+                  </GridPane>
+               </children>
+            </GridPane>
+         </center>
+         <bottom>
+            <HBox prefHeight="46.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton fx:id="valider" onAction="#configEditAction" prefHeight="46.0" prefWidth="608.0" ripplerFill="#30fc07" style="-fx-background-color: #30fc07;" text="Valider">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
-                     <GridPane.margin>
-                        <Insets left="50.0" />
-                     </GridPane.margin>
-                  </Label>
+                  </JFXButton>
                </children>
-            </GridPane>
-            <JFXButton fx:id="valider" onAction="#configEditAction" prefHeight="46.0" prefWidth="113.0" ripplerFill="#30fc07" style="-fx-background-color: #30fc07;" text="Valider" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </JFXButton>
-         </children>
-      </GridPane>
+            </HBox>
+         </bottom>
+      </BorderPane>
    </children>
 </StackPane>

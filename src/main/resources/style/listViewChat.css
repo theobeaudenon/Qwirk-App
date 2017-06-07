@@ -10,10 +10,10 @@
 
 
 #Messagelist .list-cell:even {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #dfdfdf;
 }
 #Messagelist .list-cell:odd {
-    -fx-background-color: #ffffff;
+    -fx-background-color: #DFDFDF;
 }
 
 .jfx-snackbar-content{
@@ -25,6 +25,8 @@
 }
 
 .list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
     -fx-border-image-width: 0;
 }
 
@@ -53,11 +55,6 @@
     -fx-background-color: #2b2b2b;
 }
 
-.list.list-cell{
-    -fx-background-insets : 0;
-    -fx-border-insets: 0;
-}
-
 .text-area .content {
     -fx-background-color: #383b3f;
     -fx-text-fill: #f9fdff;
@@ -67,9 +64,5 @@
     -fx-text-fill: #f9fdff;
 }
 
-.list {
-    -fx-background-insets : 0;
-    -fx-border-insets: 0;
-}
 
 

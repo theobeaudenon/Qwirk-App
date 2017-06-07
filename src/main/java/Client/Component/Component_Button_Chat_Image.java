@@ -41,8 +41,8 @@ public class Component_Button_Chat_Image extends Button {
 
         WritableImage image = SwingFXUtils.toFXImage(img, null);
         setGraphic(new ImageView(image));
-        setStyle(" -fx-background-color: linear-gradient(#00f8ff, #0573be);\n" +
-                "    -fx-border-width: 2px;"+
+        setStyle(" -fx-background-color: linear-gradient(#7289DA, #7289DA);\n" +
+                "    -fx-border-width: 1px;"+
                 "    -fx-border-color: #2b2b2b;");
     }
 

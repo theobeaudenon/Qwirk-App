@@ -1,0 +1,15 @@
+.combo-box .cell{
+    -fx-text-fill: white;
+}
+
+.combo-box{
+    -fx-text-fill: white;
+}
+
+.text-input {
+   -fx-text-fill: white;
+}
+
+.text-area {
+    -fx-text-fill: white;
+}

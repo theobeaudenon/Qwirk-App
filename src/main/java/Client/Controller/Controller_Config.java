@@ -45,6 +45,9 @@ public class Controller_Config implements Initializable {
     @FXML
     JFXComboBox speakerList;
 
+    @FXML
+    JFXTextField pseudo;
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,6 +56,8 @@ public class Controller_Config implements Initializable {
             webcamList.getItems().addAll(Webcam.getWebcams().get(0));
         }
         webcamList.getItems().addAll(Webcam.getWebcams());*/
+
+        pseudo.setText(Singleton_UserInfo.getInstance().getUser().getUserName());
 
         Task<Void> webCamTask = new Task<Void>() {
 
@@ -99,6 +104,7 @@ public class Controller_Config implements Initializable {
         Configuration conf = new Configuration((Webcam) webcamList.getSelectionModel().getSelectedItem(), Integer.parseInt(port.getText()));
         Singleton_Configuration.getInstance().setConfiguration(conf);
 
+        Singleton_UserInfo.getInstance().getUser().setUserName(pseudo.getText());
 
         Node node=(Node) actionEvent.getSource();
         Stage stage=(Stage) node.getScene().getWindow();

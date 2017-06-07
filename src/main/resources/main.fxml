@@ -80,7 +80,7 @@
                   <content>
                      <StackPane prefHeight="150.0" prefWidth="200.0">
                         <children>
-                           <JFXListView fx:id="userContactList" prefHeight="474.0" prefWidth="200.0" style="-fx-background-color: #3c3f41; -fx-background-insets: 0;" styleClass="list" />
+                           <JFXListView fx:id="userContactList" prefHeight="497.0" prefWidth="200.0" style="-fx-background-color: #3c3f41; -fx-background-insets: 0;" styleClass="list" />
                         </children>
                      </StackPane>
                   </content>
@@ -90,7 +90,7 @@
                <HBox prefHeight="44.0" prefWidth="200.0" style="-fx-background-color: #23272A;" BorderPane.alignment="CENTER">
                   <children>
                      <JFXButton fx:id="optionButton" onMouseClicked="#optionAction" prefHeight="52.0" prefWidth="52.0" />
-                     <JFXButton fx:id="deconectButton" onMouseClicked="#deconectAction" prefHeight="62.0" prefWidth="52.0" />
+                     <JFXButton fx:id="deconectButton" onMouseClicked="#deconectAction" prefHeight="62.0" prefWidth="60.0" />
                   </children>
                </HBox>
             </bottom>

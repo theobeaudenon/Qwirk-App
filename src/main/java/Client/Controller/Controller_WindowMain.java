@@ -17,6 +17,7 @@ import Objet.Utils.Action;
 import com.jfoenix.controls.*;
 import com.jfoenix.svg.SVGGlyph;
 import io.socket.client.Ack;
+import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -35,6 +36,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -141,7 +143,7 @@ public class Controller_WindowMain implements Initializable {
 
         list.setFocusTraversable(false);
         list.setId("Messagelist");
-        list.setStyle("-fx-background-insets: 0;");
+        list.setStyle("-fx-background-insets: 0; -fx-background-color: #989898;");
 
        // userContactList.getItems().add(new Label("test"));
 
@@ -177,12 +179,12 @@ public class Controller_WindowMain implements Initializable {
         SVGGlyph plus = new SVGGlyph(0,
                 "FULLSCREEN",
                 "M357,204H204v153h-51V204H0v-51h153V0h51v153h153V204z",
-                Color.web("#04fd00"));
+                Color.web("#7289DA"));
         plus.setSize(20, 16);
         SVGGlyph plus2 = new SVGGlyph(0,
                 "FULLSCREEN",
                 "M357,204H204v153h-51V204H0v-51h153V0h51v153h153V204z",
-                 Color.web("#04fd00"));
+                 Color.web("#7289DA"));
         plus2.setSize(20, 16);
         addContact.setGraphic(plus);
         addContact.setRipplerFill(Color.GREENYELLOW);
@@ -214,7 +216,7 @@ public class Controller_WindowMain implements Initializable {
                         "        c-6.864,4.638-8.67,13.962-4.032,20.826c22.881,33.868,60.913,54.087,101.737,54.087C274.956,287.701,330,232.658,330,165\n" +
                         "        S274.956,42.299,207.299,42.299z" ,
                 Color.web("#FFF"));
-        deco.setSize(26, 26);
+        deco.setSize(35, 26);
         deconectButton.setGraphic(deco);
         deconectButton.setRipplerFill(Color.GRAY);
 
@@ -364,7 +366,25 @@ public class Controller_WindowMain implements Initializable {
             root  = loader.load();
             stage.setTitle("Configuration");
             stage.setScene(new Scene(root, 600, 400));
-           // stage.setResizable(false);
+            stage.setResizable(false);
+            stage.getScene().getStylesheets().add("/style/config.css");
+
+            stage.setOnHiding(new EventHandler<WindowEvent>() {
+
+                @Override
+                public void handle(WindowEvent event) {
+                    Platform.runLater(new Runnable() {
+
+                        @Override
+                        public void run() {
+
+                        }
+                    });
+                }
+            });
+
+
+            // stage.setResizable(false);
 
            /* Controller_WindowSoloChat controller = loader.getController();
             stage.setOnHidden(e -> controller.shutdown());

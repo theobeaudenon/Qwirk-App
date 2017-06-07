@@ -48,7 +48,7 @@ import java.util.regex.Pattern;
  */
 public class EventHandler_Message {
     
-    static String ourMessageColorBackground = "#fac";
+    static String ourMessageColorBackground = "#7289DA";
     static String theirMessageColorBackgroud = "#f1f0f0";
     static String ourMessageColor = "#FFF";
     static String theirMessageColor = "#000";
@@ -141,6 +141,18 @@ public class EventHandler_Message {
                 // x.setMaxWidth(list.getWidth() - 20);
                 Component_Button_Chat_Image bl6 = new Component_Button_Chat_Image(message.getData(), message.getDataName());
                 bl6.setOnAction(new EventHandler_Message_Fichier());
+
+                BubbledLabel bl7 = new BubbledLabel();
+                bl7.setText(" ----- Image envoyeé par "+ message.getUserName()+" ----- ");
+                bl7.setBackground(new Background(new BackgroundFill(Color.web(ourMessageColorBackground),null, null)));
+                bl7.setTextFill(Color.web(ourMessageColor));
+                bl7.setBubbleSpec(BubbleSpec.FACE_RIGHT_CENTER);
+
+                HBox hBox2 = new HBox();
+                hBox2.setAlignment(Pos.TOP_RIGHT);
+                hBox2.getChildren().addAll(bl7);
+                list.getItems().add(hBox2);
+
                 HBox hBox = new HBox();
                 hBox.setAlignment(Pos.TOP_RIGHT);
                 hBox.getChildren().addAll(bl6);
@@ -150,6 +162,17 @@ public class EventHandler_Message {
                 // x.setMaxWidth(list.getWidth() - 20);
                 Component_Button_Chat_Image bl6 = new Component_Button_Chat_Image(message.getData(), message.getDataName());
                 bl6.setOnAction(new EventHandler_Message_Fichier());
+
+                BubbledLabel bl7 = new BubbledLabel();
+                bl7.setText(" ----- Image envoyeé par "+ message.getUserName()+" ----- ");
+                bl7.setBackground(new Background(new BackgroundFill(Color.web(theirMessageColorBackgroud),null, null)));
+                bl7.setTextFill(Color.web(theirMessageColor));
+                bl7.setBubbleSpec(BubbleSpec.FACE_LEFT_CENTER);
+
+                HBox hBox2 = new HBox();
+                hBox2.getChildren().addAll(bl7);
+                list.getItems().add(hBox2);
+
                 HBox hBox = new HBox();
                 hBox.getChildren().addAll(bl6);
                 list.getItems().add(hBox);
@@ -163,6 +186,18 @@ public class EventHandler_Message {
                 // x.setMaxWidth(list.getWidth() - 20);
                 Component_Button_Chat_Fichier bl6 = new Component_Button_Chat_Fichier(message.getData(), message.getDataName());
                 bl6.setOnAction(new EventHandler_Message_Fichier());
+
+                BubbledLabel bl7 = new BubbledLabel();
+                bl7.setText(" ----- Fichier envoyeé par "+ message.getUserName()+" ----- ");
+                bl7.setBackground(new Background(new BackgroundFill(Color.web(ourMessageColorBackground),null, null)));
+                bl7.setTextFill(Color.web(ourMessageColor));
+                bl7.setBubbleSpec(BubbleSpec.FACE_RIGHT_CENTER);
+
+                HBox hBox2 = new HBox();
+                hBox2.setAlignment(Pos.TOP_RIGHT);
+                hBox2.getChildren().addAll(bl7);
+                list.getItems().add(hBox2);
+
                 HBox hBox = new HBox();
                 hBox.setAlignment(Pos.TOP_RIGHT);
                 hBox.getChildren().addAll(bl6);
@@ -172,6 +207,17 @@ public class EventHandler_Message {
                 // x.setMaxWidth(list.getWidth() - 20);
                 Component_Button_Chat_Fichier bl6 = new Component_Button_Chat_Fichier(message.getData(), message.getDataName());
                 bl6.setOnAction(new EventHandler_Message_Fichier());
+
+                BubbledLabel bl7 = new BubbledLabel();
+                bl7.setText(" ----- Fichier envoyeé par "+ message.getUserName()+" ----- ");
+                bl7.setBackground(new Background(new BackgroundFill(Color.web(theirMessageColorBackgroud),null, null)));
+                bl7.setTextFill(Color.web(theirMessageColor));
+                bl7.setBubbleSpec(BubbleSpec.FACE_LEFT_CENTER);
+
+                HBox hBox2 = new HBox();
+                hBox2.getChildren().addAll(bl7);
+                list.getItems().add(hBox2);
+
                 HBox hBox = new HBox();
                 hBox.getChildren().addAll(bl6);
                 list.getItems().add(hBox);

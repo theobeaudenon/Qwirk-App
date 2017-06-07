@@ -18,9 +18,9 @@ public class Component_Button_Chat_Fichier extends Button {
         this.fileName = fileName;
 
         setText(fileName);
-        setStyle(" -fx-background-color: linear-gradient(#00f8ff, #0573be);\n" +
+        setStyle(" -fx-background-color: linear-gradient(#7289DA, #7289DA);\n" +
                 "-fx-text-fill: white;"+
-                "    -fx-border-width: 2px;"+
+                "    -fx-border-width: 1px;"+
                 "    -fx-border-color: #2b2b2b;");
     }
 
